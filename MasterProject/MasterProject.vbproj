@@ -15,7 +15,7 @@
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x86</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <DefineDebug>true</DefineDebug>
@@ -46,10 +46,38 @@
   <PropertyGroup>
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DocumentationFile>MasterProject.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DocumentationFile>MasterProject.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MySql.Data, Version=6.9.3.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\MySQL\MySQL Connector Net 6.1.2\Assemblies\MySql.Data.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
+    <Reference Include="System.DirectoryServices" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
@@ -72,13 +100,81 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Form1.vb">
+    <Compile Include="Classes\Operations\Customer Service\Import\clsImportBooking.vb" />
+    <Compile Include="Classes\Global Classes\clsEnableToolstripObjects.vb" />
+    <Compile Include="Classes\Global Classes\clsPopulateComboBox.vb" />
+    <Compile Include="Classes\Maintenance\UserAccess\clsUserAccount.vb" />
+    <Compile Include="Forms\01 Operations\Customer Service\Export\frmExportBookingMenu.Designer.vb">
+      <DependentUpon>frmExportBookingMenu.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\01 Operations\Customer Service\Export\frmExportBookingMenu.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.vb">
-      <DependentUpon>Form1.vb</DependentUpon>
+    <Compile Include="Forms\01 Operations\Customer Service\frmAddBookingContainer.Designer.vb">
+      <DependentUpon>frmAddBookingContainer.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\01 Operations\Customer Service\frmAddBookingContainer.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Forms\01 Operations\Customer Service\frmSelection.Designer.vb">
+      <DependentUpon>frmSelection.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\01 Operations\Customer Service\frmSelection.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\01 Operations\Customer Service\Import\frmImportBookingMonitoring.Designer.vb">
+      <DependentUpon>frmImportBookingMonitoring.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\01 Operations\Customer Service\Import\frmImportBookingMonitoring.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\01 Operations\Customer Service\Import\frmImportBookingMenu.Designer.vb">
+      <DependentUpon>frmImportBookingMenu.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\01 Operations\Customer Service\Import\frmImportBookingMenu.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\01 Operations\Customer Service\Import\frmSearchImportBooking.Designer.vb">
+      <DependentUpon>frmSearchImportBooking.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\01 Operations\Customer Service\Import\frmSearchImportBooking.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\04 Login\frmLogIn.Designer.vb">
+      <DependentUpon>frmLogIn.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\04 Login\frmLogIn.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\04 Login\frmSelectCompany.Designer.vb">
+      <DependentUpon>frmSelectCompany.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\04 Login\frmSelectCompany.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\05 Main Menu\frmLogoutOptions.Designer.vb">
+      <DependentUpon>frmLogoutOptions.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\05 Main Menu\frmLogoutOptions.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\05 Main Menu\mdiMain.Designer.vb">
+      <DependentUpon>mdiMain.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\05 Main Menu\mdiMain.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\06 Sample Form\frmSampleForm.Designer.vb">
+      <DependentUpon>frmSampleForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\06 Sample Form\frmSampleForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Interface\ICommonFunction.vb" />
+    <Compile Include="Modules\modDBConn.vb" />
+    <Compile Include="Modules\modGlobalDeclaration.vb" />
+    <Compile Include="Modules\modGlobalFunction.vb" />
+    <Compile Include="Modules\modSampleCodes.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -96,6 +192,39 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Forms\01 Operations\Customer Service\Export\frmExportBookingMenu.resx">
+      <DependentUpon>frmExportBookingMenu.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\01 Operations\Customer Service\frmAddBookingContainer.resx">
+      <DependentUpon>frmAddBookingContainer.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\01 Operations\Customer Service\frmSelection.resx">
+      <DependentUpon>frmSelection.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\01 Operations\Customer Service\Import\frmImportBookingMonitoring.resx">
+      <DependentUpon>frmImportBookingMonitoring.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\01 Operations\Customer Service\Import\frmImportBookingMenu.resx">
+      <DependentUpon>frmImportBookingMenu.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\01 Operations\Customer Service\Import\frmSearchImportBooking.resx">
+      <DependentUpon>frmSearchImportBooking.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\04 Login\frmLogIn.resx">
+      <DependentUpon>frmLogIn.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\04 Login\frmSelectCompany.resx">
+      <DependentUpon>frmSelectCompany.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\05 Main Menu\frmLogoutOptions.resx">
+      <DependentUpon>frmLogoutOptions.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\05 Main Menu\mdiMain.resx">
+      <DependentUpon>mdiMain.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\06 Sample Form\frmSampleForm.resx">
+      <DependentUpon>frmSampleForm.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
@@ -114,6 +243,14 @@
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Forms\01 Operations\Customer Service\Domestic\" />
+    <Folder Include="Forms\02 Accounting\" />
+    <Folder Include="Forms\03 Maintenance\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\edit.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
