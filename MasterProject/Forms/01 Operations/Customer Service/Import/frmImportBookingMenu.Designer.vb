@@ -119,7 +119,13 @@ Partial Class frmImportBookingMenu
         Me.tscmdContainerAdd = New System.Windows.Forms.ToolStripButton()
         Me.tscmdContainerRemove = New System.Windows.Forms.ToolStripButton()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
+        Me.Panel2 = New System.Windows.Forms.Panel()
+        Me.chkDocsCompleted = New System.Windows.Forms.CheckBox()
         Me.dtgDocuments = New System.Windows.Forms.DataGridView()
+        Me.colDSelected = New System.Windows.Forms.DataGridViewCheckBoxColumn()
+        Me.colDDocID = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colDDocName = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colDRequired = New System.Windows.Forms.DataGridViewCheckBoxColumn()
         Me.GroupBox4 = New System.Windows.Forms.GroupBox()
         Me.txtRemarks = New System.Windows.Forms.TextBox()
         Me.Panel1 = New System.Windows.Forms.Panel()
@@ -160,6 +166,9 @@ Partial Class frmImportBookingMenu
         Me.ToolStripStatusLabel5 = New System.Windows.Forms.ToolStripStatusLabel()
         Me.tslblModDate = New System.Windows.Forms.ToolStripStatusLabel()
         Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
+        Me.lblStatusDetails = New System.Windows.Forms.Label()
+        Me.GroupBox6 = New System.Windows.Forms.GroupBox()
+        Me.TextBox1 = New System.Windows.Forms.TextBox()
         Me.grpShipper.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
@@ -170,6 +179,7 @@ Partial Class frmImportBookingMenu
         Me.StatusStrip1.SuspendLayout()
         Me.ToolStrip1.SuspendLayout()
         Me.TabPage2.SuspendLayout()
+        Me.Panel2.SuspendLayout()
         CType(Me.dtgDocuments, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox4.SuspendLayout()
         Me.Panel1.SuspendLayout()
@@ -177,6 +187,7 @@ Partial Class frmImportBookingMenu
         Me.GroupBox3.SuspendLayout()
         CType(Me.dtgServices, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.StatusStrip2.SuspendLayout()
+        Me.GroupBox6.SuspendLayout()
         Me.SuspendLayout()
         '
         'Label1
@@ -1099,6 +1110,7 @@ Partial Class frmImportBookingMenu
         '
         'TabPage2
         '
+        Me.TabPage2.Controls.Add(Me.Panel2)
         Me.TabPage2.Controls.Add(Me.dtgDocuments)
         Me.TabPage2.Location = New System.Drawing.Point(4, 22)
         Me.TabPage2.Name = "TabPage2"
@@ -1108,17 +1120,67 @@ Partial Class frmImportBookingMenu
         Me.TabPage2.Text = "Documents"
         Me.TabPage2.UseVisualStyleBackColor = True
         '
+        'Panel2
+        '
+        Me.Panel2.Controls.Add(Me.GroupBox6)
+        Me.Panel2.Controls.Add(Me.chkDocsCompleted)
+        Me.Panel2.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.Panel2.Location = New System.Drawing.Point(3, 391)
+        Me.Panel2.Name = "Panel2"
+        Me.Panel2.Size = New System.Drawing.Size(326, 74)
+        Me.Panel2.TabIndex = 3
+        '
+        'chkDocsCompleted
+        '
+        Me.chkDocsCompleted.AutoCheck = False
+        Me.chkDocsCompleted.AutoSize = True
+        Me.chkDocsCompleted.Location = New System.Drawing.Point(6, 3)
+        Me.chkDocsCompleted.Name = "chkDocsCompleted"
+        Me.chkDocsCompleted.Size = New System.Drawing.Size(104, 17)
+        Me.chkDocsCompleted.TabIndex = 0
+        Me.chkDocsCompleted.Text = "Docs Completed"
+        Me.chkDocsCompleted.UseVisualStyleBackColor = True
+        '
         'dtgDocuments
         '
         Me.dtgDocuments.AllowUserToAddRows = False
         Me.dtgDocuments.AllowUserToDeleteRows = False
         Me.dtgDocuments.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.dtgDocuments.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.colDSelected, Me.colDDocID, Me.colDDocName, Me.colDRequired})
         Me.dtgDocuments.Dock = System.Windows.Forms.DockStyle.Fill
         Me.dtgDocuments.Location = New System.Drawing.Point(3, 3)
         Me.dtgDocuments.Name = "dtgDocuments"
-        Me.dtgDocuments.ReadOnly = True
         Me.dtgDocuments.Size = New System.Drawing.Size(326, 462)
         Me.dtgDocuments.TabIndex = 2
+        '
+        'colDSelected
+        '
+        Me.colDSelected.HeaderText = ""
+        Me.colDSelected.Name = "colDSelected"
+        Me.colDSelected.Width = 25
+        '
+        'colDDocID
+        '
+        Me.colDDocID.HeaderText = "DocumentID"
+        Me.colDDocID.Name = "colDDocID"
+        Me.colDDocID.ReadOnly = True
+        Me.colDDocID.Visible = False
+        '
+        'colDDocName
+        '
+        Me.colDDocName.HeaderText = "Document Name"
+        Me.colDDocName.Name = "colDDocName"
+        Me.colDDocName.ReadOnly = True
+        Me.colDDocName.Width = 250
+        '
+        'colDRequired
+        '
+        Me.colDRequired.HeaderText = "Required"
+        Me.colDRequired.Name = "colDRequired"
+        Me.colDRequired.ReadOnly = True
+        Me.colDRequired.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.colDRequired.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
+        Me.colDRequired.Width = 75
         '
         'GroupBox4
         '
@@ -1142,6 +1204,7 @@ Partial Class frmImportBookingMenu
         'Panel1
         '
         Me.Panel1.AutoScroll = True
+        Me.Panel1.Controls.Add(Me.lblStatusDetails)
         Me.Panel1.Controls.Add(Me.Label5)
         Me.Panel1.Controls.Add(Me.txtBookingPrefix)
         Me.Panel1.Controls.Add(Me.txtSite)
@@ -1369,6 +1432,7 @@ Partial Class frmImportBookingMenu
         'txtStatus
         '
         Me.txtStatus.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.txtStatus.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.txtStatus.Font = New System.Drawing.Font("Arial Narrow", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtStatus.Location = New System.Drawing.Point(492, 467)
         Me.txtStatus.Name = "txtStatus"
@@ -1493,6 +1557,38 @@ Partial Class frmImportBookingMenu
         Me.tslblModDate.Size = New System.Drawing.Size(150, 17)
         Me.tslblModDate.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
+        'lblStatusDetails
+        '
+        Me.lblStatusDetails.AutoSize = True
+        Me.lblStatusDetails.Location = New System.Drawing.Point(686, 470)
+        Me.lblStatusDetails.Name = "lblStatusDetails"
+        Me.lblStatusDetails.Size = New System.Drawing.Size(16, 13)
+        Me.lblStatusDetails.TabIndex = 25
+        Me.lblStatusDetails.Text = "..."
+        Me.ToolTip1.SetToolTip(Me.lblStatusDetails, "Status Details")
+        Me.lblStatusDetails.Visible = False
+        '
+        'GroupBox6
+        '
+        Me.GroupBox6.Controls.Add(Me.TextBox1)
+        Me.GroupBox6.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.GroupBox6.Location = New System.Drawing.Point(0, 23)
+        Me.GroupBox6.Name = "GroupBox6"
+        Me.GroupBox6.Size = New System.Drawing.Size(326, 51)
+        Me.GroupBox6.TabIndex = 1
+        Me.GroupBox6.TabStop = False
+        Me.GroupBox6.Text = "Docs Completed Date"
+        '
+        'TextBox1
+        '
+        Me.TextBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.TextBox1.Font = New System.Drawing.Font("Arial Narrow", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.TextBox1.Location = New System.Drawing.Point(6, 19)
+        Me.TextBox1.Name = "TextBox1"
+        Me.TextBox1.ReadOnly = True
+        Me.TextBox1.Size = New System.Drawing.Size(314, 20)
+        Me.TextBox1.TabIndex = 19
+        '
         'frmImportBookingMenu
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -1521,6 +1617,8 @@ Partial Class frmImportBookingMenu
         Me.ToolStrip1.ResumeLayout(False)
         Me.ToolStrip1.PerformLayout()
         Me.TabPage2.ResumeLayout(False)
+        Me.Panel2.ResumeLayout(False)
+        Me.Panel2.PerformLayout()
         CType(Me.dtgDocuments, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupBox4.ResumeLayout(False)
         Me.GroupBox4.PerformLayout()
@@ -1533,6 +1631,8 @@ Partial Class frmImportBookingMenu
         CType(Me.dtgServices, System.ComponentModel.ISupportInitialize).EndInit()
         Me.StatusStrip2.ResumeLayout(False)
         Me.StatusStrip2.PerformLayout()
+        Me.GroupBox6.ResumeLayout(False)
+        Me.GroupBox6.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -1674,4 +1774,13 @@ Partial Class frmImportBookingMenu
     Friend WithEvents colSParam_Desc As DataGridViewTextBoxColumn
     Friend WithEvents Label5 As Label
     Friend WithEvents txtBookingPrefix As TextBox
+    Friend WithEvents colDSelected As DataGridViewCheckBoxColumn
+    Friend WithEvents colDDocID As DataGridViewTextBoxColumn
+    Friend WithEvents colDDocName As DataGridViewTextBoxColumn
+    Friend WithEvents colDRequired As DataGridViewCheckBoxColumn
+    Friend WithEvents Panel2 As Panel
+    Friend WithEvents chkDocsCompleted As CheckBox
+    Friend WithEvents lblStatusDetails As Label
+    Friend WithEvents GroupBox6 As GroupBox
+    Friend WithEvents TextBox1 As TextBox
 End Class

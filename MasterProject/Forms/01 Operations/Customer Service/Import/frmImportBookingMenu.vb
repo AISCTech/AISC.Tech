@@ -5,6 +5,10 @@
     Private EnableButtons As New clsEnableToolstripObjects()
     Public lngBookingID As Long
 
+    Private strStatusByID As String
+    Private strStatusByName As String
+    Private dtStatusDate As String
+
     Public Sub NewRecord() Implements ICommonFunction.NewRecord
         If MsgBox("Create new record?", MsgBoxStyle.Question + MsgBoxStyle.YesNo, "System Message") = MsgBoxResult.Yes Then
             ClearUserInput()
@@ -139,6 +143,7 @@
         clsComboBox.PopComboBox()
 
         PopulateServices()
+        PopulateRequiredDocuments()
 
         If lngBookingID < 1 Then
             ClearUserInput()
@@ -168,6 +173,33 @@
 
     Public Sub ReOpenRecord() Implements ICommonFunction.ReOpenRecord
 
+    End Sub
+
+    Private Sub PopulateRequiredDocuments()
+        Try
+            Dim cmdSQL = New MySql.Data.MySqlClient.MySqlCommand
+
+            If cnnDBMaster.State <> ConnectionState.Open Then cnnDBMaster.Open()
+            cmdSQL.Connection = cnnDBMaster
+            cmdSQL.CommandText = "SELECT * FROM lib_booking_documents WHERE Active = TRUE"
+
+            dtgDocuments.Rows.Clear()
+            Dim reader As MySql.Data.MySqlClient.MySqlDataReader = cmdSQL.ExecuteReader
+            While reader.Read
+                dtgDocuments.Rows.Add()
+                With dtgDocuments.Rows(dtgDocuments.Rows.Count - 1)
+                    .Cells(colDDocID.Name).Value = reader.Item("ID")
+                    .Cells(colDDocName.Name).Value = reader.Item("DocumentName")
+                    .Cells(colDRequired.Name).Value = reader.Item("Required")
+                    '.Visible = False
+                End With
+            End While
+
+            reader.Close()
+            cmdSQL.Dispose()
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
     End Sub
 
     Private Function CheckRequiredEntries() As Boolean
@@ -226,14 +258,24 @@
         txtInvoiceNo.Text = clsImpBook._InvoiceNo
         txtRegistryNo.Text = clsImpBook._RegistryNo
         txtRemarks.Text = clsImpBook._Remarks
+        'account holder
+        txtStatus.Tag = clsImpBook._StatusID
+        txtStatus.Text = clsImpBook._StatusName
+        strStatusByID = clsImpBook._StatusByID
+        strStatusByName = clsImpBook._StatusByFullName
+        dtStatusDate = clsImpBook._StatusDate
         cboModeOfTransport.SelectedValue = clsImpBook._ModeOfTrasnsportID
         cboLoadType.SelectedValue = clsImpBook._LoadTypeID
         cboEntryType.SelectedValue = clsImpBook._EntryTypeID
         cboFreightType.SelectedValue = clsImpBook._FreightTermsID
         tslblPrepBy.Text = clsImpBook._PrepByFullName
+        tslblPrepBy.ToolTipText = tslblPrepBy.Text
         tslblPrepDate.Text = clsImpBook._PrepDate
+        tslblPrepDate.ToolTipText = tslblPrepDate.Text
         tslblModBy.Text = clsImpBook._ModByFullName
+        tslblModBy.ToolTipText = tslblModBy.Text
         tslblModDate.Text = clsImpBook._ModDate
+        tslblModDate.ToolTipText = tslblModDate.Text
 
         For Each clsTemp As clsImportBookingServices In clsImpBook._ServiceDetails
             For Each dtgTemp As DataGridViewRow In dtgServices.Rows
@@ -369,10 +411,17 @@ lnAccountType:
         cboEntryType.SelectedIndex = -1
         cboFreightType.SelectedIndex = -1
         txtRemarks.Text = ""
+        txtStatus.Tag = ""
         txtStatus.Text = ""
+        lblStatusDetails.Visible = False
+        strStatusByID = ""
+        strStatusByName = ""
+        dtStatusDate = Nothing
         dtgContainer.Rows.Clear()
         tslblContainerSizes.Text = ""
-        dtgDocuments.Rows.Clear()
+        For Each dtgRow As DataGridViewRow In dtgDocuments.Rows
+            dtgRow.Cells(colDSelected.Name).Value = False
+        Next
     End Sub
 
     Public Sub PopulateServices()
@@ -384,7 +433,7 @@ lnAccountType:
             cmdSQL.CommandText = "SELECT PK, Param_Type, Param_Code, Param_Value, Param_Desc " &
                         "FROM lib_params " &
                         "WHERE Param_Type = 10 " &
-                            "AND Param_Code LIKE 'SIMP%' " &
+                            "And Param_Code Like 'SIMP%' " &
                         "ORDER BY PK"
 
             dtgServices.Rows.Clear()
@@ -480,7 +529,7 @@ lnAccountType:
         cmdSelectConsignee.Enabled = blUserInput
         cmdSelectConsignor.Enabled = blUserInput
         cmdSelectForwader.Enabled = blUserInput
-        dtgServices.ReadOnly = Not blUserInput
+        colSSelected.ReadOnly = Not blUserInput
         txtDescriptionOfGoods.ReadOnly = Not blUserInput
         txtRemarks.ReadOnly = Not blUserInput
         cboShippingLine.Enabled = blUserInput
@@ -506,6 +555,7 @@ lnAccountType:
         cboFreightType.Enabled = blUserInput
         tscmdContainerAdd.Enabled = blUserInput
         tscmdContainerRemove.Enabled = blUserInput
+        colDSelected.ReadOnly = Not blUserInput
     End Sub
 
     Private Sub frmImportBookingMenu_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -628,5 +678,33 @@ lnAccountType:
 
     Private Sub txtForwarder_TextChanged(sender As Object, e As EventArgs) Handles txtForwarder.TextChanged
         ToolTip1.SetToolTip(txtForwarder, txtForwarder.Text)
+    End Sub
+
+    Private Sub dtgServices_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dtgServices.CellContentClick
+
+    End Sub
+
+    Private Sub dtgServices_CellValidated(sender As Object, e As DataGridViewCellEventArgs) Handles dtgServices.CellValidated
+
+    End Sub
+
+    Private Sub lblStatusDetails_Click(sender As Object, e As EventArgs) Handles lblStatusDetails.Click
+        If lngBookingID > 0 Then
+            MsgBox("Status: " & txtStatus.Text.ToUpper & vbNewLine &
+               "Status Update By: " & strStatusByName & vbNewLine &
+               "Status Date: " & dtStatusDate, MsgBoxStyle.Information, "Status Details")
+        End If
+    End Sub
+
+    Private Sub txtStatus_TextChanged(sender As Object, e As EventArgs) Handles txtStatus.TextChanged
+        If IsNumeric(txtStatus.Tag) Then
+            If CInt(txtStatus.Tag) > 1 Then
+                lblStatusDetails.Visible = True
+            Else
+                lblStatusDetails.Visible = False
+            End If
+        Else
+            lblStatusDetails.Visible = False
+        End If
     End Sub
 End Class

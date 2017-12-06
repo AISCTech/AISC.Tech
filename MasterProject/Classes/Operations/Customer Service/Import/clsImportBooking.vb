@@ -728,13 +728,13 @@ Public Class clsImportBookingHeader
         End Get
     End Property
 
-    Private dblStatusID As Double
-    Property _StatusID As Double
+    Private intStatusID As Integer
+    Property _StatusID As Integer
         Get
-            Return dblStatusID
+            Return intStatusID
         End Get
-        Set(value As Double)
-            dblStatusID = value
+        Set(value As Integer)
+            intStatusID = value
         End Set
     End Property
 
@@ -796,6 +796,33 @@ Public Class clsImportBookingHeader
         End Get
         Set(value As Date)
             dtModDate = value
+        End Set
+    End Property
+
+    Private strStatusByID As String
+    Property _StatusByID As String
+        Get
+            Return strStatusByID
+        End Get
+        Set(value As String)
+            strStatusByID = value
+        End Set
+    End Property
+
+    Private strStatusByFullName As String
+    ReadOnly Property _StatusByFullName As String
+        Get
+            Return strStatusByFullName
+        End Get
+    End Property
+
+    Private dtStatusDate As Date
+    Property _StatusDate As Date
+        Get
+            Return dtStatusDate
+        End Get
+        Set(value As Date)
+            dtStatusDate = value
         End Set
     End Property
 
@@ -909,13 +936,17 @@ Public Class clsImportBookingHeader
                 strFreightTermsName = reader.Item("FreightTermsName")
                 'strAccountHolderID = reader.Item("AccountHolderID")
                 'strAccountHolderName = reader.Item("AccountHolderName")
-                'status
+                intStatusID = reader.Item("StatusID")
+                strStatusName = reader.Item("Status_Name")
                 strPrepByID = reader.Item("PrepByID")
                 strPrepByFullName = reader.Item("PrepFirstName") & " " & reader.Item("PrepLastName")
                 dtPrepDate = reader.Item("PrepDate")
                 strModByID = reader.Item("ModByID")
                 strModByFullName = reader.Item("ModFirstName") & " " & reader.Item("ModLastName")
                 dtModDate = reader.Item("ModDate")
+                strStatusByID = reader.Item("StatusByID")
+                strStatusByFullName = reader.Item("StatusFirstName") & " " & reader.Item("StatusLastName")
+                dtStatusDate = reader.Item("StatusDate")
             End While
 
             reader.Close()
