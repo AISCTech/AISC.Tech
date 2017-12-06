@@ -70,6 +70,11 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CrystalDecisions.CrystalReports.Engine, Version=13.0.3500.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.ReportSource, Version=13.0.3500.0, Culture=neutral, PublicKeyToken=692fbea5521e1304" />
+    <Reference Include="CrystalDecisions.Shared, Version=13.0.3500.0, Culture=neutral, PublicKeyToken=692fbea5521e1304" />
+    <Reference Include="CrystalDecisions.Windows.Forms, Version=13.0.3500.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="FlashControlV71, Version=1.0.3187.32366, Culture=neutral, PublicKeyToken=692fbea5521e1304" />
     <Reference Include="MySql.Data, Version=6.9.3.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\MySQL\MySQL Connector Net 6.1.2\Assemblies\MySql.Data.dll</HintPath>
@@ -79,6 +84,8 @@
     <Reference Include="System.Deployment" />
     <Reference Include="System.DirectoryServices" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Services" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
@@ -140,6 +147,114 @@
     <Compile Include="Forms\01 Operations\Customer Service\Import\frmSearchImportBooking.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Forms\02 Accounting\frmAPV.designer.vb">
+      <DependentUpon>frmAPV.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\02 Accounting\frmAPV.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\02 Accounting\frmCreateVoucher.designer.vb">
+      <DependentUpon>frmCreateVoucher.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\02 Accounting\frmCreateVoucher.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\02 Accounting\frmCV.designer.vb">
+      <DependentUpon>frmCV.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\02 Accounting\frmCV.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\02 Accounting\frmManageVendor.designer.vb">
+      <DependentUpon>frmManageVendor.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\02 Accounting\frmManageVendor.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\02 Accounting\frmPCV.designer.vb">
+      <DependentUpon>frmPCV.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\02 Accounting\frmPCV.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\02 Accounting\frmPCVCheckRequest.designer.vb">
+      <DependentUpon>frmPCVCheckRequest.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\02 Accounting\frmPCVCheckRequest.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\02 Accounting\frmPettyCashPost.designer.vb">
+      <DependentUpon>frmPettyCashPost.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\02 Accounting\frmPettyCashPost.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\02 Accounting\frmPettyCashRelease.designer.vb">
+      <DependentUpon>frmPettyCashRelease.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\02 Accounting\frmPettyCashRelease.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\02 Accounting\frmPettyCashReplenishment.designer.vb">
+      <DependentUpon>frmPettyCashReplenishment.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\02 Accounting\frmPettyCashReplenishment.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\02 Accounting\frmPrintPreview.designer.vb">
+      <DependentUpon>frmPrintPreview.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\02 Accounting\frmPrintPreview.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\02 Accounting\frmPurchaseOrderDetails.designer.vb">
+      <DependentUpon>frmPurchaseOrderDetails.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\02 Accounting\frmPurchaseOrderDetails.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\02 Accounting\frmReplenishmentPCVSummary.designer.vb">
+      <DependentUpon>frmReplenishmentPCVSummary.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\02 Accounting\frmReplenishmentPCVSummary.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\02 Accounting\frmReportReplenish.designer.vb">
+      <DependentUpon>frmReportReplenish.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\02 Accounting\frmReportReplenish.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\02 Accounting\frmRequest.designer.vb">
+      <DependentUpon>frmRequest.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\02 Accounting\frmRequest.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\02 Accounting\frmSearchFundKey.designer.vb">
+      <DependentUpon>frmSearchFundKey.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\02 Accounting\frmSearchFundKey.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\02 Accounting\frmSelectADMRequestItem.designer.vb">
+      <DependentUpon>frmSelectADMRequestItem.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\02 Accounting\frmSelectADMRequestItem.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\02 Accounting\frmSelectAP.designer.vb">
+      <DependentUpon>frmSelectAP.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\02 Accounting\frmSelectAP.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\02 Accounting\frmSelectGLEntry.designer.vb">
+      <DependentUpon>frmSelectGLEntry.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\02 Accounting\frmSelectGLEntry.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\04 Login\frmLogIn.Designer.vb">
       <DependentUpon>frmLogIn.vb</DependentUpon>
     </Compile>
@@ -172,9 +287,11 @@
     </Compile>
     <Compile Include="Interface\ICommonFunction.vb" />
     <Compile Include="Modules\modDBConn.vb" />
+    <Compile Include="Modules\modGetCtrlNbr.vb" />
     <Compile Include="Modules\modGlobalDeclaration.vb" />
     <Compile Include="Modules\modGlobalFunction.vb" />
     <Compile Include="Modules\modSampleCodes.vb" />
+    <Compile Include="Modules\modTransLogs.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -209,6 +326,60 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\01 Operations\Customer Service\Import\frmSearchImportBooking.resx">
       <DependentUpon>frmSearchImportBooking.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\02 Accounting\frmAPV.resx">
+      <DependentUpon>frmAPV.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\02 Accounting\frmCreateVoucher.resx">
+      <DependentUpon>frmCreateVoucher.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\02 Accounting\frmCV.resx">
+      <DependentUpon>frmCV.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\02 Accounting\frmManageVendor.resx">
+      <DependentUpon>frmManageVendor.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\02 Accounting\frmPCV.resx">
+      <DependentUpon>frmPCV.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\02 Accounting\frmPCVCheckRequest.resx">
+      <DependentUpon>frmPCVCheckRequest.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\02 Accounting\frmPettyCashPost.resx">
+      <DependentUpon>frmPettyCashPost.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\02 Accounting\frmPettyCashRelease.resx">
+      <DependentUpon>frmPettyCashRelease.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\02 Accounting\frmPettyCashReplenishment.resx">
+      <DependentUpon>frmPettyCashReplenishment.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\02 Accounting\frmPrintPreview.resx">
+      <DependentUpon>frmPrintPreview.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\02 Accounting\frmPurchaseOrderDetails.resx">
+      <DependentUpon>frmPurchaseOrderDetails.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\02 Accounting\frmReplenishmentPCVSummary.resx">
+      <DependentUpon>frmReplenishmentPCVSummary.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\02 Accounting\frmReportReplenish.resx">
+      <DependentUpon>frmReportReplenish.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\02 Accounting\frmRequest.resx">
+      <DependentUpon>frmRequest.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\02 Accounting\frmSearchFundKey.resx">
+      <DependentUpon>frmSearchFundKey.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\02 Accounting\frmSelectADMRequestItem.resx">
+      <DependentUpon>frmSelectADMRequestItem.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\02 Accounting\frmSelectAP.resx">
+      <DependentUpon>frmSelectAP.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\02 Accounting\frmSelectGLEntry.resx">
+      <DependentUpon>frmSelectGLEntry.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\04 Login\frmLogIn.resx">
       <DependentUpon>frmLogIn.vb</DependentUpon>
@@ -246,7 +417,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Forms\01 Operations\Customer Service\Domestic\" />
-    <Folder Include="Forms\02 Accounting\" />
     <Folder Include="Forms\03 Maintenance\" />
   </ItemGroup>
   <ItemGroup>
