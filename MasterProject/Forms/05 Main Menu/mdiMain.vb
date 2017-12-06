@@ -153,13 +153,13 @@ Public Class mdiMain
 
         With Me.trvMenu
             .Nodes.Clear()
-
             'Cash Disbursement
             .Nodes.Add("2.1", "Cash Disbursement")
             MyNode = .Nodes.Find("2.1", True)
-            MyNode(0).Nodes.Add("2.1.1", "...")
-            MyNode(0).Nodes.Add("2.1.2", "...")
-            MyNode(0).Nodes.Add("2.1.3", "...")
+            MyNode(0).Nodes.Add("2.1.1", "Request for Payment")
+            MyNode(0).Nodes.Add("2.1.2", "Accounts Payables Voucher")
+            MyNode(0).Nodes.Add("2.1.3", "Check/MC Voucher")
+            MyNode(0).Nodes.Add("2.1.4", "Petty Cash Voucher")
 
             'Billing
             .Nodes.Add("2.2", "Billing")
@@ -215,6 +215,12 @@ Public Class mdiMain
                     ChildForm = frmImportBookingMenu
                 Case "1.1.2.2"
                     ChildForm = frmImportBookingMonitoring
+                Case "2.1.1"
+                    ChildForm = frmRequest
+                Case "2.1.2"
+                    ChildForm = frmAPV
+                Case "2.1.4"
+                    ChildForm = frmPCV
                 Case Else
                     Exit Sub
             End Select
