@@ -54,6 +54,10 @@
                     ._Last_Name = reader.Item("Last_Name")
                     ._First_Name = reader.Item("First_Name")
                     ._Middle_Name = reader.Item("Middle_Name")
+                    ._Dept_Code = reader.Item("Dept_Code")
+                    ._Dept_Name = reader.Item("Dept_Name")
+                    ._Position_Code = reader.Item("Position_Code")
+                    ._Position_Name = reader.Item("Position_Name")
                 End With
 
                 ValidateUserAccess = True

@@ -662,4 +662,88 @@ Module modGlobalFunction
         reader.Close()
         cnn.Close()
     End Function
+
+    Public Function GetFirstDayOfWeek(ByVal dtToday As Date) 'MONDAY OF CURRENT WEEK
+        Dim intDiff As Integer = dtToday.DayOfWeek - DayOfWeek.Monday
+        GetFirstDayOfWeek = dtToday.AddDays(-intDiff)
+    End Function
+
+    Public Function GetLastDayOfWeek(ByVal dtToday As Date) 'SUNDAY OF NEXT WEEK
+        Dim intDiff As Integer = dtToday.DayOfWeek - DayOfWeek.Saturday
+        GetLastDayOfWeek = dtToday.AddDays((-intDiff) + 1)
+    End Function
+
+    Public Sub ShowChildForm(ByVal frmTemp As System.Windows.Forms.Form)
+        frmTemp.MdiParent = mdiMain
+        frmTemp.Show()
+        frmTemp.WindowState = FormWindowState.Maximized
+        frmTemp.Focus()
+    End Sub
+
+    Public Function CompareFiles(ByVal file1FullPath As String, ByVal file2FullPath As String) As Boolean
+
+        If Not System.IO.File.Exists(file1FullPath) Or Not System.IO.File.Exists(file2FullPath) Then
+            'One or both of the files does not exist.
+            Return False
+        End If
+
+        If file1FullPath = file2FullPath Then
+            ' fileFullPath1 and fileFullPath2 points to the same file...
+            Return True
+        End If
+
+        Try
+            Dim file1Hash As String = hashFile(file1FullPath)
+            Dim file2Hash As String = hashFile(file2FullPath)
+
+            If file1Hash = file2Hash Then
+                Return True
+            Else
+                Return False
+            End If
+
+        Catch ex As Exception
+            Return False
+        End Try
+    End Function
+
+    Private Function hashFile(ByVal filepath As String) As String
+        Using reader As New System.IO.FileStream(filepath, IO.FileMode.Open, IO.FileAccess.Read)
+            Using md5 As New System.Security.Cryptography.MD5CryptoServiceProvider
+                Dim hash() As Byte = md5.ComputeHash(reader)
+                Return System.Text.Encoding.Unicode.GetString(hash)
+            End Using
+        End Using
+    End Function
+
+    Public Function GetGreeting() As String
+        Dim dtCurrent As Date = GetServerDate()
+
+        If dtCurrent.Hour < 12 Then
+            Return "Good Morning."
+        ElseIf dtCurrent.Hour <= 17 Then
+            Return "Good Afternoon"
+        Else
+            Return "Good Evening"
+        End If
+    End Function
+
+    Public Function UpperFirstLetter(ByVal strVal As String) As String
+        Dim strSentence As String() = Split(strVal, " ")
+        Dim strTemp As String = ""
+
+        For Each strWord As String In strSentence
+            strTemp = strTemp & Mid(strWord, 1, 1).ToUpper & Mid(strWord, 2, Len(strWord) - 1).ToLower & " "
+        Next
+
+        Return Trim(strTemp)
+    End Function
+
+    Public Function NotNull(Of T)(ByVal Value As T, ByVal DefaultValue As T) As T
+        If Value Is Nothing OrElse IsDBNull(Value) Then
+            Return DefaultValue
+        Else
+            Return Value
+        End If
+    End Function
 End Module

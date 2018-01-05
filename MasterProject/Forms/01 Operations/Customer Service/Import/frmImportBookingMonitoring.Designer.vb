@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class frmImportBookingMonitoring
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,174 +20,155 @@ Partial Class frmImportBookingMonitoring
     'NOTE: The following procedure is required by the Windows Form Designer
     'It can be modified using the Windows Form Designer.  
     'Do not modify it using the code editor.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.Panel1 = New System.Windows.Forms.Panel()
-        Me.DataGridView1 = New System.Windows.Forms.DataGridView()
-        Me.colID = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colBookingNo = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colCompanyCode = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colCompanyName = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colShipperCode = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colShipperName = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colConsigneeCode = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colConsigneeName = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colDescriptionOfGoods = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colModeOfTransportID = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colModeOfTransportName = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colLoadTypeID = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colLoadTypeName = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colPrepDate = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.cmdLoad = New System.Windows.Forms.Button()
+        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.dtTo = New System.Windows.Forms.DateTimePicker()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.dtFrom = New System.Windows.Forms.DateTimePicker()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.dtgImportBooking = New System.Windows.Forms.DataGridView()
+        Me.Panel1.SuspendLayout()
+        Me.GroupBox1.SuspendLayout()
+        CType(Me.dtgImportBooking, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'Panel1
         '
+        Me.Panel1.AutoScroll = True
+        Me.Panel1.Controls.Add(Me.cmdLoad)
+        Me.Panel1.Controls.Add(Me.GroupBox1)
         Me.Panel1.Dock = System.Windows.Forms.DockStyle.Top
         Me.Panel1.Location = New System.Drawing.Point(0, 0)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(854, 91)
+        Me.Panel1.Size = New System.Drawing.Size(854, 103)
         Me.Panel1.TabIndex = 0
         '
-        'DataGridView1
+        'cmdLoad
         '
-        Me.DataGridView1.AllowUserToAddRows = False
-        Me.DataGridView1.AllowUserToDeleteRows = False
-        Me.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DataGridView1.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.colID, Me.colBookingNo, Me.colCompanyCode, Me.colCompanyName, Me.colShipperCode, Me.colShipperName, Me.colConsigneeCode, Me.colConsigneeName, Me.colDescriptionOfGoods, Me.colModeOfTransportID, Me.colModeOfTransportName, Me.colLoadTypeID, Me.colLoadTypeName, Me.colPrepDate})
-        Me.DataGridView1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.DataGridView1.Location = New System.Drawing.Point(0, 91)
-        Me.DataGridView1.Name = "DataGridView1"
-        Me.DataGridView1.ReadOnly = True
-        Me.DataGridView1.Size = New System.Drawing.Size(854, 396)
-        Me.DataGridView1.TabIndex = 1
+        Me.cmdLoad.Location = New System.Drawing.Point(310, 71)
+        Me.cmdLoad.Name = "cmdLoad"
+        Me.cmdLoad.Size = New System.Drawing.Size(75, 23)
+        Me.cmdLoad.TabIndex = 2
+        Me.cmdLoad.Text = "Load"
+        Me.cmdLoad.UseVisualStyleBackColor = True
         '
-        'colID
+        'GroupBox1
         '
-        Me.colID.Frozen = True
-        Me.colID.HeaderText = "ID"
-        Me.colID.Name = "colID"
-        Me.colID.ReadOnly = True
-        Me.colID.Visible = False
+        Me.GroupBox1.Controls.Add(Me.dtTo)
+        Me.GroupBox1.Controls.Add(Me.Label3)
+        Me.GroupBox1.Controls.Add(Me.Label4)
+        Me.GroupBox1.Controls.Add(Me.dtFrom)
+        Me.GroupBox1.Controls.Add(Me.Label1)
+        Me.GroupBox1.Controls.Add(Me.Label2)
+        Me.GroupBox1.Location = New System.Drawing.Point(12, 12)
+        Me.GroupBox1.Name = "GroupBox1"
+        Me.GroupBox1.Size = New System.Drawing.Size(292, 82)
+        Me.GroupBox1.TabIndex = 2
+        Me.GroupBox1.TabStop = False
+        Me.GroupBox1.Text = "Date Encoded"
         '
-        'colBookingNo
+        'dtTo
         '
-        Me.colBookingNo.Frozen = True
-        Me.colBookingNo.HeaderText = "Booking No."
-        Me.colBookingNo.Name = "colBookingNo"
-        Me.colBookingNo.ReadOnly = True
-        Me.colBookingNo.Width = 125
+        Me.dtTo.Location = New System.Drawing.Point(69, 51)
+        Me.dtTo.Name = "dtTo"
+        Me.dtTo.Size = New System.Drawing.Size(200, 20)
+        Me.dtTo.TabIndex = 5
         '
-        'colCompanyCode
+        'Label3
         '
-        Me.colCompanyCode.HeaderText = "Company Code"
-        Me.colCompanyCode.Name = "colCompanyCode"
-        Me.colCompanyCode.ReadOnly = True
-        Me.colCompanyCode.Visible = False
+        Me.Label3.AutoSize = True
+        Me.Label3.Location = New System.Drawing.Point(17, 55)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(20, 13)
+        Me.Label3.TabIndex = 3
+        Me.Label3.Text = "To"
         '
-        'colCompanyName
+        'Label4
         '
-        Me.colCompanyName.HeaderText = "Company Name"
-        Me.colCompanyName.Name = "colCompanyName"
-        Me.colCompanyName.ReadOnly = True
-        Me.colCompanyName.Visible = False
+        Me.Label4.AutoSize = True
+        Me.Label4.Location = New System.Drawing.Point(53, 55)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(10, 13)
+        Me.Label4.TabIndex = 4
+        Me.Label4.Text = ":"
         '
-        'colShipperCode
+        'dtFrom
         '
-        Me.colShipperCode.HeaderText = "Shipper Code"
-        Me.colShipperCode.Name = "colShipperCode"
-        Me.colShipperCode.ReadOnly = True
-        Me.colShipperCode.Visible = False
+        Me.dtFrom.Location = New System.Drawing.Point(69, 25)
+        Me.dtFrom.Name = "dtFrom"
+        Me.dtFrom.Size = New System.Drawing.Size(200, 20)
+        Me.dtFrom.TabIndex = 2
         '
-        'colShipperName
+        'Label1
         '
-        Me.colShipperName.HeaderText = "Shipper"
-        Me.colShipperName.Name = "colShipperName"
-        Me.colShipperName.ReadOnly = True
-        Me.colShipperName.Width = 200
+        Me.Label1.AutoSize = True
+        Me.Label1.Location = New System.Drawing.Point(17, 29)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(30, 13)
+        Me.Label1.TabIndex = 0
+        Me.Label1.Text = "From"
         '
-        'colConsigneeCode
+        'Label2
         '
-        Me.colConsigneeCode.HeaderText = "ConsigneeCode"
-        Me.colConsigneeCode.Name = "colConsigneeCode"
-        Me.colConsigneeCode.ReadOnly = True
-        Me.colConsigneeCode.Visible = False
+        Me.Label2.AutoSize = True
+        Me.Label2.Location = New System.Drawing.Point(53, 29)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(10, 13)
+        Me.Label2.TabIndex = 1
+        Me.Label2.Text = ":"
         '
-        'colConsigneeName
+        'dtgImportBooking
         '
-        Me.colConsigneeName.HeaderText = "Consignee"
-        Me.colConsigneeName.Name = "colConsigneeName"
-        Me.colConsigneeName.ReadOnly = True
-        Me.colConsigneeName.Width = 200
-        '
-        'colDescriptionOfGoods
-        '
-        Me.colDescriptionOfGoods.HeaderText = "Description Of Goods"
-        Me.colDescriptionOfGoods.Name = "colDescriptionOfGoods"
-        Me.colDescriptionOfGoods.ReadOnly = True
-        Me.colDescriptionOfGoods.Width = 250
-        '
-        'colModeOfTransportID
-        '
-        Me.colModeOfTransportID.HeaderText = "Mode Of Transport ID"
-        Me.colModeOfTransportID.Name = "colModeOfTransportID"
-        Me.colModeOfTransportID.ReadOnly = True
-        Me.colModeOfTransportID.Visible = False
-        '
-        'colModeOfTransportName
-        '
-        Me.colModeOfTransportName.HeaderText = "Trans Mode"
-        Me.colModeOfTransportName.Name = "colModeOfTransportName"
-        Me.colModeOfTransportName.ReadOnly = True
-        '
-        'colLoadTypeID
-        '
-        Me.colLoadTypeID.HeaderText = "Load Type ID"
-        Me.colLoadTypeID.Name = "colLoadTypeID"
-        Me.colLoadTypeID.ReadOnly = True
-        Me.colLoadTypeID.Visible = False
-        '
-        'colLoadTypeName
-        '
-        Me.colLoadTypeName.HeaderText = "Load Type"
-        Me.colLoadTypeName.Name = "colLoadTypeName"
-        Me.colLoadTypeName.ReadOnly = True
-        '
-        'colPrepDate
-        '
-        Me.colPrepDate.HeaderText = "Prepared Date"
-        Me.colPrepDate.Name = "colPrepDate"
-        Me.colPrepDate.ReadOnly = True
-        Me.colPrepDate.Width = 125
+        Me.dtgImportBooking.AllowUserToAddRows = False
+        Me.dtgImportBooking.AllowUserToDeleteRows = False
+        Me.dtgImportBooking.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle1.Font = New System.Drawing.Font("Arial Narrow", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.dtgImportBooking.DefaultCellStyle = DataGridViewCellStyle1
+        Me.dtgImportBooking.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.dtgImportBooking.Location = New System.Drawing.Point(0, 103)
+        Me.dtgImportBooking.Name = "dtgImportBooking"
+        Me.dtgImportBooking.ReadOnly = True
+        Me.dtgImportBooking.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.dtgImportBooking.Size = New System.Drawing.Size(854, 384)
+        Me.dtgImportBooking.TabIndex = 1
         '
         'frmImportBookingMonitoring
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(854, 487)
-        Me.Controls.Add(Me.DataGridView1)
+        Me.Controls.Add(Me.dtgImportBooking)
         Me.Controls.Add(Me.Panel1)
         Me.Name = "frmImportBookingMonitoring"
         Me.Text = "Import Booking Monitoring"
-        CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.Panel1.ResumeLayout(False)
+        Me.GroupBox1.ResumeLayout(False)
+        Me.GroupBox1.PerformLayout()
+        CType(Me.dtgImportBooking, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
 
     Friend WithEvents Panel1 As Panel
-    Friend WithEvents DataGridView1 As DataGridView
-    Friend WithEvents colID As DataGridViewTextBoxColumn
-    Friend WithEvents colBookingNo As DataGridViewTextBoxColumn
-    Friend WithEvents colCompanyCode As DataGridViewTextBoxColumn
-    Friend WithEvents colCompanyName As DataGridViewTextBoxColumn
-    Friend WithEvents colShipperCode As DataGridViewTextBoxColumn
-    Friend WithEvents colShipperName As DataGridViewTextBoxColumn
-    Friend WithEvents colConsigneeCode As DataGridViewTextBoxColumn
-    Friend WithEvents colConsigneeName As DataGridViewTextBoxColumn
-    Friend WithEvents colDescriptionOfGoods As DataGridViewTextBoxColumn
-    Friend WithEvents colModeOfTransportID As DataGridViewTextBoxColumn
-    Friend WithEvents colModeOfTransportName As DataGridViewTextBoxColumn
-    Friend WithEvents colLoadTypeID As DataGridViewTextBoxColumn
-    Friend WithEvents colLoadTypeName As DataGridViewTextBoxColumn
-    Friend WithEvents colPrepDate As DataGridViewTextBoxColumn
+    Friend WithEvents dtgImportBooking As DataGridView
+    Friend WithEvents GroupBox1 As GroupBox
+    Friend WithEvents dtTo As DateTimePicker
+    Friend WithEvents Label3 As Label
+    Friend WithEvents Label4 As Label
+    Friend WithEvents dtFrom As DateTimePicker
+    Friend WithEvents Label1 As Label
+    Friend WithEvents Label2 As Label
+    Friend WithEvents cmdLoad As Button
 End Class

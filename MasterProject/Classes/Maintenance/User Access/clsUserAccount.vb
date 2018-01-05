@@ -80,6 +80,26 @@
         End Set
     End Property
 
+    Private strCompanyLogoLocation As String
+    Property _Company_Logo_Location As String
+        Get
+            Return strCompanyLogoLocation
+        End Get
+        Set(value As String)
+            strCompanyLogoLocation = value
+        End Set
+    End Property
+
+    Private imgCompanyLogo As Image
+    Property _Company_Logo As Image
+        Get
+            Return imgCompanyLogo
+        End Get
+        Set(value As Image)
+            imgCompanyLogo = value
+        End Set
+    End Property
+
     Private strSite_Code As String
     Property _Site_Code As String
         Get
@@ -97,6 +117,46 @@
         End Get
         Set(value As String)
             strSite_Name = value
+        End Set
+    End Property
+
+    Private strDept_Code As String
+    Property _Dept_Code As String
+        Get
+            Return strDept_Code
+        End Get
+        Set(value As String)
+            strDept_Code = value
+        End Set
+    End Property
+
+    Private strDept_Name As String
+    Property _Dept_Name As String
+        Get
+            Return strDept_Name
+        End Get
+        Set(value As String)
+            strDept_Name = value
+        End Set
+    End Property
+
+    Private intPosition_Code As Integer
+    Property _Position_Code As Integer
+        Get
+            Return intPosition_Code
+        End Get
+        Set(value As Integer)
+            intPosition_Code = value
+        End Set
+    End Property
+
+    Private strPosition_Name As String
+    Property _Position_Name As String
+        Get
+            Return strPosition_Name
+        End Get
+        Set(value As String)
+            strPosition_Name = value
         End Set
     End Property
 End Class
