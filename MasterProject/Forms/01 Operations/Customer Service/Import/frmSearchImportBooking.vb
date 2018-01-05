@@ -6,9 +6,11 @@
 
     Private Sub txtBookingNoL_KeyDown(sender As Object, e As KeyEventArgs) Handles txtBookingNo.KeyDown
         If e.KeyCode = Keys.Enter Then
-            Dim clsTemp As New clsImportBookingHeader
-            If clsTemp.SearchRecord(txtBookingNo.Text, CurrentUser._Company_Code) = True Then
-                frmImportBookingMenu.PopulateBooking(clsTemp)
+            Dim clsDBTemp As New clsDBTrans
+            Dim clsImpTemp As clsImportBookingHeader = clsDBTemp.SearchImportBookingRecord(txtBookingNo.Text, CurrentUser._Company_Code)
+
+            If Not IsNothing(clsImpTemp) Then
+                frmImportBookingMenu.PopulateBooking(clsImpTemp)
                 Me.Close()
             End If
         End If

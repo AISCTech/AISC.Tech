@@ -3,7 +3,9 @@
     Implements ICommonFunction
 
     Private EnableButtons As New clsEnableToolstripObjects()
-    Public lngBookingID As Long
+    Public clsImportBooking As New clsImportBookingHeader
+    'Public lngBookingID As Long
+    'Public strCompanyName As String
 
     Private strStatusByID As String
     Private strStatusByName As String
@@ -19,19 +21,23 @@
     End Sub
 
     Public Sub EditRecord() Implements ICommonFunction.EditRecord
-        ChangeEnabledButtons(True, False, True, True, False, True, False, False, False, True)
+        If txtStatus.Tag = 1 Then
+            ChangeEnabledButtons(True, False, True, True, False, True, False, False, False, True)
+        Else
+            MsgBox("Cannot edit record that is NOT OPEN.", MsgBoxStyle.Information, "System Message")
+        End If
     End Sub
 
     Public Sub SaveRecord() Implements ICommonFunction.SaveRecord
         If CheckRequiredEntries() = True Then
-            Dim clsTempBookHead As New clsImportBookingHeader
+            clsImportBooking = New clsImportBookingHeader
             Dim clsTempService As New clsImportBookingServices
             Dim clsTempContainer As New clsImportBookingContainers
-            Dim clsSaveImpBook = New clsDBImportBooking
-            Dim dtNow As Date = GetServerDate()
+            Dim clsTempDocument As New clsImportBookingDocuments
+            Dim clsImportDBTrans As New clsDBTrans
 
-            With clsTempBookHead
-                ._ID = lngBookingID
+            With clsImportBooking
+                '._ID = lngBookingID
                 ._BookingNo = txtBookingNo.Text
                 ._BookingPrefix = GenerateBookingPrefix()
                 ._HouseBL = txtHouseBL.Text
@@ -61,21 +67,19 @@
                 End If
                 ._VesselID = cboVessel.SelectedValue
                 ._Voyage = txtVoyage.Text
-                ._DocsCompleted = True
-                ._DocsCompletedDate = dtNow
+                ._DocsCompleted = CheckIfDocsComplete()
                 ._ImportPermitNo = txtImportPermitNo.Text
                 ._InvoiceNo = txtInvoiceNo.Text
                 ._RegistryNo = txtRegistryNo.Text
                 ._Remarks = txtRemarks.Text
-                ._ModeOfTrasnsportID = cboModeOfTransport.SelectedValue
+                ._ModeOfTransportID = cboModeOfTransport.SelectedValue
                 ._LoadTypeID = cboLoadType.SelectedValue
                 ._EntryTypeID = cboEntryType.SelectedValue
                 ._FreightTermsID = cboFreightType.SelectedValue
                 ._AccountHolderID = 1
                 ._PrepByID = CurrentUser._User_ID
-                ._PrepDate = dtNow
                 ._ModByID = CurrentUser._User_ID
-                ._ModDate = dtNow
+                ._StatusByID = CurrentUser._User_ID
             End With
 
             For Each dtgRow As DataGridViewRow In dtgServices.Rows
@@ -85,7 +89,7 @@
                         ._ServiceID = dtgRow.Cells(colSPK.Name).Value
                     End With
 
-                    clsTempBookHead._ServiceDetails.Add(clsTempService)
+                    clsImportBooking._ServiceDetails.Add(clsTempService)
                 End If
             Next
 
@@ -104,11 +108,19 @@
                         ._DeliveryDate = Nothing
                     End If
                 End With
-                clsTempBookHead._ContainerDetails.Add(clsTempContainer)
+                clsImportBooking._ContainerDetails.Add(clsTempContainer)
             Next
 
-            clsSaveImpBook.SaveRecord(clsTempBookHead)
-            PopulateBooking(clsSaveImpBook._ImportBookingRecord)
+            For Each dtgRow As DataGridViewRow In dtgDocuments.Rows
+                If dtgRow.Cells(colDSelected.Name).Value = True Then
+                    clsTempDocument = New clsImportBookingDocuments
+                    clsTempDocument._DocumentID = dtgRow.Cells(colDDocID.Name).Value
+                    clsImportBooking._DocumentDetails.Add(clsTempDocument)
+                End If
+            Next
+
+            clsImportBooking = clsImportDBTrans.SaveImportBookingRecord(clsImportBooking)
+            PopulateBooking(clsImportBooking)
         End If
     End Sub
 
@@ -145,18 +157,17 @@
         PopulateServices()
         PopulateRequiredDocuments()
 
-        If lngBookingID < 1 Then
+        If clsImportBooking._ID < 1 Then
             ClearUserInput()
             ChangeEnabledButtons(True, False, False, True, False, True, False, False, False, False)
         Else
-            Dim clsTemp As New clsImportBookingHeader
-            clsTemp.SearchRecord(txtBookingNo.Text, CurrentUser._Company_Code)
-            PopulateBooking(clsTemp)
+            Dim clsDBTemp As New clsDBTrans
+            PopulateBooking(clsDBTemp.SearchImportBookingRecord(txtBookingNo.Text, CurrentUser._Company_Code))
         End If
     End Sub
 
     Public Sub PrintPreview() Implements ICommonFunction.PrintPreview
-
+        frmSelectImportBookingPrintPrev.ShowDialog()
     End Sub
 
     Public Sub SearchRecord() Implements ICommonFunction.SearchRecord
@@ -164,16 +175,160 @@
     End Sub
 
     Public Sub PostRecord() Implements ICommonFunction.PostRecord
+        If txtStatus.Tag = 1 Then
+            If MsgBox("Are you sure you want to POST record?", MsgBoxStyle.Question + MsgBoxStyle.YesNo, "System Message") = MsgBoxResult.Yes Then
+                If cnnDBMaster.State <> ConnectionState.Open Then cnnDBMaster.Open()
 
+                Dim cmdSQL = New MySql.Data.MySqlClient.MySqlCommand
+                Dim trnSQL As MySql.Data.MySqlClient.MySqlTransaction
+
+                trnSQL = cnnDBMaster.BeginTransaction
+
+                Try
+                    cmdSQL.Connection = cnnDBMaster
+                    cmdSQL.Transaction = trnSQL
+                    cmdSQL.CommandText = "sp_importbookingchangestatus"
+                    cmdSQL.CommandType = CommandType.StoredProcedure
+
+                    cmdSQL.Parameters.AddWithValue("@p_StatusID", 2)
+                    cmdSQL.Parameters("@p_StatusID").Direction = ParameterDirection.Input
+
+                    cmdSQL.Parameters.AddWithValue("@p_StatusByID", CurrentUser._User_ID)
+                    cmdSQL.Parameters("@p_StatusByID").Direction = ParameterDirection.Input
+
+                    cmdSQL.Parameters.AddWithValue("@p_ID", clsImportBooking._ID)
+                    cmdSQL.Parameters("@p_ID").Direction = ParameterDirection.Input
+
+                    cmdSQL.ExecuteNonQuery()
+
+                    trnSQL.Commit()
+                    cmdSQL.Dispose()
+
+                    Dim clsDBTemp As New clsDBTrans
+                    PopulateBooking(clsDBTemp.SearchImportBookingRecord(txtBookingNo.Text, CurrentUser._Company_Code))
+                Catch ex As Exception
+                    Try
+                        trnSQL.Rollback()
+                        MsgBox(ex.Message)
+                    Catch ex1 As Exception
+                        If Not trnSQL.Connection Is Nothing Then
+                            MsgBox("An exception of type " & ex1.GetType().ToString() &
+                              " was encountered while attempting to roll back the transaction.")
+                        End If
+                    End Try
+                End Try
+            End If
+        Else
+            MsgBox("Cannot post record. Record is already " & txtStatus.Text.ToUpper & ".", MsgBoxStyle.Information, "System Message")
+        End If
     End Sub
 
     Public Sub CancelRecord() Implements ICommonFunction.CancelRecord
+        If txtStatus.Tag = 1 Then
+            If MsgBox("Are you sure you want to CANCEL record?", MsgBoxStyle.Question + MsgBoxStyle.YesNo, "System Message") = MsgBoxResult.Yes Then
+                If cnnDBMaster.State <> ConnectionState.Open Then cnnDBMaster.Open()
 
+                Dim cmdSQL = New MySql.Data.MySqlClient.MySqlCommand
+                Dim trnSQL As MySql.Data.MySqlClient.MySqlTransaction
+
+                trnSQL = cnnDBMaster.BeginTransaction
+
+                Try
+                    cmdSQL.Connection = cnnDBMaster
+                    cmdSQL.Transaction = trnSQL
+                    cmdSQL.CommandText = "sp_importbookingchangestatus"
+                    cmdSQL.CommandType = CommandType.StoredProcedure
+
+                    cmdSQL.Parameters.AddWithValue("@p_StatusID", 3)
+                    cmdSQL.Parameters("@p_StatusID").Direction = ParameterDirection.Input
+
+                    cmdSQL.Parameters.AddWithValue("@p_StatusByID", CurrentUser._User_ID)
+                    cmdSQL.Parameters("@p_StatusByID").Direction = ParameterDirection.Input
+
+                    cmdSQL.Parameters.AddWithValue("@p_ID", clsImportBooking._ID)
+                    cmdSQL.Parameters("@p_ID").Direction = ParameterDirection.Input
+
+                    cmdSQL.ExecuteNonQuery()
+
+                    trnSQL.Commit()
+                    cmdSQL.Dispose()
+
+                    Dim clsDBTemp As New clsDBTrans
+                    PopulateBooking(clsDBTemp.SearchImportBookingRecord(txtBookingNo.Text, CurrentUser._Company_Code))
+                Catch ex As Exception
+                    Try
+                        trnSQL.Rollback()
+                        MsgBox(ex.Message)
+                    Catch ex1 As Exception
+                        If Not trnSQL.Connection Is Nothing Then
+                            MsgBox("An exception of type " & ex1.GetType().ToString() &
+                              " was encountered while attempting to roll back the transaction.")
+                        End If
+                    End Try
+                End Try
+            End If
+        Else
+            MsgBox("Cannot cancel record. Record is already " & txtStatus.Text.ToUpper & ".", MsgBoxStyle.Information, "System Message")
+        End If
     End Sub
 
     Public Sub ReOpenRecord() Implements ICommonFunction.ReOpenRecord
+        If txtStatus.Tag <> 1 Then
+            If MsgBox("Are you sure you want to RE-OPEN record?", MsgBoxStyle.Question + MsgBoxStyle.YesNo, "System Message") = MsgBoxResult.Yes Then
+                If cnnDBMaster.State <> ConnectionState.Open Then cnnDBMaster.Open()
 
+                Dim cmdSQL = New MySql.Data.MySqlClient.MySqlCommand
+                Dim trnSQL As MySql.Data.MySqlClient.MySqlTransaction
+
+                trnSQL = cnnDBMaster.BeginTransaction
+
+                Try
+                    cmdSQL.Connection = cnnDBMaster
+                    cmdSQL.Transaction = trnSQL
+                    cmdSQL.CommandText = "sp_importbookingchangestatus"
+                    cmdSQL.CommandType = CommandType.StoredProcedure
+
+                    cmdSQL.Parameters.AddWithValue("@p_StatusID", 1)
+                    cmdSQL.Parameters("@p_StatusID").Direction = ParameterDirection.Input
+
+                    cmdSQL.Parameters.AddWithValue("@p_StatusByID", CurrentUser._User_ID)
+                    cmdSQL.Parameters("@p_StatusByID").Direction = ParameterDirection.Input
+
+                    cmdSQL.Parameters.AddWithValue("@p_ID", clsImportBooking._ID)
+                    cmdSQL.Parameters("@p_ID").Direction = ParameterDirection.Input
+
+                    cmdSQL.ExecuteNonQuery()
+
+                    trnSQL.Commit()
+                    cmdSQL.Dispose()
+
+                    Dim clsDBTemp As New clsDBTrans
+                    PopulateBooking(clsDBTemp.SearchImportBookingRecord(txtBookingNo.Text, CurrentUser._Company_Code))
+                Catch ex As Exception
+                    Try
+                        trnSQL.Rollback()
+                        MsgBox(ex.Message)
+                    Catch ex1 As Exception
+                        If Not trnSQL.Connection Is Nothing Then
+                            MsgBox("An exception of type " & ex1.GetType().ToString() &
+                              " was encountered while attempting to roll back the transaction.")
+                        End If
+                    End Try
+                End Try
+            End If
+        Else
+            MsgBox("Record is still OPEN.", MsgBoxStyle.Information, "System Message")
+        End If
     End Sub
+
+    Private Function CheckIfDocsComplete() As Boolean
+        CheckIfDocsComplete = True
+        For Each dtgRow As DataGridViewRow In dtgDocuments.Rows
+            If dtgRow.Cells(colDRequired.Name).Value = True And dtgRow.Cells(colDSelected.Name).Value = False Then
+                CheckIfDocsComplete = False
+            End If
+        Next
+    End Function
 
     Private Sub PopulateRequiredDocuments()
         Try
@@ -181,7 +336,7 @@
 
             If cnnDBMaster.State <> ConnectionState.Open Then cnnDBMaster.Open()
             cmdSQL.Connection = cnnDBMaster
-            cmdSQL.CommandText = "SELECT * FROM lib_booking_documents WHERE Active = TRUE"
+            cmdSQL.CommandText = "SELECT * FROM lib_booking_documents WHERE FreightType = 1 AND Active = TRUE"
 
             dtgDocuments.Rows.Clear()
             Dim reader As MySql.Data.MySqlClient.MySqlDataReader = cmdSQL.ExecuteReader
@@ -191,7 +346,6 @@
                     .Cells(colDDocID.Name).Value = reader.Item("ID")
                     .Cells(colDDocName.Name).Value = reader.Item("DocumentName")
                     .Cells(colDRequired.Name).Value = reader.Item("Required")
-                    '.Visible = False
                 End With
             End While
 
@@ -208,11 +362,18 @@
         dtgServices.EndEdit()
         dtgContainer.EndEdit()
         dtgDocuments.EndEdit()
+
+        If Len(txtConsignor.Tag) = 0 Then
+            MsgBox("Please select Consignor/Debtor!", MsgBoxStyle.Exclamation, "System Message")
+            CheckRequiredEntries = False
+            Exit Function
+        End If
     End Function
 
     Public Sub PopulateBooking(ByVal clsImpBook As clsImportBookingHeader)
         ClearUserInput()
-        lngBookingID = clsImpBook._ID
+        clsImportBooking = clsImpBook
+        clsImportBooking._ID = clsImpBook._ID
         txtBookingPrefix.Text = clsImpBook._BookingPrefix
         txtBookingNo.Text = clsImpBook._BookingNo
         txtHouseBL.Text = clsImpBook._HouseBL
@@ -252,8 +413,12 @@
         End If
         cboVessel.SelectedValue = clsImpBook._VesselID
         txtVoyage.Text = clsImpBook._Voyage
-        'DocsCompleted
-        'DocsCompletedDate
+        chkDocsCompleted.Checked = clsImpBook._DocsCompleted
+        If clsImpBook._DocsCompletedDate = Nothing Then
+            txtDocsCompletedDate.Text = ""
+        Else
+            txtDocsCompletedDate.Text = clsImpBook._DocsCompletedDate
+        End If
         txtImportPermitNo.Text = clsImpBook._ImportPermitNo
         txtInvoiceNo.Text = clsImpBook._InvoiceNo
         txtRegistryNo.Text = clsImpBook._RegistryNo
@@ -264,7 +429,7 @@
         strStatusByID = clsImpBook._StatusByID
         strStatusByName = clsImpBook._StatusByFullName
         dtStatusDate = clsImpBook._StatusDate
-        cboModeOfTransport.SelectedValue = clsImpBook._ModeOfTrasnsportID
+        cboModeOfTransport.SelectedValue = clsImpBook._ModeOfTransportID
         cboLoadType.SelectedValue = clsImpBook._LoadTypeID
         cboEntryType.SelectedValue = clsImpBook._EntryTypeID
         cboFreightType.SelectedValue = clsImpBook._FreightTermsID
@@ -307,6 +472,15 @@
             End With
         Next
 
+        For Each clsTemp As clsImportBookingDocuments In clsImpBook._DocumentDetails
+            For Each dtgTemp As DataGridViewRow In dtgDocuments.Rows
+                If clsTemp._DocumentID = dtgTemp.Cells(colDDocID.Name).Value Then
+                    dtgTemp.Cells(colDSelected.Name).Value = True
+                    Exit For
+                End If
+            Next
+        Next
+
         ChangeEnabledButtons(True, True, False, True, True, True, True, True, True, False)
     End Sub
 
@@ -333,12 +507,12 @@
 
             'Service Type
             For Each dtgRow As DataGridViewRow In dtgServices.Rows
-                If dtgRow.Cells(colSPK.Name).Value = 27 And dtgRow.Cells(colSSelected.Name).Value = True Then
+                If dtgRow.Cells(colSParam_Code.Name).Value = "SFRGT" And dtgRow.Cells(colSSelected.Name).Value = True Then
                     Select Case cboModeOfTransport.Text
                         Case "Air"
-                            strTemp = strTemp & "A" & dtgRow.Cells(colSPrefix.Name).Value
+                            strTemp = strTemp & "AI"
                         Case "Sea"
-                            strTemp = strTemp & "S" & dtgRow.Cells(colSPrefix.Name).Value
+                            strTemp = strTemp & "SI"
                     End Select
                     GoTo lnAccountType
                 ElseIf dtgRow.Cells(colSSelected.Name).Value = True Then
@@ -365,7 +539,8 @@ lnAccountType:
     End Function
 
     Public Sub ClearUserInput()
-        lngBookingID = -1
+        clsImportBooking = New clsImportBookingHeader
+        txtBookingPrefix.Text = ""
         txtBookingNo.Text = ""
         txtHouseBL.Text = ""
         txtShipper.Tag = ""
@@ -422,6 +597,8 @@ lnAccountType:
         For Each dtgRow As DataGridViewRow In dtgDocuments.Rows
             dtgRow.Cells(colDSelected.Name).Value = False
         Next
+        chkDocsCompleted.Checked = False
+        txtDocsCompletedDate.Text = ""
     End Sub
 
     Public Sub PopulateServices()
@@ -433,7 +610,6 @@ lnAccountType:
             cmdSQL.CommandText = "SELECT PK, Param_Type, Param_Code, Param_Value, Param_Desc " &
                         "FROM lib_params " &
                         "WHERE Param_Type = 10 " &
-                            "And Param_Code Like 'SIMP%' " &
                         "ORDER BY PK"
 
             dtgServices.Rows.Clear()
@@ -689,7 +865,7 @@ lnAccountType:
     End Sub
 
     Private Sub lblStatusDetails_Click(sender As Object, e As EventArgs) Handles lblStatusDetails.Click
-        If lngBookingID > 0 Then
+        If clsImportBooking._ID > 0 Then
             MsgBox("Status: " & txtStatus.Text.ToUpper & vbNewLine &
                "Status Update By: " & strStatusByName & vbNewLine &
                "Status Date: " & dtStatusDate, MsgBoxStyle.Information, "Status Details")
@@ -706,5 +882,18 @@ lnAccountType:
         Else
             lblStatusDetails.Visible = False
         End If
+    End Sub
+
+    Private Sub lblStatusDetails_MouseHover(sender As Object, e As EventArgs) Handles lblStatusDetails.MouseHover
+        lblStatusDetails.BorderStyle = BorderStyle.FixedSingle
+    End Sub
+
+    Private Sub lblStatusDetails_MouseLeave(sender As Object, e As EventArgs) Handles lblStatusDetails.MouseLeave
+        lblStatusDetails.BorderStyle = BorderStyle.None
+    End Sub
+
+    Private Sub dtgDocuments_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dtgDocuments.CellContentClick
+        dtgDocuments.EndEdit()
+        chkDocsCompleted.Checked = CheckIfDocsComplete()
     End Sub
 End Class

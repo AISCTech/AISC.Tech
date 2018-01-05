@@ -25,6 +25,7 @@ Partial Class frmSelectCompany
         Me.dtgCompany = New System.Windows.Forms.DataGridView()
         Me.colCompanyCode = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.colCompanyName = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colCompanyLogoFilename = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.colSiteCode = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.colSiteName = New System.Windows.Forms.DataGridViewTextBoxColumn()
         CType(Me.dtgCompany, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -35,7 +36,7 @@ Partial Class frmSelectCompany
         Me.dtgCompany.AllowUserToAddRows = False
         Me.dtgCompany.AllowUserToDeleteRows = False
         Me.dtgCompany.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dtgCompany.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.colCompanyCode, Me.colCompanyName, Me.colSiteCode, Me.colSiteName})
+        Me.dtgCompany.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.colCompanyCode, Me.colCompanyName, Me.colCompanyLogoFilename, Me.colSiteCode, Me.colSiteName})
         Me.dtgCompany.Dock = System.Windows.Forms.DockStyle.Fill
         Me.dtgCompany.Location = New System.Drawing.Point(0, 0)
         Me.dtgCompany.MultiSelect = False
@@ -58,6 +59,13 @@ Partial Class frmSelectCompany
         Me.colCompanyName.Name = "colCompanyName"
         Me.colCompanyName.ReadOnly = True
         Me.colCompanyName.Width = 350
+        '
+        'colCompanyLogoFilename
+        '
+        Me.colCompanyLogoFilename.HeaderText = "Logo File Name"
+        Me.colCompanyLogoFilename.Name = "colCompanyLogoFilename"
+        Me.colCompanyLogoFilename.ReadOnly = True
+        Me.colCompanyLogoFilename.Visible = False
         '
         'colSiteCode
         '
@@ -91,6 +99,7 @@ Partial Class frmSelectCompany
     Friend WithEvents dtgCompany As DataGridView
     Friend WithEvents colCompanyCode As DataGridViewTextBoxColumn
     Friend WithEvents colCompanyName As DataGridViewTextBoxColumn
+    Friend WithEvents colCompanyLogoFilename As DataGridViewTextBoxColumn
     Friend WithEvents colSiteCode As DataGridViewTextBoxColumn
     Friend WithEvents colSiteName As DataGridViewTextBoxColumn
 End Class

@@ -71,13 +71,15 @@ Public Class mdiMain
 
     Private Sub mdiMain_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.Text = strSystemName & " v. " & strSystemVersion & " " & CurrentUser._Company_Name
+        'Me.BackgroundImage = CurrentUser._Company_Logo
+        'Me.BackgroundImageLayout = ImageLayout.Stretch
     End Sub
 
     Private Sub cmdOperations_Click(sender As Object, e As EventArgs) Handles cmdOperations.Click
         Me.lblMenuTitle.Text = "OPERATIONS"
         Dim MyNode() As TreeNode
 
-        With Me.trvMenu
+        With trvMenu
             .Nodes.Clear()
             'Customer Service
             .Nodes.Add("1.1", "Customer Service")
@@ -151,7 +153,7 @@ Public Class mdiMain
         Me.lblMenuTitle.Text = "ACCOUNTING"
         Dim MyNode() As TreeNode
 
-        With Me.trvMenu
+        With trvMenu
             .Nodes.Clear()
             'Cash Disbursement
             .Nodes.Add("2.1", "Cash Disbursement")
@@ -188,15 +190,22 @@ Public Class mdiMain
         Me.lblMenuTitle.Text = "MAINTENANCE"
         Dim MyNode() As TreeNode
 
-        With Me.trvMenu
+        With trvMenu
             .Nodes.Clear()
 
-            'Cash Disbursement
-            .Nodes.Add("3.1", "Maintenance")
+            'User Accounts
+            .Nodes.Add("3.1", "User Accounts")
             MyNode = .Nodes.Find("3.1", True)
             MyNode(0).Nodes.Add("3.1.1", "...")
             MyNode(0).Nodes.Add("3.1.2", "...")
             MyNode(0).Nodes.Add("3.1.3", "...")
+
+            'Email Addresses
+            .Nodes.Add("3.2", "Email Addresses")
+            MyNode = .Nodes.Find("3.2", True)
+            MyNode(0).Nodes.Add("3.2.1", "Manage Email Addresses")
+            MyNode(0).Nodes.Add("3.2.2", "Assign Email Per Module")
+            MyNode(0).Nodes.Add("3.2.3", "...")
         End With
     End Sub
 
@@ -207,8 +216,8 @@ Public Class mdiMain
     Private Sub trvMenu_NodeMouseDoubleClick(sender As Object, e As TreeNodeMouseClickEventArgs) Handles trvMenu.NodeMouseDoubleClick
         Dim ChildForm As New System.Windows.Forms.Form
 
-        If Me.trvMenu.SelectedNode IsNot Nothing Then
-            Select Case _NotNull(Me.trvMenu.SelectedNode.Name, "")
+        If trvMenu.SelectedNode IsNot Nothing Then
+            Select Case _NotNull(trvMenu.SelectedNode.Name, "")
                 Case "1.1.1.1"
                     ChildForm = frmExportBookingMenu
                 Case "1.1.2.1"
@@ -221,13 +230,14 @@ Public Class mdiMain
                     ChildForm = frmAPV
                 Case "2.1.4"
                     ChildForm = frmPCV
+                Case "3.2.1"
+                    ChildForm = frmManageEmailAddresses
+                Case "3.2.2"
+                    ChildForm = frmModuleEmail
                 Case Else
                     Exit Sub
             End Select
-            ChildForm.MdiParent = Me
-            ChildForm.Show()
-            ChildForm.WindowState = FormWindowState.Maximized
-            ChildForm.Focus()
+            ShowChildForm(ChildForm)
         End If
     End Sub
 

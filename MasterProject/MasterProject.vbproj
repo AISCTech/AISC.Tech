@@ -107,10 +107,23 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\Database Transactions\clsDBTrans.vb" />
+    <Compile Include="Classes\Global Classes\clsEmailSending.vb" />
+    <Compile Include="Classes\Global Classes\clsLocalFiles.vb" />
+    <Compile Include="Classes\Maintenance\Email\clsEmailAddress.vb" />
+    <Compile Include="Classes\Maintenance\Email\clsEmailPerModule.vb" />
+    <Compile Include="Classes\Maintenance\File Location\clsFileLocation.vb" />
+    <Compile Include="Classes\Maintenance\Modules\clsModules.vb" />
     <Compile Include="Classes\Operations\Customer Service\Import\clsImportBooking.vb" />
     <Compile Include="Classes\Global Classes\clsEnableToolstripObjects.vb" />
     <Compile Include="Classes\Global Classes\clsPopulateComboBox.vb" />
-    <Compile Include="Classes\Maintenance\UserAccess\clsUserAccount.vb" />
+    <Compile Include="Classes\Maintenance\User Access\clsUserAccount.vb" />
+    <Compile Include="Crystal Reports\rptImportBAC.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rptImportBAC.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Forms\01 Operations\Customer Service\Export\frmExportBookingMenu.Designer.vb">
       <DependentUpon>frmExportBookingMenu.vb</DependentUpon>
     </Compile>
@@ -129,6 +142,12 @@
     <Compile Include="Forms\01 Operations\Customer Service\frmSelection.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Forms\01 Operations\Customer Service\frmSendEmail.Designer.vb">
+      <DependentUpon>frmSendEmail.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\01 Operations\Customer Service\frmSendEmail.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\01 Operations\Customer Service\Import\frmImportBookingMonitoring.Designer.vb">
       <DependentUpon>frmImportBookingMonitoring.vb</DependentUpon>
     </Compile>
@@ -145,6 +164,12 @@
       <DependentUpon>frmSearchImportBooking.vb</DependentUpon>
     </Compile>
     <Compile Include="Forms\01 Operations\Customer Service\Import\frmSearchImportBooking.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\01 Operations\Customer Service\Import\frmSelectImportBookingPrintPrev.Designer.vb">
+      <DependentUpon>frmSelectImportBookingPrintPrev.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\01 Operations\Customer Service\Import\frmSelectImportBookingPrintPrev.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\02 Accounting\frmAPV.designer.vb">
@@ -255,6 +280,18 @@
     <Compile Include="Forms\02 Accounting\frmSelectGLEntry.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Forms\03 Maintenance\Email\frmManageEmailAddresses.Designer.vb">
+      <DependentUpon>frmManageEmailAddresses.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\03 Maintenance\Email\frmManageEmailAddresses.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\03 Maintenance\Email\frmModuleEmail.Designer.vb">
+      <DependentUpon>frmModuleEmail.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\03 Maintenance\Email\frmModuleEmail.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\04 Login\frmLogIn.Designer.vb">
       <DependentUpon>frmLogIn.vb</DependentUpon>
     </Compile>
@@ -309,6 +346,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Crystal Reports\rptImportBAC.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>rptImportBAC.vb</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\01 Operations\Customer Service\Export\frmExportBookingMenu.resx">
       <DependentUpon>frmExportBookingMenu.vb</DependentUpon>
     </EmbeddedResource>
@@ -318,6 +359,9 @@
     <EmbeddedResource Include="Forms\01 Operations\Customer Service\frmSelection.resx">
       <DependentUpon>frmSelection.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\01 Operations\Customer Service\frmSendEmail.resx">
+      <DependentUpon>frmSendEmail.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\01 Operations\Customer Service\Import\frmImportBookingMonitoring.resx">
       <DependentUpon>frmImportBookingMonitoring.vb</DependentUpon>
     </EmbeddedResource>
@@ -326,6 +370,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\01 Operations\Customer Service\Import\frmSearchImportBooking.resx">
       <DependentUpon>frmSearchImportBooking.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\01 Operations\Customer Service\Import\frmSelectImportBookingPrintPrev.resx">
+      <DependentUpon>frmSelectImportBookingPrintPrev.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\02 Accounting\frmAPV.resx">
       <DependentUpon>frmAPV.vb</DependentUpon>
@@ -381,6 +428,12 @@
     <EmbeddedResource Include="Forms\02 Accounting\frmSelectGLEntry.resx">
       <DependentUpon>frmSelectGLEntry.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\03 Maintenance\Email\frmManageEmailAddresses.resx">
+      <DependentUpon>frmManageEmailAddresses.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\03 Maintenance\Email\frmModuleEmail.resx">
+      <DependentUpon>frmModuleEmail.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\04 Login\frmLogIn.resx">
       <DependentUpon>frmLogIn.vb</DependentUpon>
     </EmbeddedResource>
@@ -417,10 +470,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Forms\01 Operations\Customer Service\Domestic\" />
-    <Folder Include="Forms\03 Maintenance\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\edit.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{C0C07587-41A7-46C8-8FBD-3F9C8EBE2DDC}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
