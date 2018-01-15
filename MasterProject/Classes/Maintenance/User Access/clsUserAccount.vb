@@ -1,4 +1,6 @@
-﻿Public Class clsUserAccount
+﻿Imports System.Security
+
+Public Class clsUserAccount
 
     Private strUser_ID As String
     Property _User_ID As String

@@ -54,19 +54,10 @@
     End Sub
 
     Private Sub dtgSelection_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles dtgSelection.CellDoubleClick
-        'Select Case Me.Tag
-        'Case "ImpBookShipper"
-        'FillImpBookShipper(sender, e)
-        'Case "ImpBookConsignee"
-        'FillImpBookConsignee(sender, e)
-        'Case "ImpBookConsignor"
-
-        'Case "ImpBookForwarder"
-
-        'End Select
-
-        txtCaller.Tag = dtgSelection.Rows(e.RowIndex).Cells(0).Value
-        txtCaller.Text = dtgSelection.Rows(e.RowIndex).Cells(1).Value
-        Me.Close()
+        If e.RowIndex >= 0 Then
+            txtCaller.Tag = dtgSelection.Rows(e.RowIndex).Cells(0).Value
+            txtCaller.Text = dtgSelection.Rows(e.RowIndex).Cells(1).Value
+            Me.Close()
+        End If
     End Sub
 End Class

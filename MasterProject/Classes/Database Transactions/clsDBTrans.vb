@@ -65,6 +65,7 @@
                 cmdSQL.Parameters.AddWithValue("@p_PackageUnitID", ._PackageUnitID)
                 cmdSQL.Parameters("@p_PackageUnitID").Direction = ParameterDirection.Input
 
+
                 cmdSQL.Parameters.AddWithValue("@p_OriginPortID", ._OriginPortID)
                 cmdSQL.Parameters("@p_OriginPortID").Direction = ParameterDirection.Input
 
@@ -119,6 +120,12 @@
 
                 cmdSQL.Parameters.AddWithValue("@p_FreightTermsID", ._FreightTermsID)
                 cmdSQL.Parameters("@p_FreightTermsID").Direction = ParameterDirection.Input
+
+                cmdSQL.Parameters.AddWithValue("@p_WarehouseID", ._WarehouseID)
+                cmdSQL.Parameters("@p_WarehouseID").Direction = ParameterDirection.Input
+
+                cmdSQL.Parameters.AddWithValue("@p_AccountTypeID", ._AccountTypeID)
+                cmdSQL.Parameters("@p_AccountTypeID").Direction = ParameterDirection.Input
 
                 cmdSQL.Parameters.AddWithValue("@p_AccountHolderID", ._AccountHolderID)
                 cmdSQL.Parameters("@p_AccountHolderID").Direction = ParameterDirection.Input
@@ -235,6 +242,7 @@
             SaveImportBookingRecord = clsTempImpBook
             MsgBox("Record saved!", MsgBoxStyle.Information, "System Message")
         Catch ex As Exception
+            SaveImportBookingRecord = Nothing
             Try
                 trnSQL.Rollback()
                 MsgBox(ex.Message)
@@ -300,7 +308,61 @@
             cmdSQL.Dispose()
             SaveEmailAddress = clsTempEmailAddress
         Catch ex As Exception
-            SaveEmailAddress = clsTempEmailAddress
+            SaveEmailAddress = Nothing
+            Try
+                trnSQL.Rollback()
+                MsgBox(ex.Message)
+            Catch ex1 As Exception
+                If Not trnSQL.Connection Is Nothing Then
+                    MsgBox("An exception of type " & ex1.GetType().ToString() &
+                      " was encountered while attempting to roll back the transaction.")
+                End If
+            End Try
+        End Try
+    End Function
+
+    Public Function SaveCompanyServiceOffered(ByVal clsTempCompanyServiceOffered As clsCompanyServiceOffered) As clsCompanyServiceOffered
+        If cnnDBMaster.State <> ConnectionState.Open Then cnnDBMaster.Open()
+
+        Dim cmdSQL = New MySql.Data.MySqlClient.MySqlCommand
+        Dim trnSQL As MySql.Data.MySqlClient.MySqlTransaction
+
+        trnSQL = cnnDBMaster.BeginTransaction
+
+        Try
+            cmdSQL.Connection = cnnDBMaster
+            cmdSQL.Transaction = trnSQL
+            cmdSQL.CommandText = "sp_companyserviceofferedsave"
+            cmdSQL.CommandType = CommandType.StoredProcedure
+
+            With clsTempCompanyServiceOffered
+                cmdSQL.Parameters.AddWithValue("@p_ID", ._ID)
+                cmdSQL.Parameters("@p_ID").Direction = ParameterDirection.Input
+
+                cmdSQL.Parameters.AddWithValue("@p_Company_Code", ._Company._Company_Code)
+                cmdSQL.Parameters("@p_Company_Code").Direction = ParameterDirection.Input
+
+                cmdSQL.Parameters.AddWithValue("@p_Service_Code", ._ServiceOffered._PK)
+                cmdSQL.Parameters("@p_Service_Code").Direction = ParameterDirection.Input
+
+                cmdSQL.Parameters.AddWithValue("@p_PrepByID", ._PrepBy._User_ID)
+                cmdSQL.Parameters("@p_PrepByID").Direction = ParameterDirection.Input
+
+                cmdSQL.Parameters.AddWithValue("@p_ModByID", ._ModBy._User_ID)
+                cmdSQL.Parameters("@p_ModByID").Direction = ParameterDirection.Input
+
+                cmdSQL.Parameters.AddWithValue("@p_ID_Out", ._ID)
+                cmdSQL.Parameters("@p_ID_Out").Direction = ParameterDirection.Output
+
+                cmdSQL.ExecuteNonQuery()
+                ._ID = cmdSQL.Parameters("@p_ID_Out").Value
+            End With
+
+            trnSQL.Commit()
+            cmdSQL.Dispose()
+            SaveCompanyServiceOffered = clsTempCompanyServiceOffered
+        Catch ex As Exception
+            SaveCompanyServiceOffered = Nothing
             Try
                 trnSQL.Rollback()
                 MsgBox(ex.Message)
@@ -314,6 +376,66 @@
     End Function
 
     'Search Record
+    Public Function SearchClientRecord(ByVal strCode As String) As clsClientHeader
+        Try
+            Dim clsTemp As New clsClientHeader
+            Dim cmdSQL = New MySql.Data.MySqlClient.MySqlCommand
+
+            If cnnDBMaster.State <> ConnectionState.Open Then cnnDBMaster.Open()
+            cmdSQL.Connection = cnnDBMaster
+            cmdSQL.CommandText = "SELECT * FROM v_client WHERE `Code` = @Code"
+            cmdSQL.Parameters.AddWithValue("@Code", strCode)
+
+            Dim reader As MySql.Data.MySqlClient.MySqlDataReader = cmdSQL.ExecuteReader
+
+            While reader.Read
+                With clsTemp
+                    ._Code = reader.Item("Code")
+                    ._Description = reader.Item("Description")
+                    ._Prefix = reader.Item("Prefix")
+                    ._Addr1 = reader.Item("Addr1")
+                    ._AddrCity = reader.Item("AddrCity")
+                    ._CityDesc = reader.Item("CityDesc")
+                    ._AddrCountry = reader.Item("AddrCountry")
+                    ._CountryDesc = reader.Item("CountryDesc")
+                    ._AddrZipCode = reader.Item("AddrZipCode")
+                    ._BusStyle = reader.Item("BusStyle")
+                    ._ContactMobileNo = reader.Item("ContactMobileNo")
+                    ._ContactFax = reader.Item("ContactFax")
+                    ._ContactLandline = reader.Item("ContactLandline")
+                    ._ContactPerson = reader.Item("ContactPerson")
+                    ._Email = reader.Item("Email")
+                    ._Tin = reader.Item("Tin")
+                    ._SalesTax = reader.Item("SalesTax")
+                    ._SalesTaxDesc = reader.Item("SalesTaxDesc")
+                    ._Terms = reader.Item("Terms")
+                    ._TermsDesc = reader.Item("TermsDesc")
+                    ._CreditLimitAmt = reader.Item("CreditLimitAmt")
+                    ._CreditLimitCurrency = reader.Item("CreditLimitCurrency")
+                    ._CurrencyDesc = reader.Item("CurrencyDesc")
+                    ._SitePK = reader.Item("SitePK")
+                    ._Site_Name = reader.Item("Site_Name")
+                    ._Account_TypeID = reader.Item("Account_TypeID")
+                    ._Account_TypePrefix = reader.Item("Account_TypePrefix")
+                    ._Account_TypeDesc = reader.Item("Account_TypeDesc")
+                    ._Account_HandlerID = reader.Item("Account_HandlerID")
+                    ._Account_HandlerName = reader.Item("Account_HandlerName")
+                    ._ModifiedBy = reader.Item("ModifiedBy")
+                    ._ModifiedByName = reader.Item("Employee_Name")
+                    ._ModifiedDate = reader.Item("ModifiedDate")
+                End With
+            End While
+
+            reader.Close()
+            cmdSQL.Dispose()
+
+            Return clsTemp
+        Catch ex As Exception
+            MsgBox(ex.Message)
+            Return Nothing
+        End Try
+    End Function
+
     Public Function SearchImportBookingRecord(ByVal strTempBookingNo As String, ByVal strTempCompanyCode As String) As clsImportBookingHeader
         SearchImportBookingRecord = New clsImportBookingHeader
         Try
@@ -362,8 +484,8 @@
                     ._ForwarderName = reader.Item("ForwarderName")
                     ._ForwarderAddress = reader.Item("ForwarderAddr1") & " " & reader.Item("ForwarderAddrCity") & " " & reader.Item("ForwarderAddrCountry")
                     ._ForwarderAddress = System.Text.RegularExpressions.Regex.Replace(._ForwarderAddress, "\s{2,}", " ").ToUpper
-                    ._ShippingLineCode = reader.Item("ShippingLineCode")
-                    ._ShippingLineName = reader.Item("ShippingLineName")
+                    ._ShippingLineCode = _NotNull(reader.Item("ShippingLineCode"), "")
+                    ._ShippingLineName = _NotNull(reader.Item("ShippingLineName"), "")
                     ._DescriptionOfGoods = reader.Item("DescriptionOfGoods")
                     ._Weight = reader.Item("Weight")
                     ._Volume = reader.Item("Volume")
@@ -407,8 +529,13 @@
                     ._EntryTypeName = reader.Item("EntryTypeName")
                     ._FreightTermsID = reader.Item("FreightTermsID")
                     ._FreightTermsName = reader.Item("FreightTermsName")
-                    'strAccountHolderID = reader.Item("AccountHolderID")
-                    'strAccountHolderName = reader.Item("AccountHolderName")
+                    ._WarehouseID = reader.Item("WarehouseID")
+                    ._WarehouseName = reader.Item("WarehouseName")
+                    ._AccountTypeID = reader.Item("AccountTypeID")
+                    ._AccountTypePrefix = reader.Item("AccountTypePrefix")
+                    ._AccountTypeDesc = reader.Item("AccountTypeDescription")
+                    ._AccountHolderID = reader.Item("AccountHolderID")
+                    ._AccountHolderFullName = reader.Item("AccountHolderFirstName") & " " & reader.Item("AccountHolderLastName")
                     ._StatusID = reader.Item("StatusID")
                     ._StatusName = reader.Item("Status_Name")
                     ._PrepByID = reader.Item("PrepByID")
@@ -590,6 +717,201 @@
             cmdSQL.Dispose()
 
             Return clsTemp
+        Catch ex As Exception
+            MsgBox(ex.Message)
+            Return Nothing
+        End Try
+    End Function
+
+    Public Function SearchEmailPerModule(ByVal strCompany_Code As String, ByVal lngModule_ID As Long) As clsEmailPerModule
+        Try
+            Dim clsTemp As New clsEmailPerModule
+            Dim cmdSQL = New MySql.Data.MySqlClient.MySqlCommand
+
+            If cnnDBMaster.State <> ConnectionState.Open Then cnnDBMaster.Open()
+            cmdSQL.Connection = cnnDBMaster
+            cmdSQL.CommandText = "SELECT * FROM v_emailpermodule WHERE `Company_Code` = @Company_Code AND `Module_ID` = @Module_ID"
+            cmdSQL.Parameters.AddWithValue("@Company_Code", strCompanyCode)
+            cmdSQL.Parameters.AddWithValue("@Module_ID", lngModule_ID)
+
+            Dim reader As MySql.Data.MySqlClient.MySqlDataReader = cmdSQL.ExecuteReader
+
+            While reader.Read
+                With clsTemp
+                    ._ID = reader.Item("ID")
+                    ._Company_Code = reader.Item("Company_Code")
+                    ._Company_FullName = reader.Item("Company_FullName")
+                    ._Module_ID = reader.Item("Module_ID")
+                    ._Module_Name = reader.Item("Module_Name")
+                    ._EmailFrom._ID = reader.Item("Email_From_ID")
+                    ._EmailFrom._EmailAddress = reader.Item("From_EmailAddress")
+                    ._EmailFrom._SMTP_Host = reader.Item("From_SMTP_Host")
+                    ._EmailFrom._SMTP_Port = reader.Item("From_SMTP_Port")
+                    ._EmailFrom._SMTP_Username = reader.Item("From_SMTP_Username")
+                    ._EmailFrom._SMTP_Password = DecryptString(reader.Item("From_SMTP_Password"), 1)
+                    ._EmailFrom._SMTP_EnableSSL = reader.Item("From_SMTP_EnableSSL")
+                    ._EmailReplyTo._ID = reader.Item("Email_ReplyTo_ID")
+                    ._EmailReplyTo._EmailAddress = reader.Item("ReplyTo_EmailAddress")
+                    ._EmailReplyTo._SMTP_Host = reader.Item("ReplyTo_SMTP_Host")
+                    ._EmailReplyTo._SMTP_Port = reader.Item("ReplyTo_SMTP_Port")
+                    ._EmailReplyTo._SMTP_Username = reader.Item("ReplyTo_SMTP_Username")
+                    ._EmailReplyTo._SMTP_Password = DecryptString(reader.Item("ReplyTo_SMTP_Password"), 1)
+                    ._EmailReplyTo._SMTP_EnableSSL = reader.Item("ReplyTo_SMTP_EnableSSL")
+                    ._PrepBy._User_ID = reader.Item("PrepByID")
+                    ._PrepBy._Last_Name = reader.Item("PrepLastName")
+                    ._PrepBy._First_Name = reader.Item("PrepFirstName")
+                    ._PrepBy._Middle_Name = reader.Item("PrepMiddleName")
+                    ._PrepDate = reader.Item("PrepDate")
+                    ._ModBy._User_ID = reader.Item("ModByID")
+                    ._ModBy._Last_Name = reader.Item("ModLastName")
+                    ._ModBy._First_Name = reader.Item("ModFirstName")
+                    ._ModBy._Middle_Name = reader.Item("ModMiddleName")
+                    ._ModDate = reader.Item("ModDate")
+                End With
+            End While
+
+            reader.Close()
+            cmdSQL.Dispose()
+
+            Return clsTemp
+        Catch ex As Exception
+            MsgBox(ex.Message)
+            Return Nothing
+        End Try
+    End Function
+
+    Public Function SearchCompanyServiceOffered(ByVal lngID As Long) As clsCompanyServiceOffered
+        Try
+            Dim clsTemp As New clsCompanyServiceOffered
+            Dim cmdSQL = New MySql.Data.MySqlClient.MySqlCommand
+
+            If cnnDBMaster.State <> ConnectionState.Open Then cnnDBMaster.Open()
+            cmdSQL.Connection = cnnDBMaster
+            cmdSQL.CommandText = "SELECT * FROM v_companyserviceoffered WHERE `ID` = @ID"
+            cmdSQL.Parameters.AddWithValue("@ID", lngID)
+
+            Dim reader As MySql.Data.MySqlClient.MySqlDataReader = cmdSQL.ExecuteReader
+
+            While reader.Read
+                With clsTemp
+                    ._ID = reader.Item("ID")
+                    With ._Company
+                        ._Company_Code = reader.Item("Company_Code")
+                        ._Company_FullName = reader.Item("Company_FullName")
+                    End With
+                    With ._ServiceOffered
+                        ._PK = reader.Item("Service_Code")
+                        ._ParameterType._PK = reader.Item("Param_Type")
+                        ._Param_Code = reader.Item("Param_Code")
+                        ._Param_Desc = reader.Item("Param_Desc")
+                        ._Param_Value = _NotNull(reader.Item("Param_Value"), "")
+                    End With
+                    ._PrepBy._User_ID = reader.Item("PrepByID")
+                    ._PrepBy._Last_Name = reader.Item("PrepLastName")
+                    ._PrepBy._First_Name = reader.Item("PrepFirstName")
+                    ._PrepBy._Middle_Name = reader.Item("PrepMiddleName")
+                    ._PrepDate = reader.Item("PrepDate")
+                    ._ModBy._User_ID = reader.Item("ModByID")
+                    ._ModBy._Last_Name = reader.Item("ModLastName")
+                    ._ModBy._First_Name = reader.Item("ModFirstName")
+                    ._ModBy._Middle_Name = reader.Item("ModMiddleName")
+                    ._ModDate = reader.Item("ModDate")
+                End With
+            End While
+
+            reader.Close()
+            cmdSQL.Dispose()
+
+            Return clsTemp
+        Catch ex As Exception
+            MsgBox(ex.Message)
+            Return Nothing
+        End Try
+    End Function
+
+    'Populate List of Record
+    Public Function PopulateListOfParameters(ByVal strParam_Type As String) As List(Of clsParameters)
+        Try
+            Dim clsTemp As New clsParameters
+            Dim clslstTemp As New List(Of clsParameters)
+
+            Dim cmdSQL = New MySql.Data.MySqlClient.MySqlCommand
+
+            If cnnDBMaster.State <> ConnectionState.Open Then cnnDBMaster.Open()
+            cmdSQL.Connection = cnnDBMaster
+            cmdSQL.CommandText = "SELECT * FROM `v_params` WHERE `Param_Type` = @Param_Code"
+            cmdSQL.Parameters.AddWithValue("@Param_Code", strParam_Type)
+
+            Dim reader As MySql.Data.MySqlClient.MySqlDataReader = cmdSQL.ExecuteReader
+
+            While reader.Read
+                clsTemp = New clsParameters
+                With clsTemp
+                    ._PK = reader.Item("PK")
+                    With ._ParameterType
+                        ._PK = reader.Item("Param_Type")
+                        ._Description = reader.Item("Param_Type_Desc")
+                    End With
+                    ._Param_Code = reader.Item("Param_Code")
+                    ._Param_Desc = reader.Item("Param_Desc")
+                    ._Param_Value = _NotNull(reader.Item("Param_Value"), "")
+                End With
+                clslstTemp.Add(clsTemp)
+            End While
+
+            reader.Close()
+            cmdSQL.Dispose()
+
+            Return clslstTemp
+        Catch ex As Exception
+            MsgBox(ex.Message)
+            Return Nothing
+        End Try
+    End Function
+
+    Public Function PopulateListOfReportParameter(ByVal strCompany_Code As String, ByVal strReport_Name As String) As List(Of clsReportParameters)
+        Try
+            Dim clsTemp As New clsReportParameters
+            Dim clslstTemp As New List(Of clsReportParameters)
+
+            Dim cmdSQL = New MySql.Data.MySqlClient.MySqlCommand
+
+            If cnnDBMaster.State <> ConnectionState.Open Then cnnDBMaster.Open()
+            cmdSQL.Connection = cnnDBMaster
+            cmdSQL.CommandText = "SELECT * FROM v_reportparameters WHERE `Company_Code` = @Company_Code AND `Report_Name` = @Report_Name"
+            cmdSQL.Parameters.AddWithValue("@Company_Code", strCompanyCode)
+            cmdSQL.Parameters.AddWithValue("@Report_Name", strReport_Name)
+
+            Dim reader As MySql.Data.MySqlClient.MySqlDataReader = cmdSQL.ExecuteReader
+
+            While reader.Read
+                clsTemp = New clsReportParameters
+                With clsTemp
+                    ._ID = reader.Item("ID")
+                    ._Company_Code = reader.Item("Company_Code")
+                    ._Company_FullName = reader.Item("Company_FullName")
+                    ._Report_Name = reader.Item("Report_Name")
+                    ._Parameter_Name = reader.Item("Parameter_Name")
+                    ._Parameter_Value = reader.Item("Parameter_Value")
+                    ._PrepBy._User_ID = reader.Item("PrepByID")
+                    ._PrepBy._Last_Name = reader.Item("PrepLastName")
+                    ._PrepBy._First_Name = reader.Item("PrepFirstName")
+                    ._PrepBy._Middle_Name = reader.Item("PrepMiddleName")
+                    ._PrepDate = reader.Item("PrepDate")
+                    ._ModBy._User_ID = reader.Item("ModByID")
+                    ._ModBy._Last_Name = reader.Item("ModLastName")
+                    ._ModBy._First_Name = reader.Item("ModFirstName")
+                    ._ModBy._Middle_Name = reader.Item("ModMiddleName")
+                    ._ModDate = reader.Item("ModDate")
+                End With
+
+                clslstTemp.Add(clsTemp)
+            End While
+
+            reader.Close()
+            cmdSQL.Dispose()
+
+            Return clslstTemp
         Catch ex As Exception
             MsgBox(ex.Message)
             Return Nothing
