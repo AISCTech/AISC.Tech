@@ -205,6 +205,13 @@ Public Class mdiMain
             MyNode(0).Nodes.Add("3.1.2", "...")
             MyNode(0).Nodes.Add("3.1.3", "...")
 
+            'Company
+            .Nodes.Add("3.3", "Company")
+            MyNode = .Nodes.Find("3.3", True)
+            MyNode(0).Nodes.Add("3.3.1", "...")
+            MyNode(0).Nodes.Add("3.3.2", "...")
+            MyNode(0).Nodes.Add("3.3.3", "Manage Service Offered per Company")
+
             'Email Addresses
             .Nodes.Add("3.2", "Email Addresses")
             MyNode = .Nodes.Find("3.2", True)
@@ -238,14 +245,16 @@ Public Class mdiMain
                     ChildForm = frmAPV
                 Case "2.1.4"
                     ChildForm = frmPCV
-                Case "3.2.1"
-                    ChildForm = frmManageEmailAddresses
-                Case "3.2.2"
-                    ChildForm = frmModuleEmail
                 Case "2.2.1.1"
                     ChildForm = frmInvoice
                 Case "2.2.2.1"
                     ChildForm = frmSOA
+                Case "3.2.1"
+                    ChildForm = frmManageEmailAddresses
+                Case "3.2.2"
+                    ChildForm = frmModuleEmail
+                Case "3.3.3"
+                    ChildForm = frmCompanyServiceOffered
                 Case "3.4"
                     ChildForm = frmRegForm
                 Case Else

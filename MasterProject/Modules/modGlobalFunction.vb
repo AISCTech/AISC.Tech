@@ -5,13 +5,7 @@ Module modGlobalFunction
     Public strSiteCode As String = "MNL"
     Public strCompanyCode = "C101"
 
-    'Public Function _NotNull(Of T)(ByVal Value As T, ByVal DefaultValue As T) As T
-    '    If Value Is Nothing OrElse IsDBNull(Value) Then
-    '        Return DefaultValue
-    '    Else
-    '        Return Value
-    '    End If
-    'End Function
+
     Public Function GetHostIP(ByVal af As System.Net.Sockets.AddressFamily) As String
 
         Dim host As System.Net.IPHostEntry = System.Net.Dns.GetHostEntry(System.Net.Dns.GetHostName)
@@ -739,12 +733,8 @@ Module modGlobalFunction
         Return Trim(strTemp)
     End Function
 
-    Public Function NotNull(Of T)(ByVal Value As T, ByVal DefaultValue As T) As T
-        If Value Is Nothing OrElse IsDBNull(Value) Then
-            Return DefaultValue
-        Else
-            Return Value
-        End If
+    Public Function FormalText(ByVal strVal As String) As String
+        Return System.Text.RegularExpressions.Regex.Replace(Trim(strVal), "\s{2,}", " ")
     End Function
 
     Public Function GetRegisteredFormNo(ByVal intGroupID As Integer, ByVal intModuleID As Integer) As Integer

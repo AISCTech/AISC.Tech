@@ -23,6 +23,7 @@ Partial Class frmSendEmail
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.Label1 = New System.Windows.Forms.Label()
         Me.cmdSend = New System.Windows.Forms.Button()
         Me.txtSubject = New System.Windows.Forms.TextBox()
         Me.Label3 = New System.Windows.Forms.Label()
@@ -45,6 +46,7 @@ Partial Class frmSendEmail
         '
         'Panel1
         '
+        Me.Panel1.Controls.Add(Me.Label1)
         Me.Panel1.Controls.Add(Me.cmdSend)
         Me.Panel1.Controls.Add(Me.txtSubject)
         Me.Panel1.Controls.Add(Me.Label3)
@@ -57,8 +59,18 @@ Partial Class frmSendEmail
         Me.Panel1.Dock = System.Windows.Forms.DockStyle.Top
         Me.Panel1.Location = New System.Drawing.Point(0, 0)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(978, 123)
+        Me.Panel1.Size = New System.Drawing.Size(978, 129)
         Me.Panel1.TabIndex = 0
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Location = New System.Drawing.Point(12, 113)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(77, 13)
+        Me.Label1.TabIndex = 12
+        Me.Label1.Text = "Sending Mail..."
+        Me.Label1.Visible = False
         '
         'cmdSend
         '
@@ -145,7 +157,7 @@ Partial Class frmSendEmail
         Me.CrystalReportViewer1.ShowGroupTreeButton = False
         Me.CrystalReportViewer1.ShowLogo = False
         Me.CrystalReportViewer1.ShowParameterPanelButton = False
-        Me.CrystalReportViewer1.Size = New System.Drawing.Size(964, 341)
+        Me.CrystalReportViewer1.Size = New System.Drawing.Size(964, 335)
         Me.CrystalReportViewer1.TabIndex = 0
         Me.CrystalReportViewer1.ToolPanelView = CrystalDecisions.Windows.Forms.ToolPanelViewType.None
         '
@@ -154,10 +166,10 @@ Partial Class frmSendEmail
         Me.TabControl1.Controls.Add(Me.TabPage1)
         Me.TabControl1.Controls.Add(Me.TabPage2)
         Me.TabControl1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TabControl1.Location = New System.Drawing.Point(0, 123)
+        Me.TabControl1.Location = New System.Drawing.Point(0, 129)
         Me.TabControl1.Name = "TabControl1"
         Me.TabControl1.SelectedIndex = 0
-        Me.TabControl1.Size = New System.Drawing.Size(978, 373)
+        Me.TabControl1.Size = New System.Drawing.Size(978, 367)
         Me.TabControl1.TabIndex = 1
         '
         'TabPage1
@@ -166,7 +178,7 @@ Partial Class frmSendEmail
         Me.TabPage1.Location = New System.Drawing.Point(4, 22)
         Me.TabPage1.Name = "TabPage1"
         Me.TabPage1.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage1.Size = New System.Drawing.Size(970, 347)
+        Me.TabPage1.Size = New System.Drawing.Size(970, 341)
         Me.TabPage1.TabIndex = 0
         Me.TabPage1.Text = "Attachment"
         Me.TabPage1.UseVisualStyleBackColor = True
@@ -177,7 +189,7 @@ Partial Class frmSendEmail
         Me.TabPage2.Location = New System.Drawing.Point(4, 22)
         Me.TabPage2.Name = "TabPage2"
         Me.TabPage2.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage2.Size = New System.Drawing.Size(970, 326)
+        Me.TabPage2.Size = New System.Drawing.Size(970, 341)
         Me.TabPage2.TabIndex = 1
         Me.TabPage2.Text = "Message"
         Me.TabPage2.UseVisualStyleBackColor = True
@@ -185,10 +197,12 @@ Partial Class frmSendEmail
         'txtMessage
         '
         Me.txtMessage.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.txtMessage.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtMessage.Location = New System.Drawing.Point(3, 3)
         Me.txtMessage.Multiline = True
         Me.txtMessage.Name = "txtMessage"
-        Me.txtMessage.Size = New System.Drawing.Size(964, 320)
+        Me.txtMessage.ScrollBars = System.Windows.Forms.ScrollBars.Both
+        Me.txtMessage.Size = New System.Drawing.Size(964, 335)
         Me.txtMessage.TabIndex = 0
         '
         'frmSendEmail
@@ -199,7 +213,7 @@ Partial Class frmSendEmail
         Me.Controls.Add(Me.TabControl1)
         Me.Controls.Add(Me.Panel1)
         Me.Name = "frmSendEmail"
-        Me.Text = "frmSendEmail"
+        Me.Text = "Send Email"
         Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         Me.Panel1.ResumeLayout(False)
         Me.Panel1.PerformLayout()
@@ -225,5 +239,6 @@ Partial Class frmSendEmail
     Friend WithEvents TabControl1 As TabControl
     Friend WithEvents TabPage1 As TabPage
     Friend WithEvents TabPage2 As TabPage
+    Friend WithEvents Label1 As Label
     Friend WithEvents txtMessage As TextBox
 End Class

@@ -1,14 +1,4 @@
-﻿Public Class clsEmailPerModule
-
-    Private lngID As Long
-    Property _ID As Long
-        Get
-            Return lngID
-        End Get
-        Set(value As Long)
-            lngID = value
-        End Set
-    End Property
+﻿Public Class clsCompanyHeader
 
     Private strCompany_Code As String
     Property _Company_Code As String
@@ -29,44 +19,37 @@
             strCompany_FullName = value
         End Set
     End Property
+End Class
 
-    Private lngModule_ID As Long
-    Property _Module_ID As Long
+Public Class clsCompanyServiceOffered
+
+    Private lngID As Long
+    Property _ID As Long
         Get
-            Return lngModule_ID
+            Return lngID
         End Get
         Set(value As Long)
-            lngModule_ID = value
+            lngID = value
         End Set
     End Property
 
-    Private strModule_Name As String
-    Property _Module_Name As String
+    Private clsCompany As New clsCompanyHeader
+    Property _Company As clsCompanyHeader
         Get
-            Return strModule_Name
+            Return clsCompany
         End Get
-        Set(value As String)
-            strModule_Name = value
+        Set(value As clsCompanyHeader)
+            clsCompany = value
         End Set
     End Property
 
-    Private clsEmailFrom As New clsEmailAddress
-    Property _EmailFrom As clsEmailAddress
+    Private clsServiceOffered As New clsParameters
+    Property _ServiceOffered As clsParameters
         Get
-            Return clsEmailFrom
+            Return clsServiceOffered
         End Get
-        Set(value As clsEmailAddress)
-            clsEmailFrom = value
-        End Set
-    End Property
-
-    Private clsEmailReplyTo As New clsEmailAddress
-    Property _EmailReplyTo As clsEmailAddress
-        Get
-            Return clsEmailReplyTo
-        End Get
-        Set(value As clsEmailAddress)
-            clsEmailReplyTo = value
+        Set(value As clsParameters)
+            clsServiceOffered = value
         End Set
     End Property
 

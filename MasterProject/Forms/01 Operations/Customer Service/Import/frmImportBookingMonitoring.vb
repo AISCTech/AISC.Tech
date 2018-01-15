@@ -138,6 +138,7 @@ Public Class frmImportBookingMonitoring
 
     Private Sub frmImportBookingMonitoring_Activated(sender As Object, e As EventArgs) Handles Me.Activated
         EnableButtons.UpdateEnabledButtons()
+        PopGrid()
     End Sub
 
     Private Sub frmImportBookingMonitoring_FormClosed(sender As Object, e As FormClosedEventArgs) Handles Me.FormClosed

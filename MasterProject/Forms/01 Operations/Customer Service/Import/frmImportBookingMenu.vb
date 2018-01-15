@@ -4,18 +4,16 @@
 
     Private EnableButtons As New clsEnableToolstripObjects()
     Public clsImportBooking As New clsImportBookingHeader
-    'Public lngBookingID As Long
-    'Public strCompanyName As String
+    Public _ModuleID As Long = 1
 
-    Private strStatusByID As String
-    Private strStatusByName As String
-    Private dtStatusDate As String
+    'Private strStatusByID As String
+    'Private strStatusByName As String
+    'Private dtStatusDate As String
 
     Public Sub NewRecord() Implements ICommonFunction.NewRecord
         If MsgBox("Create new record?", MsgBoxStyle.Question + MsgBoxStyle.YesNo, "System Message") = MsgBoxResult.Yes Then
+            clsImportBooking = New clsImportBookingHeader
             ClearUserInput()
-            txtSite.Tag = CurrentUser._Site_Code
-            txtSite.Text = CurrentUser._Site_Name
             ChangeEnabledButtons(True, False, True, True, False, True, False, False, False, True)
         End If
     End Sub
@@ -30,14 +28,12 @@
 
     Public Sub SaveRecord() Implements ICommonFunction.SaveRecord
         If CheckRequiredEntries() = True Then
-            clsImportBooking = New clsImportBookingHeader
             Dim clsTempService As New clsImportBookingServices
             Dim clsTempContainer As New clsImportBookingContainers
             Dim clsTempDocument As New clsImportBookingDocuments
             Dim clsImportDBTrans As New clsDBTrans
 
             With clsImportBooking
-                '._ID = lngBookingID
                 ._BookingNo = txtBookingNo.Text
                 ._BookingPrefix = GenerateBookingPrefix()
                 ._HouseBL = txtHouseBL.Text
@@ -76,12 +72,15 @@
                 ._LoadTypeID = cboLoadType.SelectedValue
                 ._EntryTypeID = cboEntryType.SelectedValue
                 ._FreightTermsID = cboFreightType.SelectedValue
-                ._AccountHolderID = 1
+                ._WarehouseID = cboWarehouse.SelectedValue
+                ._AccountTypeID = txtAccountType.Tag
+                ._AccountHolderID = txtAccountHolder.Tag
                 ._PrepByID = CurrentUser._User_ID
                 ._ModByID = CurrentUser._User_ID
                 ._StatusByID = CurrentUser._User_ID
             End With
 
+            clsImportBooking._ServiceDetails.Clear()
             For Each dtgRow As DataGridViewRow In dtgServices.Rows
                 If dtgRow.Cells(colSSelected.Name).Value = True Then
                     clsTempService = New clsImportBookingServices
@@ -93,6 +92,7 @@
                 End If
             Next
 
+            clsImportBooking._ContainerDetails.Clear()
             For Each dtgRow As DataGridViewRow In dtgContainer.Rows
                 clsTempContainer = New clsImportBookingContainers
                 With clsTempContainer
@@ -111,6 +111,7 @@
                 clsImportBooking._ContainerDetails.Add(clsTempContainer)
             Next
 
+            clsImportBooking._DocumentDetails.Clear()
             For Each dtgRow As DataGridViewRow In dtgDocuments.Rows
                 If dtgRow.Cells(colDSelected.Name).Value = True Then
                     clsTempDocument = New clsImportBookingDocuments
@@ -125,12 +126,7 @@
     End Sub
 
     Public Sub ResetRecord() Implements ICommonFunction.ResetRecord
-
-
-        Dim clsComboBox As New clsPopulateComboBox(cboShippingLine, "SELECT * FROM v_vendortype WHERE Params_Code = 2 ORDER BY `Description`", "Description", "Code")
-        clsComboBox.PopComboBox()
-
-        clsComboBox = New clsPopulateComboBox(cboModeOfTransport, "SELECT * FROM lib_params WHERE Param_Type = 4 ORDER BY `PK`", "Param_Desc", "PK")
+        Dim clsComboBox As New clsPopulateComboBox(cboModeOfTransport, "SELECT * FROM lib_params WHERE Param_Type = 4 ORDER BY `PK`", "Param_Desc", "PK")
         clsComboBox.PopComboBox()
 
         clsComboBox = New clsPopulateComboBox(cboLoadType, "SELECT * FROM lib_params WHERE Param_Type = 2 ORDER BY `PK`", "Param_Desc", "PK")
@@ -152,6 +148,9 @@
         clsComboBox.PopComboBox()
 
         clsComboBox = New clsPopulateComboBox(cboFreightType, "SELECT * FROM lib_params WHERE Param_Type = 3 ORDER BY `PK`", "Param_Desc", "PK")
+        clsComboBox.PopComboBox()
+
+        clsComboBox = New clsPopulateComboBox(cboWarehouse, "SELECT * FROM lib_warehouse", "WarehouseName", "ID")
         clsComboBox.PopComboBox()
 
         PopulateServices()
@@ -176,6 +175,95 @@
 
     Public Sub PostRecord() Implements ICommonFunction.PostRecord
         If txtStatus.Tag = 1 Then
+            If Not IsDate(txtATA.Text) Then
+                MsgBox("Please enter a date value for ATA!", MsgBoxStyle.Exclamation, "System Message")
+                TabControl1.SelectedTab = tabShippingDetails
+                txtATA.Focus()
+                Exit Sub
+            End If
+
+            If cboVessel.SelectedIndex = -1 Then
+                MsgBox("Please select Vessel!", MsgBoxStyle.Exclamation, "System Message")
+                TabControl1.SelectedTab = tabShippingDetails
+                cboVessel.Focus()
+                Exit Sub
+            End If
+
+            If Len(Trim(txtVoyage.Text)) = 0 Then
+                MsgBox("Please enter Voyage!", MsgBoxStyle.Exclamation, "System Message")
+                TabControl1.SelectedTab = tabShippingDetails
+                txtVoyage.Focus()
+                Exit Sub
+            End If
+
+            If Len(Trim(txtImportPermitNo.Text)) = 0 Then
+                MsgBox("Please enter Import Permit No.!", MsgBoxStyle.Exclamation, "System Message")
+                TabControl1.SelectedTab = tabShippingDetails
+                txtImportPermitNo.Focus()
+                Exit Sub
+            End If
+
+            If Len(Trim(txtInvoiceNo.Text)) = 0 Then
+                MsgBox("Please enter Invoice No.!", MsgBoxStyle.Exclamation, "System Message")
+                TabControl1.SelectedTab = tabShippingDetails
+                txtInvoiceNo.Focus()
+                Exit Sub
+            End If
+
+            If Len(Trim(txtRegistryNo.Text)) = 0 Then
+                MsgBox("Please enter Registry No.!", MsgBoxStyle.Exclamation, "System Message")
+                TabControl1.SelectedTab = tabShippingDetails
+                txtRegistryNo.Focus()
+                Exit Sub
+            End If
+
+            If cboEntryType.SelectedIndex = -1 Then
+                MsgBox("Please select Entry Type!", MsgBoxStyle.Exclamation, "System Message")
+                TabControl1.SelectedTab = tabShippingDetails
+                cboEntryType.Focus()
+                Exit Sub
+            End If
+
+            If cboFreightType.SelectedIndex = -1 Then
+                MsgBox("Please select Freight Type!", MsgBoxStyle.Exclamation, "System Message")
+                TabControl1.SelectedTab = tabShippingDetails
+                cboFreightType.Focus()
+                Exit Sub
+            End If
+
+            If cboWarehouse.SelectedIndex = -1 Then
+                MsgBox("Please select Warehouse!", MsgBoxStyle.Exclamation, "System Message")
+                TabControl1.SelectedTab = tabShippingDetails
+                cboWarehouse.Focus()
+                Exit Sub
+            End If
+
+            If dtgContainer.Rows.Count = 0 Then
+                MsgBox("Please enter Container No/s.!", MsgBoxStyle.Exclamation, "System Message")
+                TabControl1.SelectedTab = tabContainer
+                Exit Sub
+            End If
+
+            For Each dtgRow As DataGridViewRow In dtgContainer.Rows
+                If Not IsDate(dtgRow.Cells(colCDeliveryDate.Name).Value) Then
+                    MsgBox("Please enter Delivery/Pickup on all containers!", MsgBoxStyle.Exclamation, "System Message")
+                    TabControl1.SelectedTab = tabContainer
+                    Exit Sub
+                End If
+
+                If Not IsDate(dtgRow.Cells(colCPickUpDate.Name).Value) Then
+                    MsgBox("Please enter Delivery/Pickup on all containers!", MsgBoxStyle.Exclamation, "System Message")
+                    TabControl1.SelectedTab = tabContainer
+                    Exit Sub
+                End If
+            Next
+
+            If chkDocsCompleted.Checked = False Then
+                MsgBox("Documents are incomplete!" & vbNewLine & "Please make sure documents are on hand before updating the system.", MsgBoxStyle.Exclamation, "System Message")
+                TabControl1.SelectedTab = tabDocuments
+                Exit Sub
+            End If
+
             If MsgBox("Are you sure you want to POST record?", MsgBoxStyle.Question + MsgBoxStyle.YesNo, "System Message") = MsgBoxResult.Yes Then
                 If cnnDBMaster.State <> ConnectionState.Open Then cnnDBMaster.Open()
 
@@ -357,131 +445,243 @@
     End Sub
 
     Private Function CheckRequiredEntries() As Boolean
-        CheckRequiredEntries = True
+        Dim blTemp As Boolean = True
 
+        ErrorProvider1.Clear()
         dtgServices.EndEdit()
         dtgContainer.EndEdit()
         dtgDocuments.EndEdit()
+        tslblContainerSizes.Text = GetContainerSizes()
+
+        If Len(Trim(txtHouseBL.Text)) = 0 Then
+            ErrorProvider1.SetError(txtHouseBL, "Cannot be blank!")
+            blTemp = False
+        End If
 
         If Len(txtConsignor.Tag) = 0 Then
-            MsgBox("Please select Consignor/Debtor!", MsgBoxStyle.Exclamation, "System Message")
-            CheckRequiredEntries = False
-            Exit Function
+            txtConsignor.Text = ""
+            ErrorProvider1.SetError(grpConsignor, "Cannot be blank!")
+            blTemp = False
         End If
+
+        If Len(Trim(txtShipper.Tag)) = 0 Then
+            txtShipper.Text = ""
+            ErrorProvider1.SetError(grpShipper, "Cannot be blank!")
+            blTemp = False
+        End If
+
+        If Len(Trim(txtConsignee.Tag)) = 0 Then
+            txtConsignee.Text = ""
+            ErrorProvider1.SetError(grpConsignee, "Cannot be blank!")
+            blTemp = False
+        End If
+
+        If Len(Trim(txtForwarder.Tag)) = 0 Then
+            txtForwarder.Text = ""
+            ErrorProvider1.SetError(grpForwarder, "Cannot be blank!")
+            blTemp = False
+        End If
+
+        Dim blService As Boolean = False
+        For Each dtgRow As DataGridViewRow In dtgServices.Rows
+            If dtgRow.Cells(colSSelected.Name).Value = True Then
+                blService = True
+            End If
+        Next
+
+        If blService = False Then
+            ErrorProvider1.SetError(dtgServices, "Nothing is selected!")
+            blTemp = False
+        End If
+
+        If Len(Trim(txtDescriptionOfGoods.Text)) = 0 Then
+            ErrorProvider1.SetError(grpDescriptionOfGoods, "Cannot be blank!")
+            blTemp = False
+        End If
+
+        If cboModeOfTransport.SelectedIndex = -1 Then
+            TabControl1.SelectedTab = tabShippingDetails
+            ErrorProvider1.SetError(cboDestination, "Must be selected from the drop down list!")
+            blTemp = False
+        End If
+
+        If cboModeOfTransport.SelectedValue = 8 Or cboModeOfTransport.SelectedValue = 9 Then
+            If cboShippingLine.SelectedIndex = -1 Then
+                TabControl1.SelectedTab = tabShippingDetails
+                ErrorProvider1.SetError(cboDestination, "Must be selected from the drop down list!")
+                blTemp = False
+            End If
+        End If
+
+        If cboLoadType.SelectedIndex = -1 Then
+            TabControl1.SelectedTab = tabShippingDetails
+            ErrorProvider1.SetError(cboDestination, "Must be selected from the drop down list!")
+            blTemp = False
+        End If
+
+        If Not IsNumeric(txtWeight.Text) Then
+            TabControl1.SelectedTab = tabShippingDetails
+            ErrorProvider1.SetError(txtWeight, "Must be a numeric value!")
+            blTemp = False
+        End If
+
+        If Not IsNumeric(txtVolume.Text) Then
+            TabControl1.SelectedTab = tabShippingDetails
+            ErrorProvider1.SetError(txtVolume, "Must be a numeric value!")
+            blTemp = False
+        End If
+
+        If Not IsNumeric(txtNoOfPackage.Text) Then
+            TabControl1.SelectedTab = tabShippingDetails
+            ErrorProvider1.SetError(txtNoOfPackage, "Must be a numeric value!")
+            blTemp = False
+        End If
+
+        If cboUnitOfMeasure.SelectedIndex = -1 Then
+            TabControl1.SelectedTab = tabShippingDetails
+            ErrorProvider1.SetError(cboUnitOfMeasure, "Must be selected from the drop down list!")
+            blTemp = False
+        End If
+
+        If cboOrigin.SelectedIndex = -1 Then
+            TabControl1.SelectedTab = tabShippingDetails
+            ErrorProvider1.SetError(cboOrigin, "Must be selected from the drop down list!")
+            blTemp = False
+        End If
+
+        If cboDestination.SelectedIndex = -1 Then
+            TabControl1.SelectedTab = tabShippingDetails
+            ErrorProvider1.SetError(cboDestination, "Must be selected from the drop down list!")
+            blTemp = False
+        End If
+
+        If Not IsDate(txtETA.Text) Then
+            TabControl1.SelectedTab = tabShippingDetails
+            ErrorProvider1.SetError(cboDestination, "Must be a date value!")
+            blTemp = False
+        End If
+
+        Return blTemp
     End Function
 
     Public Sub PopulateBooking(ByVal clsImpBook As clsImportBookingHeader)
-        ClearUserInput()
-        clsImportBooking = clsImpBook
-        clsImportBooking._ID = clsImpBook._ID
-        txtBookingPrefix.Text = clsImpBook._BookingPrefix
-        txtBookingNo.Text = clsImpBook._BookingNo
-        txtHouseBL.Text = clsImpBook._HouseBL
-        txtSite.Tag = clsImpBook._SiteCode
-        txtSite.Text = clsImpBook._SiteName
-        txtShipper.Tag = clsImpBook._ShipperCode
-        txtShipper.Text = clsImpBook._ShipperName
-        txtShipperAddress.Text = clsImpBook._ShipperAddress
-        txtConsignee.Tag = clsImpBook._ConsigneeCode
-        txtConsignee.Text = clsImpBook._ConsigneeName
-        txtConsigneeAddress.Text = clsImpBook._ConsigneeAddress
-        txtConsignor.Tag = clsImpBook._ConsignorCode
-        txtConsignor.Text = clsImpBook._ConsignorName
-        txtConsignorAddress.Text = clsImpBook._ConsignorAddress
-        txtForwarder.Tag = clsImpBook._ForwarderCode
-        txtForwarder.Text = clsImpBook._ForwarderName
-        txtForwarderAddress.Text = clsImpBook._ForwarderAddress
-        cboShippingLine.SelectedValue = clsImpBook._ShippingLineCode
-        txtDescriptionOfGoods.Text = clsImpBook._DescriptionOfGoods
-        txtWeight.Text = clsImpBook._Weight
-        txtVolume.Text = clsImpBook._Volume
-        txtNoOfPackage.Text = clsImpBook._NoOfPackage
-        cboUnitOfMeasure.SelectedValue = clsImpBook._PackageUnitID
-        cboOrigin.SelectedValue = clsImpBook._OriginPortID
-        txtOriginCountry.Text = clsImpBook._OriginCountryName
-        cboDestination.SelectedValue = clsImpBook._DestinationPortID
-        txtDestinationCountry.Text = clsImpBook._DestinationCountryName
-        If clsImpBook._ETA = Nothing Then
-            txtETA.Text = ""
-        Else
-            txtETA.Text = clsImpBook._ETA
-        End If
-        If clsImpBook._ATA = Nothing Then
-            txtATA.Text = ""
-        Else
-            txtATA.Text = clsImpBook._ATA
-        End If
-        cboVessel.SelectedValue = clsImpBook._VesselID
-        txtVoyage.Text = clsImpBook._Voyage
-        chkDocsCompleted.Checked = clsImpBook._DocsCompleted
-        If clsImpBook._DocsCompletedDate = Nothing Then
-            txtDocsCompletedDate.Text = ""
-        Else
-            txtDocsCompletedDate.Text = clsImpBook._DocsCompletedDate
-        End If
-        txtImportPermitNo.Text = clsImpBook._ImportPermitNo
-        txtInvoiceNo.Text = clsImpBook._InvoiceNo
-        txtRegistryNo.Text = clsImpBook._RegistryNo
-        txtRemarks.Text = clsImpBook._Remarks
-        'account holder
-        txtStatus.Tag = clsImpBook._StatusID
-        txtStatus.Text = clsImpBook._StatusName
-        strStatusByID = clsImpBook._StatusByID
-        strStatusByName = clsImpBook._StatusByFullName
-        dtStatusDate = clsImpBook._StatusDate
-        cboModeOfTransport.SelectedValue = clsImpBook._ModeOfTransportID
-        cboLoadType.SelectedValue = clsImpBook._LoadTypeID
-        cboEntryType.SelectedValue = clsImpBook._EntryTypeID
-        cboFreightType.SelectedValue = clsImpBook._FreightTermsID
-        tslblPrepBy.Text = clsImpBook._PrepByFullName
-        tslblPrepBy.ToolTipText = tslblPrepBy.Text
-        tslblPrepDate.Text = clsImpBook._PrepDate
-        tslblPrepDate.ToolTipText = tslblPrepDate.Text
-        tslblModBy.Text = clsImpBook._ModByFullName
-        tslblModBy.ToolTipText = tslblModBy.Text
-        tslblModDate.Text = clsImpBook._ModDate
-        tslblModDate.ToolTipText = tslblModDate.Text
+        If IsNothing(clsImpBook) = False Then
+            ClearUserInput()
+            clsImportBooking = clsImpBook
+            clsImportBooking._ID = clsImpBook._ID
+            txtBookingPrefix.Text = clsImpBook._BookingPrefix
+            txtBookingNo.Text = clsImpBook._BookingNo
+            txtHouseBL.Text = clsImpBook._HouseBL
+            txtSite.Tag = clsImpBook._SiteCode
+            txtSite.Text = clsImpBook._SiteName
+            txtShipper.Tag = clsImpBook._ShipperCode
+            txtShipper.Text = clsImpBook._ShipperName
+            txtShipperAddress.Text = clsImpBook._ShipperAddress
+            txtConsignee.Tag = clsImpBook._ConsigneeCode
+            txtConsignee.Text = clsImpBook._ConsigneeName
+            txtConsigneeAddress.Text = clsImpBook._ConsigneeAddress
+            txtConsignor.Tag = clsImpBook._ConsignorCode
+            txtConsignor.Text = clsImpBook._ConsignorName
+            txtConsignorAddress.Text = clsImpBook._ConsignorAddress
+            txtForwarder.Tag = clsImpBook._ForwarderCode
+            txtForwarder.Text = clsImpBook._ForwarderName
+            txtForwarderAddress.Text = clsImpBook._ForwarderAddress
+            txtDescriptionOfGoods.Text = clsImpBook._DescriptionOfGoods
+            txtWeight.Text = clsImpBook._Weight
+            txtVolume.Text = clsImpBook._Volume
+            txtNoOfPackage.Text = clsImpBook._NoOfPackage
+            cboUnitOfMeasure.SelectedValue = clsImpBook._PackageUnitID
+            cboOrigin.SelectedValue = clsImpBook._OriginPortID
+            txtOriginCountry.Text = clsImpBook._OriginCountryName
+            cboDestination.SelectedValue = clsImpBook._DestinationPortID
+            txtDestinationCountry.Text = clsImpBook._DestinationCountryName
+            If clsImpBook._ETA = Nothing Then
+                txtETA.Text = ""
+            Else
+                txtETA.Text = clsImpBook._ETA
+            End If
+            If clsImpBook._ATA = Nothing Then
+                txtATA.Text = ""
+            Else
+                txtATA.Text = clsImpBook._ATA
+            End If
+            cboVessel.SelectedValue = clsImpBook._VesselID
+            txtVoyage.Text = clsImpBook._Voyage
+            chkDocsCompleted.Checked = clsImpBook._DocsCompleted
+            If clsImpBook._DocsCompletedDate = Nothing Then
+                txtDocsCompletedDate.Text = ""
+            Else
+                txtDocsCompletedDate.Text = clsImpBook._DocsCompletedDate
+            End If
+            txtImportPermitNo.Text = clsImpBook._ImportPermitNo
+            txtInvoiceNo.Text = clsImpBook._InvoiceNo
+            txtRegistryNo.Text = clsImpBook._RegistryNo
+            txtRemarks.Text = clsImpBook._Remarks
+            txtAccountType.Tag = clsImpBook._AccountTypeID
+            txtAccountType.Text = clsImpBook._AccountTypeDesc
+            txtAccountHolder.Tag = clsImpBook._AccountHolderID
+            txtAccountHolder.Text = clsImpBook._AccountHolderFullName
+            txtStatus.Tag = clsImpBook._StatusID
+            txtStatus.Text = clsImpBook._StatusName
+            cboModeOfTransport.SelectedValue = clsImpBook._ModeOfTransportID
+            cboShippingLine.SelectedValue = clsImpBook._ShippingLineCode
+            cboLoadType.SelectedValue = clsImpBook._LoadTypeID
+            cboEntryType.SelectedValue = clsImpBook._EntryTypeID
+            cboFreightType.SelectedValue = clsImpBook._FreightTermsID
+            cboWarehouse.SelectedValue = clsImportBooking._WarehouseID
+            tslblPrepBy.Text = clsImpBook._PrepByFullName
+            tslblPrepBy.ToolTipText = tslblPrepBy.Text
+            tslblPrepDate.Text = clsImpBook._PrepDate
+            tslblPrepDate.ToolTipText = tslblPrepDate.Text
+            tslblModBy.Text = clsImpBook._ModByFullName
+            tslblModBy.ToolTipText = tslblModBy.Text
+            tslblModDate.Text = clsImpBook._ModDate
+            tslblModDate.ToolTipText = tslblModDate.Text
 
-        For Each clsTemp As clsImportBookingServices In clsImpBook._ServiceDetails
-            For Each dtgTemp As DataGridViewRow In dtgServices.Rows
-                If clsTemp._ServiceID = dtgTemp.Cells(colSPK.Name).Value Then
-                    dtgTemp.Cells(colSSelected.Name).Value = True
-                    Exit For
-                End If
+            For Each clsTemp As clsImportBookingServices In clsImpBook._ServiceDetails
+                For Each dtgTemp As DataGridViewRow In dtgServices.Rows
+                    If clsTemp._ServiceID = dtgTemp.Cells(colSPK.Name).Value Then
+                        dtgTemp.Cells(colSSelected.Name).Value = True
+                        Exit For
+                    End If
+                Next
             Next
-        Next
 
-        For Each clsTemp As clsImportBookingContainers In clsImpBook._ContainerDetails
-            dtgContainer.Rows.Add()
-            With dtgContainer.Rows(dtgContainer.Rows.Count - 1)
-                .Cells(colCPK.Name).Value = clsTemp._ID
-                .Cells(colCContainerID.Name).Value = clsTemp._ContainerID
-                .Cells(colCContainerNo.Name).Value = clsTemp._ContainerNo
-                .Cells(colCContainerSizeID.Name).Value = clsTemp._ContainerSizeID
-                .Cells(colCContainerSizeName.Name).Value = clsTemp._ContainerSizeName
-                If clsTemp._PickupDate = Nothing Then
-                    .Cells(colCPickUpDate.Name).Value = "TBA"
-                Else
-                    .Cells(colCPickUpDate.Name).Value = clsTemp._PickupDate
-                End If
-                If clsTemp._DeliveryDate = Nothing Then
-                    .Cells(colCDeliveryDate.Name).Value = "TBA"
-                Else
-                    .Cells(colCDeliveryDate.Name).Value = clsTemp._DeliveryDate
-                End If
-            End With
-        Next
-
-        For Each clsTemp As clsImportBookingDocuments In clsImpBook._DocumentDetails
-            For Each dtgTemp As DataGridViewRow In dtgDocuments.Rows
-                If clsTemp._DocumentID = dtgTemp.Cells(colDDocID.Name).Value Then
-                    dtgTemp.Cells(colDSelected.Name).Value = True
-                    Exit For
-                End If
+            For Each clsTemp As clsImportBookingContainers In clsImpBook._ContainerDetails
+                dtgContainer.Rows.Add()
+                With dtgContainer.Rows(dtgContainer.Rows.Count - 1)
+                    .Cells(colCPK.Name).Value = clsTemp._ID
+                    .Cells(colCContainerID.Name).Value = clsTemp._ContainerID
+                    .Cells(colCContainerNo.Name).Value = clsTemp._ContainerNo
+                    .Cells(colCContainerSizeID.Name).Value = clsTemp._ContainerSizeID
+                    .Cells(colCContainerSizeName.Name).Value = clsTemp._ContainerSizeName
+                    If clsTemp._PickupDate = Nothing Then
+                        .Cells(colCPickUpDate.Name).Value = "TBA"
+                    Else
+                        .Cells(colCPickUpDate.Name).Value = clsTemp._PickupDate
+                    End If
+                    If clsTemp._DeliveryDate = Nothing Then
+                        .Cells(colCDeliveryDate.Name).Value = "TBA"
+                    Else
+                        .Cells(colCDeliveryDate.Name).Value = clsTemp._DeliveryDate
+                    End If
+                End With
             Next
-        Next
+            tslblContainerSizes.Text = GetContainerSizes()
 
-        ChangeEnabledButtons(True, True, False, True, True, True, True, True, True, False)
+            For Each clsTemp As clsImportBookingDocuments In clsImpBook._DocumentDetails
+                For Each dtgTemp As DataGridViewRow In dtgDocuments.Rows
+                    If clsTemp._DocumentID = dtgTemp.Cells(colDDocID.Name).Value Then
+                        dtgTemp.Cells(colDSelected.Name).Value = True
+                        Exit For
+                    End If
+                Next
+            Next
+
+            ChangeEnabledButtons(True, True, False, True, True, True, True, True, True, False)
+        Else
+
+        End If
     End Sub
 
     Private Function GenerateBookingPrefix() As String
@@ -523,6 +723,7 @@
 
 lnAccountType:
             'Account Type
+            strTemp = strTemp & clsImportBooking._AccountTypePrefix
 
             GenerateBookingPrefix = strTemp
         Catch ex As Exception
@@ -532,14 +733,29 @@ lnAccountType:
     End Function
 
     Private Function GetContainerSizes() As String
-        GetContainerSizes = ""
+        Dim clsDB As New clsDBTrans
+        Dim lstContainersTypes As New List(Of clsParameters)
+        Dim intNoOfCont As Integer = 0
         Dim strTemp As String = ""
 
+        lstContainersTypes = clsDB.PopulateListOfParameters(6)
+        For Each clsContainerType As clsParameters In lstContainersTypes
+            For Each dtgRow As DataGridViewRow In dtgContainer.Rows
+                If clsContainerType._PK = dtgRow.Cells(colCContainerSizeID.Name).Value Then
+                    intNoOfCont += 1
+                End If
+            Next
+            If intNoOfCont > 0 Then
+                strTemp = Trim(strTemp & "   " & intNoOfCont & " x " & clsContainerType._Param_Desc)
+            End If
+            intNoOfCont = 0
+        Next
 
+        Return strTemp
     End Function
 
     Public Sub ClearUserInput()
-        clsImportBooking = New clsImportBookingHeader
+        ErrorProvider1.Clear()
         txtBookingPrefix.Text = ""
         txtBookingNo.Text = ""
         txtHouseBL.Text = ""
@@ -561,6 +777,9 @@ lnAccountType:
         txtDescriptionOfGoods.Text = ""
         txtWeight.Text = ""
         txtVolume.Text = ""
+        txtAccountType.Tag = ""
+        txtAccountType.Text = ""
+        txtAccountHolder.Tag = ""
         txtAccountHolder.Text = ""
         For Each dtgRow As DataGridViewRow In dtgServices.Rows
             dtgRow.Cells(colSSelected.Name).Value = False
@@ -585,13 +804,11 @@ lnAccountType:
         txtRegistryNo.Text = ""
         cboEntryType.SelectedIndex = -1
         cboFreightType.SelectedIndex = -1
+        cboWarehouse.SelectedIndex = -1
         txtRemarks.Text = ""
         txtStatus.Tag = ""
         txtStatus.Text = ""
         lblStatusDetails.Visible = False
-        strStatusByID = ""
-        strStatusByName = ""
-        dtStatusDate = Nothing
         dtgContainer.Rows.Clear()
         tslblContainerSizes.Text = ""
         For Each dtgRow As DataGridViewRow In dtgDocuments.Rows
@@ -607,18 +824,18 @@ lnAccountType:
 
             If cnnDBMaster.State <> ConnectionState.Open Then cnnDBMaster.Open()
             cmdSQL.Connection = cnnDBMaster
-            cmdSQL.CommandText = "SELECT PK, Param_Type, Param_Code, Param_Value, Param_Desc " &
-                        "FROM lib_params " &
-                        "WHERE Param_Type = 10 " &
-                        "ORDER BY PK"
-
+            cmdSQL.CommandText = "SELECT Service_Code, Param_Type, Param_Code, Param_Value, Param_Desc " &
+                        "FROM v_companyserviceoffered " &
+                        "WHERE Company_Code = @Company_Code " &
+                        "ORDER BY Service_Code"
+            cmdSQL.Parameters.AddWithValue("@Company_Code", CurrentUser._Company_Code)
             dtgServices.Rows.Clear()
 
             Dim reader As MySql.Data.MySqlClient.MySqlDataReader = cmdSQL.ExecuteReader
             While reader.Read
                 dtgServices.Rows.Add()
                 With dtgServices.Rows(dtgServices.Rows.Count - 1)
-                    .Cells(colSPK.Name).Value = reader.Item("PK")
+                    .Cells(colSPK.Name).Value = reader.Item("Service_Code")
                     .Cells(colSParam_Type.Name).Value = reader.Item("Param_Type")
                     .Cells(colSParam_Code.Name).Value = reader.Item("Param_Code")
                     .Cells(colSPrefix.Name).Value = reader.Item("Param_Value")
@@ -632,31 +849,6 @@ lnAccountType:
             MsgBox(ex.Message)
         End Try
     End Sub
-
-    Private Function GetClientAddress(ByVal strClientCode As String) As String
-        GetClientAddress = ""
-
-        Try
-            Dim strTemp As String
-            Dim cmdSQL = New MySql.Data.MySqlClient.MySqlCommand
-
-            If cnnDBMaster.State <> ConnectionState.Open Then cnnDBMaster.Open()
-            cmdSQL.Connection = cnnDBMaster
-            cmdSQL.CommandText = "SELECT Addr1, CityDesc, CountryDesc FROM v_client WHERE Code = @Code"
-            cmdSQL.Parameters.AddWithValue("@Code", strClientCode)
-
-            Dim reader As MySql.Data.MySqlClient.MySqlDataReader = cmdSQL.ExecuteReader
-            While reader.Read
-                strTemp = Trim(CStr(reader.Item("Addr1") & " " & reader.Item("CityDesc") & " " & reader.Item("CountryDesc")).ToUpper)
-                GetClientAddress = System.Text.RegularExpressions.Regex.Replace(strTemp, "\s{2,}", " ")
-            End While
-
-            reader.Close()
-            cmdSQL.Dispose()
-        Catch ex As Exception
-            MsgBox(ex.Message)
-        End Try
-    End Function
 
     Private Function GetPortCountry(ByVal lngPortCode As Long) As String
         GetPortCountry = ""
@@ -729,6 +921,7 @@ lnAccountType:
         txtRegistryNo.ReadOnly = Not blUserInput
         cboEntryType.Enabled = blUserInput
         cboFreightType.Enabled = blUserInput
+        cboWarehouse.Enabled = blUserInput
         tscmdContainerAdd.Enabled = blUserInput
         tscmdContainerRemove.Enabled = blUserInput
         colDSelected.ReadOnly = Not blUserInput
@@ -813,17 +1006,23 @@ lnAccountType:
     End Sub
 
     Private Sub cmdSelectConsignor_Click(sender As Object, e As EventArgs) Handles cmdSelectConsignor.Click
-        With frmSelection
-            .Text = "Select Consignor/Debtor"
-            .PopulateGrid("SELECT Code, Description as `Consignor Name` FROM tbl_client ORDER BY `Consignor Name`", "`Consignor Name`", txtConsignor)
-
-            .dtgSelection.Columns(0).Visible = False
-            .dtgSelection.Columns(1).Width = 375
-
+        With frmSelectClient
             .ShowDialog()
-        End With
 
-        txtConsignorAddress.Text = GetClientAddress(txtConsignor.Tag)
+            txtConsignor.Tag = .clsSelectedClient._Code
+            txtConsignor.Text = .clsSelectedClient._Description
+            txtConsignorAddress.Text = FormalText(.clsSelectedClient._Addr1 & " " & .clsSelectedClient._CityDesc & " " & .clsSelectedClient._CountryDesc).ToUpper
+            clsImportBooking._AccountTypePrefix = .clsSelectedClient._Account_TypePrefix
+
+            txtSite.Tag = .clsSelectedClient._SitePK
+            txtSite.Text = .clsSelectedClient._Site_Name
+            txtAccountType.Tag = .clsSelectedClient._Account_TypeID
+            txtAccountType.Text = .clsSelectedClient._Account_TypeDesc
+            txtAccountHolder.Tag = .clsSelectedClient._Account_HandlerID
+            txtAccountHolder.Text = .clsSelectedClient._Account_HandlerName
+
+            .Dispose()
+        End With
     End Sub
 
     Private Sub cmdSelectForwader_Click(sender As Object, e As EventArgs) Handles cmdSelectForwader.Click
@@ -867,8 +1066,8 @@ lnAccountType:
     Private Sub lblStatusDetails_Click(sender As Object, e As EventArgs) Handles lblStatusDetails.Click
         If clsImportBooking._ID > 0 Then
             MsgBox("Status: " & txtStatus.Text.ToUpper & vbNewLine &
-               "Status Update By: " & strStatusByName & vbNewLine &
-               "Status Date: " & dtStatusDate, MsgBoxStyle.Information, "Status Details")
+               "Status Update By: " & clsImportBooking._StatusByFullName & vbNewLine &
+               "Status Date: " & clsImportBooking._StatusDate, MsgBoxStyle.Information, "Status Details")
         End If
     End Sub
 
@@ -895,5 +1094,37 @@ lnAccountType:
     Private Sub dtgDocuments_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dtgDocuments.CellContentClick
         dtgDocuments.EndEdit()
         chkDocsCompleted.Checked = CheckIfDocsComplete()
+    End Sub
+
+    Private Sub cboModeOfTransport_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboModeOfTransport.SelectedIndexChanged
+
+    End Sub
+
+    Private Sub cboModeOfTransport_SelectedValueChanged(sender As Object, e As EventArgs) Handles cboModeOfTransport.SelectedValueChanged
+        Dim objSelectedValue As IConvertible = TryCast(Me.cboModeOfTransport.SelectedValue, IConvertible)
+
+        Select Case CInt(objSelectedValue)
+            Case 8 'Sea
+                Dim clsComboBox As New clsPopulateComboBox(cboShippingLine, "SELECT * FROM v_vendortype WHERE Params_Code = 2 ORDER BY `Description`", "Description", "Code")
+                clsComboBox.PopComboBox()
+
+                lblShpAirLine1.Visible = True
+                lblShpAirLine2.Visible = True
+                cboShippingLine.Visible = True
+                lblShpAirLine1.Text = "Shipping Line"
+            Case 9 ' Air
+                Dim clsComboBox As New clsPopulateComboBox(cboShippingLine, "SELECT * FROM v_vendortype WHERE Params_Code = 3 ORDER BY `Description`", "Description", "Code")
+                clsComboBox.PopComboBox()
+
+                lblShpAirLine1.Visible = True
+                lblShpAirLine2.Visible = True
+                cboShippingLine.Visible = True
+                lblShpAirLine1.Text = "Airline"
+            Case Else
+                cboShippingLine.DataSource = Nothing
+                lblShpAirLine1.Visible = False
+                lblShpAirLine2.Visible = False
+                cboShippingLine.Visible = False
+        End Select
     End Sub
 End Class
