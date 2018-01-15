@@ -540,6 +540,56 @@
         End Set
     End Property
 
+    Private lngWarehouseID As Long
+    Property _WarehouseID As Long
+        Get
+            Return lngWarehouseID
+        End Get
+        Set(value As Long)
+            lngWarehouseID = value
+        End Set
+    End Property
+
+    Private strWarehouseName As String
+    Property _WarehouseName As String
+        Get
+            Return strWarehouseName
+        End Get
+        Set(value As String)
+            strWarehouseName = value
+        End Set
+    End Property
+
+    Private lngAccountTypeID As Long
+    Property _AccountTypeID As Long
+        Get
+            Return lngAccountTypeID
+        End Get
+        Set(value As Long)
+            lngAccountTypeID = value
+        End Set
+    End Property
+
+    Private strAccountTypePrefix As String
+    Property _AccountTypePrefix As String
+        Get
+            Return strAccountTypePrefix
+        End Get
+        Set(value As String)
+            strAccountTypePrefix = value
+        End Set
+    End Property
+
+    Private strAccountTypeDesc As String
+    Property _AccountTypeDesc As String
+        Get
+            Return strAccountTypeDesc
+        End Get
+        Set(value As String)
+            strAccountTypeDesc = value
+        End Set
+    End Property
+
     Private strAccountHolderID As String
     Property _AccountHolderID As String
         Get

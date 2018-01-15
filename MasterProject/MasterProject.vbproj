@@ -13,6 +13,21 @@
     <MyType>WindowsForms</MyType>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -80,6 +95,7 @@
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\MySQL\MySQL Connector Net 6.1.2\Assemblies\MySql.Data.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
     <Reference Include="System.DirectoryServices" />
@@ -110,10 +126,14 @@
     <Compile Include="Classes\Database Transactions\clsDBTrans.vb" />
     <Compile Include="Classes\Global Classes\clsEmailSending.vb" />
     <Compile Include="Classes\Global Classes\clsLocalFiles.vb" />
+    <Compile Include="Classes\Global Classes\clsReportParameters.vb" />
+    <Compile Include="Classes\Maintenance\Client\clsClient.vb" />
+    <Compile Include="Classes\Maintenance\Company\clsCompany.vb" />
     <Compile Include="Classes\Maintenance\Email\clsEmailAddress.vb" />
     <Compile Include="Classes\Maintenance\Email\clsEmailPerModule.vb" />
     <Compile Include="Classes\Maintenance\File Location\clsFileLocation.vb" />
     <Compile Include="Classes\Maintenance\Modules\clsModules.vb" />
+    <Compile Include="Classes\Maintenance\Parameters\clsParameters.vb" />
     <Compile Include="Classes\Operations\Customer Service\Import\clsImportBooking.vb" />
     <Compile Include="Classes\Global Classes\clsEnableToolstripObjects.vb" />
     <Compile Include="Classes\Global Classes\clsPopulateComboBox.vb" />
@@ -134,6 +154,12 @@
       <DependentUpon>frmAddBookingContainer.vb</DependentUpon>
     </Compile>
     <Compile Include="Forms\01 Operations\Customer Service\frmAddBookingContainer.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\01 Operations\Customer Service\frmSelectClient.Designer.vb">
+      <DependentUpon>frmSelectClient.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\01 Operations\Customer Service\frmSelectClient.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\01 Operations\Customer Service\frmSelection.Designer.vb">
@@ -280,6 +306,12 @@
     <Compile Include="Forms\02 Accounting\frmSelectGLEntry.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Forms\03 Maintenance\Company\frmCompanyServiceOffered.Designer.vb">
+      <DependentUpon>frmCompanyServiceOffered.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\03 Maintenance\Company\frmCompanyServiceOffered.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\03 Maintenance\Email\frmManageEmailAddresses.Designer.vb">
       <DependentUpon>frmManageEmailAddresses.vb</DependentUpon>
     </Compile>
@@ -356,6 +388,9 @@
     <EmbeddedResource Include="Forms\01 Operations\Customer Service\frmAddBookingContainer.resx">
       <DependentUpon>frmAddBookingContainer.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\01 Operations\Customer Service\frmSelectClient.resx">
+      <DependentUpon>frmSelectClient.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\01 Operations\Customer Service\frmSelection.resx">
       <DependentUpon>frmSelection.vb</DependentUpon>
     </EmbeddedResource>
@@ -428,6 +463,9 @@
     <EmbeddedResource Include="Forms\02 Accounting\frmSelectGLEntry.resx">
       <DependentUpon>frmSelectGLEntry.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\03 Maintenance\Company\frmCompanyServiceOffered.resx">
+      <DependentUpon>frmCompanyServiceOffered.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\03 Maintenance\Email\frmManageEmailAddresses.resx">
       <DependentUpon>frmManageEmailAddresses.vb</DependentUpon>
     </EmbeddedResource>
@@ -457,6 +495,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Config\cnn.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
@@ -476,6 +517,18 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{C0C07587-41A7-46C8-8FBD-3F9C8EBE2DDC}" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.5.2 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

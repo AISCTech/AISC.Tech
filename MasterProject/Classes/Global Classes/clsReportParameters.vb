@@ -1,11 +1,11 @@
-﻿Public Class clsEmailPerModule
+﻿Public Class clsReportParameters
 
     Private lngID As Long
-    Property _ID As Long
+    Property _ID As Integer
         Get
             Return lngID
         End Get
-        Set(value As Long)
+        Set(value As Integer)
             lngID = value
         End Set
     End Property
@@ -30,43 +30,33 @@
         End Set
     End Property
 
-    Private lngModule_ID As Long
-    Property _Module_ID As Long
+    Private strReport_Name As String
+    Property _Report_Name As String
         Get
-            Return lngModule_ID
-        End Get
-        Set(value As Long)
-            lngModule_ID = value
-        End Set
-    End Property
-
-    Private strModule_Name As String
-    Property _Module_Name As String
-        Get
-            Return strModule_Name
+            Return strReport_Name
         End Get
         Set(value As String)
-            strModule_Name = value
+            strReport_Name = value
         End Set
     End Property
 
-    Private clsEmailFrom As New clsEmailAddress
-    Property _EmailFrom As clsEmailAddress
+    Private strParameter_Name As String
+    Property _Parameter_Name As String
         Get
-            Return clsEmailFrom
+            Return strParameter_Name
         End Get
-        Set(value As clsEmailAddress)
-            clsEmailFrom = value
+        Set(value As String)
+            strParameter_Name = value
         End Set
     End Property
 
-    Private clsEmailReplyTo As New clsEmailAddress
-    Property _EmailReplyTo As clsEmailAddress
+    Private strParameter_Value As String
+    Property _Parameter_Value As String
         Get
-            Return clsEmailReplyTo
+            Return strParameter_Value
         End Get
-        Set(value As clsEmailAddress)
-            clsEmailReplyTo = value
+        Set(value As String)
+            strParameter_Value = value
         End Set
     End Property
 
