@@ -213,7 +213,7 @@ Public Class mdiMain
             MyNode(0).Nodes.Add("3.2.3", "...")
 
             'Forms Registration
-            .Nodes.Add("3.3", "Forms Registration Menu")
+            .Nodes.Add("3.4", "Forms Registration Menu")
         End With
     End Sub
 
@@ -246,7 +246,7 @@ Public Class mdiMain
                     ChildForm = frmInvoice
                 Case "2.2.2.1"
                     ChildForm = frmSOA
-                Case "3.3"
+                Case "3.4"
                     ChildForm = frmRegForm
                 Case Else
                     Exit Sub
