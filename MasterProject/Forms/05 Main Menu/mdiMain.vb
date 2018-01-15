@@ -166,8 +166,13 @@ Public Class mdiMain
             'Billing
             .Nodes.Add("2.2", "Billing")
             MyNode = .Nodes.Find("2.2", True)
-            MyNode(0).Nodes.Add("2.2.1", "...")
-            MyNode(0).Nodes.Add("2.2.2", "...")
+            MyNode(0).Nodes.Add("2.2.1", "Invoice Billing")
+            MyNode(0).Nodes.Add("2.2.1.1", "Import")
+            MyNode(0).Nodes.Add("2.2.1.2", "Export")
+            MyNode(0).Nodes.Add("2.2.2", "S.O.A Billing")
+            MyNode(0).Nodes.Add("2.2.2.1", "Import")
+            MyNode(0).Nodes.Add("2.2.2.2", "Export")
+
             MyNode(0).Nodes.Add("2.2.3", "...")
 
             'OR/AR
@@ -213,6 +218,9 @@ Public Class mdiMain
             MyNode(0).Nodes.Add("3.2.1", "Manage Email Addresses")
             MyNode(0).Nodes.Add("3.2.2", "Assign Email Per Module")
             MyNode(0).Nodes.Add("3.2.3", "...")
+
+            'Forms Registration
+            .Nodes.Add("3.4", "Forms Registration Menu")
         End With
     End Sub
 
@@ -237,12 +245,18 @@ Public Class mdiMain
                     ChildForm = frmAPV
                 Case "2.1.4"
                     ChildForm = frmPCV
+                Case "2.2.1.1"
+                    ChildForm = frmInvoice
+                Case "2.2.2.1"
+                    ChildForm = frmSOA
                 Case "3.2.1"
                     ChildForm = frmManageEmailAddresses
                 Case "3.2.2"
                     ChildForm = frmModuleEmail
                 Case "3.3.3"
                     ChildForm = frmCompanyServiceOffered
+                Case "3.4"
+                    ChildForm = frmRegForm
                 Case Else
                     Exit Sub
             End Select

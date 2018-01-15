@@ -736,4 +736,39 @@ Module modGlobalFunction
     Public Function FormalText(ByVal strVal As String) As String
         Return System.Text.RegularExpressions.Regex.Replace(Trim(strVal), "\s{2,}", " ")
     End Function
+
+    Public Function GetRegisteredFormNo(ByVal intGroupID As Integer, ByVal intModuleID As Integer) As Integer
+        GetRegisteredFormNo = 0
+        Try
+            Dim intTemp As Integer = 0
+            Dim cmdSQL = New MySql.Data.MySqlClient.MySqlCommand
+
+            If cnnDBMaster.State <> ConnectionState.Open Then cnnDBMaster.Open()
+            cmdSQL.Connection = cnnDBMaster
+
+            cmdSQL.CommandText = "SELECT MIN(reg_no) AS FormNo FROM aismaster.reg_trn_main " &
+                                "WHERE reg_group = @reg_group AND reg_module = @reg_module " &
+                                    "AND reg_status = 2"
+
+            cmdSQL.Parameters.AddWithValue("@reg_group", intGroupID)
+            cmdSQL.Parameters.AddWithValue("@reg_module", intModuleID)
+
+            Dim reader As MySql.Data.MySqlClient.MySqlDataReader = cmdSQL.ExecuteReader
+
+            While reader.Read
+                If Not IsDBNull(reader.Item("FormNo")) Then
+                    intTemp = reader.Item("FormNo")
+                Else
+                    intTemp = -1
+                End If
+            End While
+
+            reader.Close()
+            cmdSQL.Dispose()
+
+            GetRegisteredFormNo = intTemp
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
+    End Function
 End Module

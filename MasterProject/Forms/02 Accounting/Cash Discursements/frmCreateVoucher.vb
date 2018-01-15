@@ -244,13 +244,13 @@
     '        blFull = True
     '    End If
 
-    '    If connAcctg.State <> ConnectionState.Open Then connAcctg.Open()
+    '    If cnnDBMaster.State <> ConnectionState.Open Then cnnDBMaster.Open()
 
     '    Dim strsql As String = "SELECT ap_crp.CRP_Nbr, ap_crp.CRP_TotalAmt, ap_crp.CRP_PayeeID, ap_crp.CRP_Cancel, ap_crp.CRP_DtNeed, lib_vendor.VendorName " &
     '                            "FROM ap_crp INNER JOIN lib_vendor ON ap_crp.CRP_PayeeID = lib_vendor.VendorID " &
     '                            "WHERE ap_crp.CRP_Nbr = '" & strRefNo & "'"
 
-    '    Dim cmdSQL = New MySql.Data.MySqlClient.MySqlCommand(strsql, connAcctg)
+    '    Dim cmdSQL = New MySql.Data.MySqlClient.MySqlCommand(strsql, cnnDBMaster)
 
     '    Dim reader As MySql.Data.MySqlClient.MySqlDataReader = cmdSQL.ExecuteReader
 
@@ -305,13 +305,13 @@
     '    cmdSQL.Dispose()
     'End Function
     'Private Function CheckCRIfAccrual(ByVal strReqNo As String) As Boolean
-    '    If connAcctg.State <> ConnectionState.Open Then connAcctg.Open()
+    '    If cnnDBMaster.State <> ConnectionState.Open Then cnnDBMaster.Open()
     '    CheckCRIfAccrual = True
     '    Dim strSQL As String = "SELECT ap_crp.CRP_FTRequest, ap_crp.CRP_PCRequest " &
     '             "FROM ap_crp " &
     '             "WHERE ap_crp.CRP_Nbr = '" & strReqNo & "'"
 
-    '    Dim cmd = New MySql.Data.MySqlClient.MySqlCommand(strSQL, connAcctg)
+    '    Dim cmd = New MySql.Data.MySqlClient.MySqlCommand(strSQL, cnnDBMaster)
     '    Dim reader As MySql.Data.MySqlClient.MySqlDataReader = cmd.ExecuteReader()
 
     '    While reader.Read()
@@ -359,7 +359,7 @@
         cmdSQL.Dispose()
     End Function
     'Private Function CheckChkBookingStatus(ByVal strReqNo As String) As Boolean
-    '    If connAcctg.State <> ConnectionState.Open Then connAcctg.Open()
+    '    If cnnDBMaster.State <> ConnectionState.Open Then cnnDBMaster.Open()
     '    CheckChkBookingStatus = True
     '    Dim strsql As String
 
@@ -367,7 +367,7 @@
     '             "FROM ap_crd " & _
     '             "WHERE ap_crd.CRD_CPRNbr = '" & strReqNo & "'"
 
-    '    Dim cmd = New MySql.Data.MySqlClient.MySqlCommand(strsql, connAcctg)
+    '    Dim cmd = New MySql.Data.MySqlClient.MySqlCommand(strsql, cnnDBMaster)
     '    Dim reader As MySql.Data.MySqlClient.MySqlDataReader = cmd.ExecuteReader()
 
     '    While reader.Read()
@@ -574,9 +574,9 @@
     '                            "INNER JOIN ap_pcr ON ap_pca.PCA_Nbr = ap_pcr.PCR_Nbr " & _
     '                            "WHERE ap_crp.CRP_Nbr = '" & strReqNo & "' AND ap_crp.CRP_PCRequest = TRUE and ap_crp.CRP_Cancel = FALSE"
 
-    '    If connAcctg.State <> ConnectionState.Open Then connAcctg.Open()
+    '    If cnnDBMaster.State <> ConnectionState.Open Then cnnDBMaster.Open()
 
-    '    Dim cmdSQL = New MySql.Data.MySqlClient.MySqlCommand(strsql, connAcctg)
+    '    Dim cmdSQL = New MySql.Data.MySqlClient.MySqlCommand(strsql, cnnDBMaster)
 
     '    Dim reader As MySql.Data.MySqlClient.MySqlDataReader = cmdSQL.ExecuteReader
 
@@ -629,7 +629,7 @@
     '    strsql = "SELECT * FROM lib_acctcode INNER JOIN lib_subacctcode ON lib_acctcode.Account_Code = lib_subacctcode.Account_Code " & _
     '             "WHERE lib_acctcode.Account_Code = '1010' AND lib_subacctcode.SubAccount_Code = '" & strSubCode & "'"
 
-    '    cmdSQL = New MySql.Data.MySqlClient.MySqlCommand(strsql, connAcctg)
+    '    cmdSQL = New MySql.Data.MySqlClient.MySqlCommand(strsql, cnnDBMaster)
 
     '    reader = cmdSQL.ExecuteReader
 
