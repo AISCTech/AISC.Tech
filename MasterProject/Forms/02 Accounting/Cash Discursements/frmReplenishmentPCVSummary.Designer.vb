@@ -34,7 +34,7 @@ Partial Class frmReplenishmentPCVSummarry
         Me.CrystalReportViewer1.Location = New System.Drawing.Point(0, 0)
         Me.CrystalReportViewer1.Name = "CrystalReportViewer1"
         Me.CrystalReportViewer1.Size = New System.Drawing.Size(778, 479)
-        Me.CrystalReportViewer1.TabIndex = 0
+        Me.CrystalReportViewer1.TabIndex = 1
         Me.CrystalReportViewer1.ToolPanelView = CrystalDecisions.Windows.Forms.ToolPanelViewType.None
         '
         'frmReplenishmentPCVSummarry

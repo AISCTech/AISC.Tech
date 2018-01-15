@@ -720,7 +720,7 @@ ByVal blReOpen As Boolean, ByVal blUserInput As Boolean)
             'strsql = "SELECT AccrualPCFT FROM tbl_cv WHERE CVNo = '" & strCVNo & "'"
             'Dim strAccrualPCFT As String = ""
 
-            'cmdSQL = New MySql.Data.MySqlClient.MySqlCommand(strsql, cnnMySQL)
+            'cmdSQL = New MySql.Data.MySqlClient.MySqlCommand(strsql, cnnDBMaster)
             'Dim reader As MySql.Data.MySqlClient.MySqlDataReader = cmdSQL.ExecuteReader
 
             'While reader.Read
@@ -735,7 +735,7 @@ ByVal blReOpen As Boolean, ByVal blUserInput As Boolean)
             '                 "CVNbr = @CVNbr " & _
             '                 "WHERE ap_pcv_replenish.CRNbr = '" & Me.dtgParticulars.Rows(ctrRow).Cells("colReqNo").Value & "'"
 
-            '        cmdSQL = New MySql.Data.MySqlClient.MySqlCommand(strsql, connAcctg)
+            '        cmdSQL = New MySql.Data.MySqlClient.MySqlCommand(strsql, cnnDBMaster)
 
             '        With cmdSQL.Parameters
             '            .AddWithValue("@CVNbr", strCVNo)
@@ -852,7 +852,7 @@ ByVal blReOpen As Boolean, ByVal blUserInput As Boolean)
         'strsql = "SELECT AccrualPCFT FROM ap_cv WHERE CVNo = '" & Me.lblCVNbr.Text & "'"
         'Dim strAccrualPCFT As String = ""
 
-        'cmdSQL = New MySql.Data.MySqlClient.MySqlCommand(strsql, connAcctg)
+        'cmdSQL = New MySql.Data.MySqlClient.MySqlCommand(strsql, cnnDBMaster)
         'Dim reader As MySql.Data.MySqlClient.MySqlDataReader = cmdSQL.ExecuteReader
 
         'While reader.Read
@@ -869,7 +869,7 @@ ByVal blReOpen As Boolean, ByVal blUserInput As Boolean)
         '                 "RepBy = @RepBy " & _
         '                 "WHERE ap_pcv_replenish.CRNbr = '" & Me.dtgParticulars.Rows(ctrRow).Cells("colReqNo").Value & "'"
 
-        '        cmdSQL = New MySql.Data.MySqlClient.MySqlCommand(strsql, connAcctg)
+        '        cmdSQL = New MySql.Data.MySqlClient.MySqlCommand(strsql, cnnDBMaster)
 
         '        With cmdSQL.Parameters
         '            .AddWithValue("@Replenish", True)

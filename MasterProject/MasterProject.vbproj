@@ -172,22 +172,40 @@
     <Compile Include="Forms\01 Operations\Customer Service\Import\frmSelectImportBookingPrintPrev.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\02 Accounting\frmAPV.designer.vb">
+    <Compile Include="Forms\02 Accounting\Billing\frmInvoice.Designer.vb">
+      <DependentUpon>frmInvoice.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\02 Accounting\Billing\frmInvoice.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\02 Accounting\Billing\frmSOA.Designer.vb">
+      <DependentUpon>frmSOA.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\02 Accounting\Billing\frmSOA.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\02 Accounting\Cash Discursements\frmAPV.designer.vb">
       <DependentUpon>frmAPV.vb</DependentUpon>
     </Compile>
-    <Compile Include="Forms\02 Accounting\frmAPV.vb">
+    <Compile Include="Forms\02 Accounting\Cash Discursements\frmAPV.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\02 Accounting\frmCreateVoucher.designer.vb">
+    <Compile Include="Forms\02 Accounting\Cash Discursements\frmCreateVoucher.designer.vb">
       <DependentUpon>frmCreateVoucher.vb</DependentUpon>
     </Compile>
-    <Compile Include="Forms\02 Accounting\frmCreateVoucher.vb">
+    <Compile Include="Forms\02 Accounting\Cash Discursements\frmCreateVoucher.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\02 Accounting\frmCV.designer.vb">
+    <Compile Include="Forms\02 Accounting\Cash Discursements\frmCV.designer.vb">
       <DependentUpon>frmCV.vb</DependentUpon>
     </Compile>
-    <Compile Include="Forms\02 Accounting\frmCV.vb">
+    <Compile Include="Forms\02 Accounting\Cash Discursements\frmCV.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\02 Accounting\Billing\frmEnterBookNo.Designer.vb">
+      <DependentUpon>frmEnterBookNo.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\02 Accounting\Billing\frmEnterBookNo.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\02 Accounting\frmManageVendor.designer.vb">
@@ -196,34 +214,34 @@
     <Compile Include="Forms\02 Accounting\frmManageVendor.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\02 Accounting\frmPCV.designer.vb">
+    <Compile Include="Forms\02 Accounting\Cash Discursements\frmPCV.designer.vb">
       <DependentUpon>frmPCV.vb</DependentUpon>
     </Compile>
-    <Compile Include="Forms\02 Accounting\frmPCV.vb">
+    <Compile Include="Forms\02 Accounting\Cash Discursements\frmPCV.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\02 Accounting\frmPCVCheckRequest.designer.vb">
+    <Compile Include="Forms\02 Accounting\Cash Discursements\frmPCVCheckRequest.designer.vb">
       <DependentUpon>frmPCVCheckRequest.vb</DependentUpon>
     </Compile>
-    <Compile Include="Forms\02 Accounting\frmPCVCheckRequest.vb">
+    <Compile Include="Forms\02 Accounting\Cash Discursements\frmPCVCheckRequest.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\02 Accounting\frmPettyCashPost.designer.vb">
+    <Compile Include="Forms\02 Accounting\Cash Discursements\frmPettyCashPost.designer.vb">
       <DependentUpon>frmPettyCashPost.vb</DependentUpon>
     </Compile>
-    <Compile Include="Forms\02 Accounting\frmPettyCashPost.vb">
+    <Compile Include="Forms\02 Accounting\Cash Discursements\frmPettyCashPost.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\02 Accounting\frmPettyCashRelease.designer.vb">
+    <Compile Include="Forms\02 Accounting\Cash Discursements\frmPettyCashRelease.designer.vb">
       <DependentUpon>frmPettyCashRelease.vb</DependentUpon>
     </Compile>
-    <Compile Include="Forms\02 Accounting\frmPettyCashRelease.vb">
+    <Compile Include="Forms\02 Accounting\Cash Discursements\frmPettyCashRelease.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\02 Accounting\frmPettyCashReplenishment.designer.vb">
+    <Compile Include="Forms\02 Accounting\Cash Discursements\frmPettyCashReplenishment.designer.vb">
       <DependentUpon>frmPettyCashReplenishment.vb</DependentUpon>
     </Compile>
-    <Compile Include="Forms\02 Accounting\frmPettyCashReplenishment.vb">
+    <Compile Include="Forms\02 Accounting\Cash Discursements\frmPettyCashReplenishment.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\02 Accounting\frmPrintPreview.designer.vb">
@@ -232,52 +250,52 @@
     <Compile Include="Forms\02 Accounting\frmPrintPreview.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\02 Accounting\frmPurchaseOrderDetails.designer.vb">
+    <Compile Include="Forms\02 Accounting\Cash Discursements\frmPurchaseOrderDetails.designer.vb">
       <DependentUpon>frmPurchaseOrderDetails.vb</DependentUpon>
     </Compile>
-    <Compile Include="Forms\02 Accounting\frmPurchaseOrderDetails.vb">
+    <Compile Include="Forms\02 Accounting\Cash Discursements\frmPurchaseOrderDetails.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\02 Accounting\frmReplenishmentPCVSummary.designer.vb">
+    <Compile Include="Forms\02 Accounting\Cash Discursements\frmReplenishmentPCVSummary.designer.vb">
       <DependentUpon>frmReplenishmentPCVSummary.vb</DependentUpon>
     </Compile>
-    <Compile Include="Forms\02 Accounting\frmReplenishmentPCVSummary.vb">
+    <Compile Include="Forms\02 Accounting\Cash Discursements\frmReplenishmentPCVSummary.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\02 Accounting\frmReportReplenish.designer.vb">
+    <Compile Include="Forms\02 Accounting\Cash Discursements\frmReportReplenish.designer.vb">
       <DependentUpon>frmReportReplenish.vb</DependentUpon>
     </Compile>
-    <Compile Include="Forms\02 Accounting\frmReportReplenish.vb">
+    <Compile Include="Forms\02 Accounting\Cash Discursements\frmReportReplenish.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\02 Accounting\frmRequest.designer.vb">
+    <Compile Include="Forms\02 Accounting\Cash Discursements\frmRequest.designer.vb">
       <DependentUpon>frmRequest.vb</DependentUpon>
     </Compile>
-    <Compile Include="Forms\02 Accounting\frmRequest.vb">
+    <Compile Include="Forms\02 Accounting\Cash Discursements\frmRequest.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\02 Accounting\frmSearchFundKey.designer.vb">
+    <Compile Include="Forms\02 Accounting\Cash Discursements\frmSearchFundKey.designer.vb">
       <DependentUpon>frmSearchFundKey.vb</DependentUpon>
     </Compile>
-    <Compile Include="Forms\02 Accounting\frmSearchFundKey.vb">
+    <Compile Include="Forms\02 Accounting\Cash Discursements\frmSearchFundKey.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\02 Accounting\frmSelectADMRequestItem.designer.vb">
+    <Compile Include="Forms\02 Accounting\Cash Discursements\frmSelectADMRequestItem.designer.vb">
       <DependentUpon>frmSelectADMRequestItem.vb</DependentUpon>
     </Compile>
-    <Compile Include="Forms\02 Accounting\frmSelectADMRequestItem.vb">
+    <Compile Include="Forms\02 Accounting\Cash Discursements\frmSelectADMRequestItem.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\02 Accounting\frmSelectAP.designer.vb">
+    <Compile Include="Forms\02 Accounting\Cash Discursements\frmSelectAP.designer.vb">
       <DependentUpon>frmSelectAP.vb</DependentUpon>
     </Compile>
-    <Compile Include="Forms\02 Accounting\frmSelectAP.vb">
+    <Compile Include="Forms\02 Accounting\Cash Discursements\frmSelectAP.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\02 Accounting\frmSelectGLEntry.designer.vb">
+    <Compile Include="Forms\02 Accounting\Cash Discursements\frmSelectGLEntry.designer.vb">
       <DependentUpon>frmSelectGLEntry.vb</DependentUpon>
     </Compile>
-    <Compile Include="Forms\02 Accounting\frmSelectGLEntry.vb">
+    <Compile Include="Forms\02 Accounting\Cash Discursements\frmSelectGLEntry.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\03 Maintenance\Email\frmManageEmailAddresses.Designer.vb">
@@ -290,6 +308,12 @@
       <DependentUpon>frmModuleEmail.vb</DependentUpon>
     </Compile>
     <Compile Include="Forms\03 Maintenance\Email\frmModuleEmail.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\03 Maintenance\Utility\frmRegForm.Designer.vb">
+      <DependentUpon>frmRegForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\03 Maintenance\Utility\frmRegForm.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\04 Login\frmLogIn.Designer.vb">
@@ -374,58 +398,67 @@
     <EmbeddedResource Include="Forms\01 Operations\Customer Service\Import\frmSelectImportBookingPrintPrev.resx">
       <DependentUpon>frmSelectImportBookingPrintPrev.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\02 Accounting\frmAPV.resx">
+    <EmbeddedResource Include="Forms\02 Accounting\Billing\frmInvoice.resx">
+      <DependentUpon>frmInvoice.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\02 Accounting\Billing\frmSOA.resx">
+      <DependentUpon>frmSOA.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\02 Accounting\Cash Discursements\frmAPV.resx">
       <DependentUpon>frmAPV.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\02 Accounting\frmCreateVoucher.resx">
+    <EmbeddedResource Include="Forms\02 Accounting\Cash Discursements\frmCreateVoucher.resx">
       <DependentUpon>frmCreateVoucher.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\02 Accounting\frmCV.resx">
+    <EmbeddedResource Include="Forms\02 Accounting\Cash Discursements\frmCV.resx">
       <DependentUpon>frmCV.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\02 Accounting\Billing\frmEnterBookNo.resx">
+      <DependentUpon>frmEnterBookNo.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\02 Accounting\frmManageVendor.resx">
       <DependentUpon>frmManageVendor.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\02 Accounting\frmPCV.resx">
+    <EmbeddedResource Include="Forms\02 Accounting\Cash Discursements\frmPCV.resx">
       <DependentUpon>frmPCV.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\02 Accounting\frmPCVCheckRequest.resx">
+    <EmbeddedResource Include="Forms\02 Accounting\Cash Discursements\frmPCVCheckRequest.resx">
       <DependentUpon>frmPCVCheckRequest.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\02 Accounting\frmPettyCashPost.resx">
+    <EmbeddedResource Include="Forms\02 Accounting\Cash Discursements\frmPettyCashPost.resx">
       <DependentUpon>frmPettyCashPost.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\02 Accounting\frmPettyCashRelease.resx">
+    <EmbeddedResource Include="Forms\02 Accounting\Cash Discursements\frmPettyCashRelease.resx">
       <DependentUpon>frmPettyCashRelease.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\02 Accounting\frmPettyCashReplenishment.resx">
+    <EmbeddedResource Include="Forms\02 Accounting\Cash Discursements\frmPettyCashReplenishment.resx">
       <DependentUpon>frmPettyCashReplenishment.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\02 Accounting\frmPrintPreview.resx">
       <DependentUpon>frmPrintPreview.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\02 Accounting\frmPurchaseOrderDetails.resx">
+    <EmbeddedResource Include="Forms\02 Accounting\Cash Discursements\frmPurchaseOrderDetails.resx">
       <DependentUpon>frmPurchaseOrderDetails.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\02 Accounting\frmReplenishmentPCVSummary.resx">
+    <EmbeddedResource Include="Forms\02 Accounting\Cash Discursements\frmReplenishmentPCVSummary.resx">
       <DependentUpon>frmReplenishmentPCVSummary.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\02 Accounting\frmReportReplenish.resx">
+    <EmbeddedResource Include="Forms\02 Accounting\Cash Discursements\frmReportReplenish.resx">
       <DependentUpon>frmReportReplenish.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\02 Accounting\frmRequest.resx">
+    <EmbeddedResource Include="Forms\02 Accounting\Cash Discursements\frmRequest.resx">
       <DependentUpon>frmRequest.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\02 Accounting\frmSearchFundKey.resx">
+    <EmbeddedResource Include="Forms\02 Accounting\Cash Discursements\frmSearchFundKey.resx">
       <DependentUpon>frmSearchFundKey.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\02 Accounting\frmSelectADMRequestItem.resx">
+    <EmbeddedResource Include="Forms\02 Accounting\Cash Discursements\frmSelectADMRequestItem.resx">
       <DependentUpon>frmSelectADMRequestItem.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\02 Accounting\frmSelectAP.resx">
+    <EmbeddedResource Include="Forms\02 Accounting\Cash Discursements\frmSelectAP.resx">
       <DependentUpon>frmSelectAP.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\02 Accounting\frmSelectGLEntry.resx">
+    <EmbeddedResource Include="Forms\02 Accounting\Cash Discursements\frmSelectGLEntry.resx">
       <DependentUpon>frmSelectGLEntry.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\03 Maintenance\Email\frmManageEmailAddresses.resx">
@@ -433,6 +466,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\03 Maintenance\Email\frmModuleEmail.resx">
       <DependentUpon>frmModuleEmail.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\03 Maintenance\Utility\frmRegForm.resx">
+      <DependentUpon>frmRegForm.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\04 Login\frmLogIn.resx">
       <DependentUpon>frmLogIn.vb</DependentUpon>
