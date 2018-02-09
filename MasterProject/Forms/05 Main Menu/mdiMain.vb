@@ -70,9 +70,10 @@ Public Class mdiMain
     Private m_ChildFormNumber As Integer
 
     Private Sub mdiMain_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Dim clsDB As New clsDBTrans
+        ListOfStatus = clsDB.PopulateListOfStatus
+
         Me.Text = strSystemName & " v. " & strSystemVersion & " " & CurrentUser._Company_Name
-        'Me.BackgroundImage = CurrentUser._Company_Logo
-        'Me.BackgroundImageLayout = ImageLayout.Stretch
     End Sub
 
     Private Sub cmdOperations_Click(sender As Object, e As EventArgs) Handles cmdOperations.Click
@@ -88,7 +89,7 @@ Public Class mdiMain
             MyNode(0).Nodes.Add("1.1.1", "Export Customer Service")
             MyNode = .Nodes.Find("1.1.1", True)
             MyNode(0).Nodes.Add("1.1.1.1", "Export Booking Menu")
-            MyNode(0).Nodes.Add("1.1.1.2", "Export Loading Plan")
+            MyNode(0).Nodes.Add("1.1.1.2", "Export Master Booking Menu")
             MyNode(0).Nodes.Add("1.1.1.3", "Export Co-Load Sequence")
             MyNode(0).Nodes.Add("1.1.1.4", "Export Monitoring Sheet")
             MyNode(0).Nodes.Add("1.1.1.5", "Export Shipping/Flight Details")
@@ -235,6 +236,8 @@ Public Class mdiMain
             Select Case _NotNull(trvMenu.SelectedNode.Name, "")
                 Case "1.1.1.1"
                     ChildForm = frmExportBookingMenu
+                Case "1.1.1.2"
+                    ChildForm = frmExportMasterBooking
                 Case "1.1.2.1"
                     ChildForm = frmImportBookingMenu
                 Case "1.1.2.2"
@@ -320,5 +323,9 @@ Public Class mdiMain
                 e.Cancel = True
             End If
         End If
+    End Sub
+
+    Private Sub HelpToolStripButton_Click(sender As Object, e As EventArgs) Handles HelpToolStripButton.Click
+
     End Sub
 End Class
