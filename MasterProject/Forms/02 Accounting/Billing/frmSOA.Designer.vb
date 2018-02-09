@@ -30,6 +30,7 @@ Partial Class frmSOA
         Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.gpMain = New System.Windows.Forms.GroupBox()
+        Me.txtBilledTo = New System.Windows.Forms.TextBox()
         Me.txtDate = New System.Windows.Forms.TextBox()
         Me.Label46 = New System.Windows.Forms.Label()
         Me.dtPrepDate = New System.Windows.Forms.DateTimePicker()
@@ -173,7 +174,6 @@ Partial Class frmSOA
         Me.UnreceivedBillingSummaryToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator6 = New System.Windows.Forms.ToolStripSeparator()
         Me.ToolStrip1 = New System.Windows.Forms.ToolStrip()
-        Me.txtBilledTo = New System.Windows.Forms.TextBox()
         Me.gpMain.SuspendLayout()
         Me.StatusStrip1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
@@ -244,6 +244,15 @@ Partial Class frmSOA
         Me.gpMain.Size = New System.Drawing.Size(978, 199)
         Me.gpMain.TabIndex = 1185
         Me.gpMain.TabStop = False
+        '
+        'txtBilledTo
+        '
+        Me.txtBilledTo.Font = New System.Drawing.Font("Tahoma", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtBilledTo.Location = New System.Drawing.Point(89, 35)
+        Me.txtBilledTo.Name = "txtBilledTo"
+        Me.txtBilledTo.ReadOnly = True
+        Me.txtBilledTo.Size = New System.Drawing.Size(279, 21)
+        Me.txtBilledTo.TabIndex = 1197
         '
         'txtDate
         '
@@ -1535,15 +1544,6 @@ Partial Class frmSOA
         Me.ToolStrip1.Size = New System.Drawing.Size(1006, 25)
         Me.ToolStrip1.TabIndex = 1184
         Me.ToolStrip1.Text = "ToolStrip1"
-        '
-        'txtBilledTo
-        '
-        Me.txtBilledTo.Font = New System.Drawing.Font("Tahoma", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtBilledTo.Location = New System.Drawing.Point(89, 35)
-        Me.txtBilledTo.Name = "txtBilledTo"
-        Me.txtBilledTo.ReadOnly = True
-        Me.txtBilledTo.Size = New System.Drawing.Size(279, 21)
-        Me.txtBilledTo.TabIndex = 1197
         '
         'frmSOA
         '

@@ -627,38 +627,10 @@ ByVal blReOpen As Boolean, ByVal blUserInput As Boolean)
         'PopUnpostHistory(Me.dgUnpostHistory, "IMPB", Me.lblRefNo.Text)
     End Sub
 
-    Private Sub tscmdNew_Click(sender As Object, e As EventArgs)
-
-    End Sub
-
     Private Sub txtTotalAmtPHP_TextChanged(sender As Object, e As EventArgs) Handles txtTotalAmtPHP.TextChanged
         If Not Len(Me.txtTotalAmtPHP.Text) = 0 Then
             Me.txtAmtInWords.Text = English(Me.txtTotalAmtPHP.Text)
         End If
-    End Sub
-
-    Private Sub tscmdEdit_Click(sender As Object, e As EventArgs)
-
-    End Sub
-
-    Private Sub tscmdReset_Click(sender As Object, e As EventArgs)
-
-    End Sub
-
-    Private Sub tscmdSave_Click(sender As Object, e As EventArgs)
-
-    End Sub
-
-    Private Sub tscmdPost_Click(sender As Object, e As EventArgs)
-
-    End Sub
-
-    Private Sub tscmdCancel_Click(sender As Object, e As EventArgs)
-
-    End Sub
-
-    Private Sub tscmdUnpost_Click(sender As Object, e As EventArgs)
-
     End Sub
 
     Private Sub ChargeInvoiceToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ChargeInvoiceToolStripMenuItem.Click

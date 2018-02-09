@@ -177,11 +177,14 @@ Public Class mdiMain
             MyNode(0).Nodes.Add("2.2.3", "...")
 
             'OR/AR
-            .Nodes.Add("2.3", "OR/AR")
+            .Nodes.Add("2.3", "Collection")
             MyNode = .Nodes.Find("2.3", True)
-            MyNode(0).Nodes.Add("2.3.1", "...")
-            MyNode(0).Nodes.Add("2.3.2", "...")
-            MyNode(0).Nodes.Add("2.3.3", "...")
+            MyNode(0).Nodes.Add("2.3.1", "Official Receipt")
+            MyNode(0).Nodes.Add("2.3.2", "Acknowledgment Receipt")
+            MyNode(0).Nodes.Add("2.3.3", "Container Refund")
+            MyNode(0).Nodes.Add("2.3.4", "Acknowledgment Receipt - Container Refund")
+
+
 
             'Reports
             .Nodes.Add("2.4", "Reports")
@@ -250,8 +253,20 @@ Public Class mdiMain
                     ChildForm = frmPCV
                 Case "2.2.1.1"
                     ChildForm = frmInvoice
+                Case "2.2.1.2"
+                    ChildForm = frmInvoiceExport
                 Case "2.2.2.1"
                     ChildForm = frmSOA
+                Case "2.2.2.2"
+                    ChildForm = frmSOAExport
+                Case "2.3.1"
+                    ChildForm = frmOfficialReceipt
+                Case "2.3.2"
+                    ChildForm = frmAcknowledgementReceipt
+                Case "2.3.3"
+                    ChildForm = frmContainerRefund
+                Case "2.3.4"
+                    ChildForm = frmARContRef
                 Case "3.2.1"
                     ChildForm = frmManageEmailAddresses
                 Case "3.2.2"

@@ -23,6 +23,9 @@ Partial Class frmAPV
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmAPV))
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.GroupBox3 = New System.Windows.Forms.GroupBox()
         Me.TabControl2 = New System.Windows.Forms.TabControl()
         Me.TabPage5 = New System.Windows.Forms.TabPage()
@@ -116,6 +119,18 @@ Partial Class frmAPV
         Me.txtRequestNo = New System.Windows.Forms.TextBox()
         Me.Label24 = New System.Windows.Forms.Label()
         Me.cboReports = New System.Windows.Forms.ComboBox()
+        Me.txtCompanyCode = New System.Windows.Forms.TextBox()
+        Me.TabPage6 = New System.Windows.Forms.TabPage()
+        Me.dgCharges = New System.Windows.Forms.DataGridView()
+        Me.Column2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colGPAType = New System.Windows.Forms.DataGridViewComboBoxColumn()
         Me.GroupBox3.SuspendLayout()
         Me.TabControl2.SuspendLayout()
         Me.TabPage5.SuspendLayout()
@@ -133,6 +148,8 @@ Partial Class frmAPV
         Me.TabPage3.SuspendLayout()
         CType(Me.dtgAPVNo, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox6.SuspendLayout()
+        Me.TabPage6.SuspendLayout()
+        CType(Me.dgCharges, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'GroupBox3
@@ -455,6 +472,7 @@ Partial Class frmAPV
         Me.TabControl1.Controls.Add(Me.TabPage1)
         Me.TabControl1.Controls.Add(Me.TabPage4)
         Me.TabControl1.Controls.Add(Me.TabPage3)
+        Me.TabControl1.Controls.Add(Me.TabPage6)
         Me.TabControl1.Location = New System.Drawing.Point(10, 19)
         Me.TabControl1.Name = "TabControl1"
         Me.TabControl1.SelectedIndex = 0
@@ -1177,11 +1195,120 @@ Partial Class frmAPV
         Me.cboReports.Size = New System.Drawing.Size(169, 21)
         Me.cboReports.TabIndex = 606
         '
+        'txtCompanyCode
+        '
+        Me.txtCompanyCode.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtCompanyCode.ForeColor = System.Drawing.Color.RoyalBlue
+        Me.txtCompanyCode.Location = New System.Drawing.Point(933, 13)
+        Me.txtCompanyCode.Name = "txtCompanyCode"
+        Me.txtCompanyCode.ReadOnly = True
+        Me.txtCompanyCode.Size = New System.Drawing.Size(87, 20)
+        Me.txtCompanyCode.TabIndex = 608
+        '
+        'TabPage6
+        '
+        Me.TabPage6.Controls.Add(Me.dgCharges)
+        Me.TabPage6.Location = New System.Drawing.Point(4, 22)
+        Me.TabPage6.Name = "TabPage6"
+        Me.TabPage6.Size = New System.Drawing.Size(984, 150)
+        Me.TabPage6.TabIndex = 4
+        Me.TabPage6.Text = "GPA Type"
+        Me.TabPage6.UseVisualStyleBackColor = True
+        '
+        'dgCharges
+        '
+        Me.dgCharges.AllowUserToAddRows = False
+        Me.dgCharges.AllowUserToDeleteRows = False
+        Me.dgCharges.BackgroundColor = System.Drawing.Color.WhiteSmoke
+        Me.dgCharges.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.dgCharges.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column2, Me.DataGridViewTextBoxColumn1, Me.DataGridViewTextBoxColumn2, Me.DataGridViewTextBoxColumn3, Me.DataGridViewTextBoxColumn4, Me.DataGridViewTextBoxColumn5, Me.DataGridViewTextBoxColumn6, Me.Column1, Me.colGPAType})
+        Me.dgCharges.Location = New System.Drawing.Point(15, 14)
+        Me.dgCharges.Name = "dgCharges"
+        Me.dgCharges.Size = New System.Drawing.Size(944, 120)
+        Me.dgCharges.TabIndex = 489
+        '
+        'Column2
+        '
+        Me.Column2.Frozen = True
+        Me.Column2.HeaderText = "PK"
+        Me.Column2.Name = "Column2"
+        Me.Column2.Width = 50
+        '
+        'DataGridViewTextBoxColumn1
+        '
+        Me.DataGridViewTextBoxColumn1.Frozen = True
+        Me.DataGridViewTextBoxColumn1.HeaderText = "Request No."
+        Me.DataGridViewTextBoxColumn1.Name = "DataGridViewTextBoxColumn1"
+        Me.DataGridViewTextBoxColumn1.ReadOnly = True
+        '
+        'DataGridViewTextBoxColumn2
+        '
+        Me.DataGridViewTextBoxColumn2.Frozen = True
+        Me.DataGridViewTextBoxColumn2.HeaderText = "Charge Description"
+        Me.DataGridViewTextBoxColumn2.Name = "DataGridViewTextBoxColumn2"
+        Me.DataGridViewTextBoxColumn2.ReadOnly = True
+        Me.DataGridViewTextBoxColumn2.Width = 150
+        '
+        'DataGridViewTextBoxColumn3
+        '
+        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle4.ForeColor = System.Drawing.Color.DodgerBlue
+        DataGridViewCellStyle4.Format = "N2"
+        DataGridViewCellStyle4.NullValue = Nothing
+        Me.DataGridViewTextBoxColumn3.DefaultCellStyle = DataGridViewCellStyle4
+        Me.DataGridViewTextBoxColumn3.Frozen = True
+        Me.DataGridViewTextBoxColumn3.HeaderText = "Book No"
+        Me.DataGridViewTextBoxColumn3.Name = "DataGridViewTextBoxColumn3"
+        Me.DataGridViewTextBoxColumn3.ReadOnly = True
+        Me.DataGridViewTextBoxColumn3.Width = 75
+        '
+        'DataGridViewTextBoxColumn4
+        '
+        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle5.ForeColor = System.Drawing.Color.DodgerBlue
+        DataGridViewCellStyle5.Format = "N2"
+        DataGridViewCellStyle5.NullValue = Nothing
+        Me.DataGridViewTextBoxColumn4.DefaultCellStyle = DataGridViewCellStyle5
+        Me.DataGridViewTextBoxColumn4.HeaderText = "BL No."
+        Me.DataGridViewTextBoxColumn4.Name = "DataGridViewTextBoxColumn4"
+        Me.DataGridViewTextBoxColumn4.ReadOnly = True
+        Me.DataGridViewTextBoxColumn4.Width = 75
+        '
+        'DataGridViewTextBoxColumn5
+        '
+        Me.DataGridViewTextBoxColumn5.HeaderText = "Container No."
+        Me.DataGridViewTextBoxColumn5.Name = "DataGridViewTextBoxColumn5"
+        Me.DataGridViewTextBoxColumn5.ReadOnly = True
+        Me.DataGridViewTextBoxColumn5.Width = 75
+        '
+        'DataGridViewTextBoxColumn6
+        '
+        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        Me.DataGridViewTextBoxColumn6.DefaultCellStyle = DataGridViewCellStyle6
+        Me.DataGridViewTextBoxColumn6.HeaderText = "Amount"
+        Me.DataGridViewTextBoxColumn6.Name = "DataGridViewTextBoxColumn6"
+        Me.DataGridViewTextBoxColumn6.ReadOnly = True
+        '
+        'Column1
+        '
+        Me.Column1.HeaderText = "GPA Type Code"
+        Me.Column1.Name = "Column1"
+        Me.Column1.ReadOnly = True
+        '
+        'colGPAType
+        '
+        Me.colGPAType.HeaderText = "GPA Type"
+        Me.colGPAType.Name = "colGPAType"
+        Me.colGPAType.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.colGPAType.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
+        Me.colGPAType.Width = 150
+        '
         'frmAPV
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1053, 741)
+        Me.Controls.Add(Me.txtCompanyCode)
         Me.Controls.Add(Me.Label24)
         Me.Controls.Add(Me.txtRequestNo)
         Me.Controls.Add(Me.GroupBox3)
@@ -1217,6 +1344,8 @@ Partial Class frmAPV
         CType(Me.dtgAPVNo, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupBox6.ResumeLayout(False)
         Me.GroupBox6.PerformLayout()
+        Me.TabPage6.ResumeLayout(False)
+        CType(Me.dgCharges, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -1315,4 +1444,16 @@ Partial Class frmAPV
     Friend WithEvents btAllowEditAcctgEntry As Button
     Friend WithEvents Label24 As Label
     Friend WithEvents cboReports As ComboBox
+    Friend WithEvents txtCompanyCode As TextBox
+    Friend WithEvents TabPage6 As TabPage
+    Friend WithEvents dgCharges As DataGridView
+    Friend WithEvents Column2 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn1 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn2 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn3 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn4 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn5 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn6 As DataGridViewTextBoxColumn
+    Friend WithEvents Column1 As DataGridViewTextBoxColumn
+    Friend WithEvents colGPAType As DataGridViewComboBoxColumn
 End Class

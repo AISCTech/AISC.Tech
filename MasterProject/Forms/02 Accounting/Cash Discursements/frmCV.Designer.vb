@@ -23,11 +23,11 @@ Partial Class frmCV
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmCV))
-        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.lblCancel = New System.Windows.Forms.Label()
         Me.lblNonAccrualType = New System.Windows.Forms.Label()
         Me.txtCashInBankWords = New System.Windows.Forms.TextBox()
@@ -60,11 +60,6 @@ Partial Class frmCV
         Me.cmdAddPaymentDetails = New System.Windows.Forms.Button()
         Me.cmdRemovePaymentDetails = New System.Windows.Forms.Button()
         Me.dtgParticulars = New System.Windows.Forms.DataGridView()
-        Me.colReqNo = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colAPVNo = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colPartAmt = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colFull = New System.Windows.Forms.DataGridViewCheckBoxColumn()
-        Me.colCVAmt = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.txtTotal = New System.Windows.Forms.TextBox()
         Me.Label13 = New System.Windows.Forms.Label()
         Me.txtAmtInWords = New System.Windows.Forms.TextBox()
@@ -111,6 +106,13 @@ Partial Class frmCV
         Me.txtPayeeCode = New System.Windows.Forms.TextBox()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.ErrorProvider1 = New System.Windows.Forms.ErrorProvider(Me.components)
+        Me.txtCompanyCode = New System.Windows.Forms.TextBox()
+        Me.colReqNo = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colAPVNo = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colPartAmt = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colFull = New System.Windows.Forms.DataGridViewCheckBoxColumn()
+        Me.colCVAmt = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colCompanyCode = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.TabControl2.SuspendLayout()
         Me.tpCheckEntry.SuspendLayout()
         CType(Me.dtgCheckEntry, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -273,22 +275,22 @@ Partial Class frmCV
         '
         'colDR
         '
-        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        DataGridViewCellStyle5.ForeColor = System.Drawing.Color.DodgerBlue
-        DataGridViewCellStyle5.Format = "N2"
-        DataGridViewCellStyle5.NullValue = Nothing
-        Me.colDR.DefaultCellStyle = DataGridViewCellStyle5
+        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle1.ForeColor = System.Drawing.Color.DodgerBlue
+        DataGridViewCellStyle1.Format = "N2"
+        DataGridViewCellStyle1.NullValue = Nothing
+        Me.colDR.DefaultCellStyle = DataGridViewCellStyle1
         Me.colDR.HeaderText = "DR"
         Me.colDR.Name = "colDR"
         Me.colDR.Width = 75
         '
         'colCR
         '
-        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        DataGridViewCellStyle6.ForeColor = System.Drawing.Color.DodgerBlue
-        DataGridViewCellStyle6.Format = "N2"
-        DataGridViewCellStyle6.NullValue = Nothing
-        Me.colCR.DefaultCellStyle = DataGridViewCellStyle6
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.DodgerBlue
+        DataGridViewCellStyle2.Format = "N2"
+        DataGridViewCellStyle2.NullValue = Nothing
+        Me.colCR.DefaultCellStyle = DataGridViewCellStyle2
         Me.colCR.HeaderText = "CR"
         Me.colCR.Name = "colCR"
         Me.colCR.Width = 75
@@ -464,52 +466,12 @@ Partial Class frmCV
         Me.dtgParticulars.AllowUserToDeleteRows = False
         Me.dtgParticulars.BackgroundColor = System.Drawing.Color.WhiteSmoke
         Me.dtgParticulars.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dtgParticulars.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.colReqNo, Me.colAPVNo, Me.colPartAmt, Me.colFull, Me.colCVAmt})
+        Me.dtgParticulars.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.colReqNo, Me.colAPVNo, Me.colPartAmt, Me.colFull, Me.colCVAmt, Me.colCompanyCode})
         Me.dtgParticulars.Location = New System.Drawing.Point(15, 30)
         Me.dtgParticulars.Name = "dtgParticulars"
         Me.dtgParticulars.ReadOnly = True
         Me.dtgParticulars.Size = New System.Drawing.Size(959, 247)
         Me.dtgParticulars.TabIndex = 309
-        '
-        'colReqNo
-        '
-        Me.colReqNo.HeaderText = "Request No."
-        Me.colReqNo.Name = "colReqNo"
-        Me.colReqNo.ReadOnly = True
-        Me.colReqNo.Width = 150
-        '
-        'colAPVNo
-        '
-        Me.colAPVNo.HeaderText = "APV No."
-        Me.colAPVNo.Name = "colAPVNo"
-        Me.colAPVNo.ReadOnly = True
-        Me.colAPVNo.Width = 150
-        '
-        'colPartAmt
-        '
-        DataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        Me.colPartAmt.DefaultCellStyle = DataGridViewCellStyle7
-        Me.colPartAmt.HeaderText = "Requested Amt"
-        Me.colPartAmt.Name = "colPartAmt"
-        Me.colPartAmt.ReadOnly = True
-        Me.colPartAmt.Width = 125
-        '
-        'colFull
-        '
-        Me.colFull.HeaderText = "Full"
-        Me.colFull.Name = "colFull"
-        Me.colFull.ReadOnly = True
-        Me.colFull.Width = 50
-        '
-        'colCVAmt
-        '
-        DataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        DataGridViewCellStyle8.ForeColor = System.Drawing.Color.Blue
-        Me.colCVAmt.DefaultCellStyle = DataGridViewCellStyle8
-        Me.colCVAmt.HeaderText = "CV Amt"
-        Me.colCVAmt.Name = "colCVAmt"
-        Me.colCVAmt.ReadOnly = True
-        Me.colCVAmt.Width = 125
         '
         'txtTotal
         '
@@ -914,6 +876,7 @@ Partial Class frmCV
         '
         'GroupBox6
         '
+        Me.GroupBox6.Controls.Add(Me.txtCompanyCode)
         Me.GroupBox6.Controls.Add(Me.btLiquidate)
         Me.GroupBox6.Controls.Add(Me.btRelease)
         Me.GroupBox6.Controls.Add(Me.Label3)
@@ -1044,6 +1007,62 @@ Partial Class frmCV
         '
         Me.ErrorProvider1.ContainerControl = Me
         '
+        'txtCompanyCode
+        '
+        Me.txtCompanyCode.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtCompanyCode.ForeColor = System.Drawing.Color.RoyalBlue
+        Me.txtCompanyCode.Location = New System.Drawing.Point(435, 41)
+        Me.txtCompanyCode.Name = "txtCompanyCode"
+        Me.txtCompanyCode.ReadOnly = True
+        Me.txtCompanyCode.Size = New System.Drawing.Size(87, 20)
+        Me.txtCompanyCode.TabIndex = 609
+        '
+        'colReqNo
+        '
+        Me.colReqNo.HeaderText = "Request No."
+        Me.colReqNo.Name = "colReqNo"
+        Me.colReqNo.ReadOnly = True
+        Me.colReqNo.Width = 150
+        '
+        'colAPVNo
+        '
+        Me.colAPVNo.HeaderText = "APV No."
+        Me.colAPVNo.Name = "colAPVNo"
+        Me.colAPVNo.ReadOnly = True
+        Me.colAPVNo.Width = 150
+        '
+        'colPartAmt
+        '
+        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        Me.colPartAmt.DefaultCellStyle = DataGridViewCellStyle3
+        Me.colPartAmt.HeaderText = "Requested Amt"
+        Me.colPartAmt.Name = "colPartAmt"
+        Me.colPartAmt.ReadOnly = True
+        Me.colPartAmt.Width = 125
+        '
+        'colFull
+        '
+        Me.colFull.HeaderText = "Full"
+        Me.colFull.Name = "colFull"
+        Me.colFull.ReadOnly = True
+        Me.colFull.Width = 50
+        '
+        'colCVAmt
+        '
+        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle4.ForeColor = System.Drawing.Color.Blue
+        Me.colCVAmt.DefaultCellStyle = DataGridViewCellStyle4
+        Me.colCVAmt.HeaderText = "CV Amt"
+        Me.colCVAmt.Name = "colCVAmt"
+        Me.colCVAmt.ReadOnly = True
+        Me.colCVAmt.Width = 125
+        '
+        'colCompanyCode
+        '
+        Me.colCompanyCode.HeaderText = "Company Code"
+        Me.colCompanyCode.Name = "colCompanyCode"
+        Me.colCompanyCode.ReadOnly = True
+        '
         'frmCV
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -1111,11 +1130,6 @@ Partial Class frmCV
     Friend WithEvents cmdAddPaymentDetails As Button
     Friend WithEvents cmdRemovePaymentDetails As Button
     Friend WithEvents dtgParticulars As DataGridView
-    Friend WithEvents colReqNo As DataGridViewTextBoxColumn
-    Friend WithEvents colAPVNo As DataGridViewTextBoxColumn
-    Friend WithEvents colPartAmt As DataGridViewTextBoxColumn
-    Friend WithEvents colFull As DataGridViewCheckBoxColumn
-    Friend WithEvents colCVAmt As DataGridViewTextBoxColumn
     Friend WithEvents txtTotal As TextBox
     Friend WithEvents Label13 As Label
     Friend WithEvents txtAmtInWords As TextBox
@@ -1162,4 +1176,11 @@ Partial Class frmCV
     Friend WithEvents ErrorProvider1 As ErrorProvider
     Friend WithEvents btRelease As Button
     Friend WithEvents btLiquidate As Button
+    Friend WithEvents txtCompanyCode As TextBox
+    Friend WithEvents colReqNo As DataGridViewTextBoxColumn
+    Friend WithEvents colAPVNo As DataGridViewTextBoxColumn
+    Friend WithEvents colPartAmt As DataGridViewTextBoxColumn
+    Friend WithEvents colFull As DataGridViewCheckBoxColumn
+    Friend WithEvents colCVAmt As DataGridViewTextBoxColumn
+    Friend WithEvents colCompanyCode As DataGridViewTextBoxColumn
 End Class

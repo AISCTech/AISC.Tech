@@ -107,6 +107,26 @@ Public Class frmAPV
             Exit Sub
         End If
 
+        Dim i As Integer = 0
+        Dim h As DataGridViewRow
+        Dim boolCheckEntry As Boolean = True
+        For i = 0 To Me.dgCharges.Rows.Count - 1
+            h = Me.dgCharges.Rows(i)
+            If Len(h.Cells(0).Value) <> 0 Then
+                If Len(h.Cells(7).Value) = 0 Then
+                    boolCheckEntry = False
+                    Exit For
+                End If
+            End If
+        Next
+
+        If Me.txtType.Text = "OPR" Then
+            If boolCheckEntry = False Then
+                MsgBox("Please complete GPA Type per Charge Description", vbInformation, "System Message")
+                Exit Sub
+            End If
+        End If
+
         If MsgBox("Save this record?", vbYesNo, "Confirm Save") = vbNo Then
 
             Exit Sub
@@ -136,8 +156,8 @@ Public Class frmAPV
 
         Dim sSQL As String
 
-        sSQL = "INSERT INTO tbl_apv (APV_ReqNo, APV_Nbr, APV_PostBy, APV_PostDate, APV_Cancel, APV_Type) " &
-                " VALUES (@APV_ReqNo, @APV_Nbr, @APV_PostBy, @APV_PostDate, @APV_Cancel, @APV_Type)"
+        sSQL = "INSERT INTO tbl_apv (APV_ReqNo, APV_Nbr, APV_PostBy, APV_PostDate, APV_Cancel, APV_Type, APV_CompanyCode) " &
+                " VALUES (@APV_ReqNo, @APV_Nbr, @APV_PostBy, @APV_PostDate, @APV_Cancel, @APV_Type, @APV_CompanyCode)"
 
         cmdSQL.CommandText = sSQL
 
@@ -149,7 +169,7 @@ Public Class frmAPV
             .AddWithValue("@APV_PostDate", dtCurrent)
             .AddWithValue("@APV_Cancel", False)
             .AddWithValue("@APV_Type", strReqType)
-
+            .AddWithValue("@APV_CompanyCode", Me.txtCompanyCode.Text)
             Me.lblAPVNbr.Text = apvNumber
         End With
 
@@ -214,6 +234,8 @@ Public Class frmAPV
         cnnDBMaster.Close()
         cnnDBMaster.Dispose()
         UpdateCtrlNbrCounter(strCompanyCode, strSiteCode, "APV")
+
+        UpdateGPAType(Me.dgCharges)
         'save to transaction logs
         'SaveTransLogs("Create APV", Me.Name, "APV No", Me.lblAPVNbr.Text, strCurrentUser)
         MsgBox("Done Saving. Record Posted", MsgBoxStyle.Information)
@@ -289,6 +311,7 @@ ByVal blReOpen As Boolean, ByVal blUserInput As Boolean)
         Me.txtDateEncoded.Text = ""
         Me.txtModifiedBy.Text = ""
         Me.txtDateModified.Text = ""
+        Me.txtCompanyCode.Text = strCompanyCode
     End Sub
     Public Function SearchRequest(ByVal str As String) As Boolean
         ClearEntries()
@@ -296,7 +319,7 @@ ByVal blReOpen As Boolean, ByVal blUserInput As Boolean)
         Dim strSQL As String
 
 
-        strSQL = "SELECT tbl_request.REQ_Nbr,  tbl_request.REQ_ReqType, tbl_request.REQ_PayeeID, tbl_vendor.Description,  lib_requestparams.ParamName, lib_requestparams_1.ParamName AS ChargeName, tbl_request.REQ_DtNeed, tbl_request.REQ_Type,   tbl_request.REQ_PlateNbr, tbl_request.REQ_ChargeID, tbl_request.REQ_ChargeTo, tbl_request.REQ_Remarks, tbl_request.REQ_TotalAmt, tbl_request.REQ_PrepDate, tbl_request.REQ_PrepBy, tbl_request.REQ_Cancel,  tbl_request.REQ_Invoice, tbl_request.REQ_ModDate, tbl_request.REQ_ModBy " &
+        strSQL = "SELECT tbl_request.REQ_Nbr,  tbl_request.REQ_ReqType, tbl_request.REQ_PayeeID, tbl_vendor.Description,  lib_requestparams.ParamName, lib_requestparams_1.ParamName AS ChargeName, tbl_request.REQ_DtNeed, tbl_request.REQ_Type,   tbl_request.REQ_PlateNbr, tbl_request.REQ_ChargeID, tbl_request.REQ_ChargeTo, tbl_request.REQ_Remarks, tbl_request.REQ_TotalAmt, tbl_request.REQ_PrepDate, tbl_request.REQ_PrepBy, tbl_request.REQ_Cancel,  tbl_request.REQ_Invoice, tbl_request.REQ_ModDate, tbl_request.REQ_ModBy, tbl_request.REQ_CompanyCode " &
                  "FROM ((tbl_request INNER JOIN lib_requestparams ON tbl_request.REQ_Type = lib_requestparams.ParamCode) INNER JOIN lib_requestparams AS lib_requestparams_1 ON tbl_request.REQ_ChargeID = lib_requestparams_1.ParamCode) INNER JOIN tbl_vendor ON tbl_request.REQ_PayeeID = tbl_vendor.Code " &
                  "WHERE tbl_request.REQ_Nbr = '" & str & " '"
 
@@ -355,6 +378,8 @@ ByVal blReOpen As Boolean, ByVal blUserInput As Boolean)
                 txtInvoice.Text = ""
             End If
 
+            Me.txtCompanyCode.Text = reader.Item("REQ_CompanyCode")
+
         End While
 
         cmd.Dispose()
@@ -368,6 +393,7 @@ ByVal blReOpen As Boolean, ByVal blUserInput As Boolean)
 
         ChangeEnabledButtons(True, True, False, False, True, True, True, True, True, False)
         PopulateAPVNo(Me.lblReqNbr.Text)
+        PopulateCharges(Me.dgCharges, Me.lblReqNbr.Text)
     End Function
 
     Private Sub PopulateAPVNo(ByVal strReqNo As String)
@@ -1197,7 +1223,104 @@ ByVal blReOpen As Boolean, ByVal blUserInput As Boolean)
         End Select
     End Sub
 
-    Private Sub GroupBox3_Enter(sender As Object, e As EventArgs) Handles GroupBox3.Enter
+    Public Sub UpdateGPAType(ByVal dg As DataGridView)
+        Dim i As Integer = 0
+        Dim h As DataGridViewRow
+        Dim cmdSQL As New MySqlCommand
+        For i = 0 To dg.Rows.Count - 1
+            h = dg.Rows(i)
 
+            If Len(h.Cells(0).Value) <> 0 Then
+                'update gpa type
+                Dim cnn As New MySqlConnection(strDBMaster)
+
+                If cnn.State <> ConnectionState.Open Then cnn.Open()
+
+                Dim sSQL As String = "UPDATE tbl_requestd SET "
+                sSQL += " REQD_GPAType=@REQD_GPAType, "
+                sSQL += " REQD_GPATypeDesc=@REQD_GPATypeDesc "
+
+                sSQL += " WHERE REQD_PK= " & h.Cells(0).Value & " "
+                cmdSQL.CommandText = sSQL
+
+                With cmdSQL.Parameters
+
+                    .AddWithValue("@REQD_GPAType", h.Cells(7).Value)
+                    .AddWithValue("@REQD_GPATypeDesc", h.Cells(8).Value)
+
+                End With
+
+                cmdSQL.Connection = cnn
+                cmdSQL.ExecuteNonQuery()
+                cmdSQL.Dispose()
+
+                Select Case h.Cells(7).Value
+                    Case 1
+                        UpdateToGPATable("BookNo", h.Cells(3).Value, "ForwChargesR", 2, "", CDbl(h.Cells(6).Value))
+                    Case 2
+                        UpdateToGPATable("BookNo", h.Cells(3).Value, "ForwChargesNR", 2, "", CDbl(h.Cells(6).Value))
+                    Case 3
+                        UpdateToGPATable("BookNo", h.Cells(3).Value, "BrkgChargesR", 2, "", CDbl(h.Cells(6).Value))
+                    Case 4
+                        UpdateToGPATable("BookNo", h.Cells(3).Value, "BrkgChargesNR", 2, "", CDbl(h.Cells(6).Value))
+                    Case 5
+                        UpdateToGPATable("BookNo", h.Cells(3).Value, "ShippingLineCharges", 2, "", CDbl(h.Cells(6).Value))
+                    Case 6
+                        UpdateToGPATable("BookNo", h.Cells(3).Value, "PortCharges", 2, "", CDbl(h.Cells(6).Value))
+                    Case 7
+                        UpdateToGPATable("BookNo", h.Cells(3).Value, "TruckingCharges", 2, "", CDbl(h.Cells(6).Value))
+                    Case 8
+                        UpdateToGPATable("BookNo", h.Cells(3).Value, "AgentCharges", 2, "", CDbl(h.Cells(6).Value))
+                    Case 9
+                        UpdateToGPATable("BookNo", h.Cells(3).Value, "WHChargesR", 2, "", CDbl(h.Cells(6).Value))
+                    Case 10
+                        UpdateToGPATable("BookNo", h.Cells(3).Value, "WHChargesNR", 2, "", CDbl(h.Cells(6).Value))
+                    Case 11
+                        UpdateToGPATable("BookNo", h.Cells(3).Value, "OthersCharges", 2, "", CDbl(h.Cells(6).Value))
+                End Select
+
+            End If
+
+        Next
+    End Sub
+
+    Private Sub PopulateCharges(ByVal dg As DataGridView, ByVal str As String)
+        dg.Rows.Clear()
+
+        Dim strSQL As String
+
+        strSQL = "SELECT * " &
+                 "FROM tbl_requestd " &
+                 "WHERE REQD_REQNbr = '" & str & "' " &
+                 "ORDER BY REQD_Index"
+
+        If cnnDBMaster.State <> ConnectionState.Open Then cnnDBMaster.Open()
+        Dim cmd = New MySqlCommand(strSQL, cnnDBMaster)
+        Dim reader As MySqlDataReader = cmd.ExecuteReader()
+
+        While reader.Read
+
+            If frmRequest.txtType.Text = "OPR" Then
+                Dim strGPAType = ""
+                Dim strGPATypeDesc = ""
+
+                If IsDBNull(reader.Item("REQD_GPAType")) = True Then
+                    strGPAType = ""
+                Else
+                    strGPAType = reader.Item("REQD_GPAType")
+                End If
+                If IsDBNull(reader.Item("REQD_GPATypeDesc")) = True Then
+                    strGPATypeDesc = ""
+                Else
+                    strGPATypeDesc = reader.Item("REQD_GPATypeDesc")
+                End If
+                dg.Rows.Add(reader.Item("PK"), reader.Item("REQD_REQNbr"), reader.Item("REQD_Particulars"), reader.Item("REQD_BookNbr"), reader.Item("REQD_HBL"), reader.Item("REQD_ContainerNo"), Format(reader.Item("REQD_Amount"), "n2"), strGPAType, strGPATypeDesc)
+            End If
+
+        End While
+
+        cmd.Dispose()
+        reader.Close()
+        cnnDBMaster.Close()
     End Sub
 End Class

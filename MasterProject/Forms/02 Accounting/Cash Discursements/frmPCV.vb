@@ -106,20 +106,37 @@ Public Class frmPCV
 
             If reader.Item("REQ_Cancel") = False And reader.Item("REQ_Release") = True And reader.Item("REQ_Liquidated") = False Then
                 Me.txtStatus.Text = "Released"
+
             End If
 
             If reader.Item("REQ_Release") = False And reader.Item("REQ_Cancel") = False Then
                 Me.txtStatus.Text = "Open"
             End If
 
-            Me.txtReleaseBy.Text = reader.Item("REQ_ReleaseBy")
-            Me.txtReleaseDate.Text = reader.Item("REQ_ReleaseDate")
-            Me.txtReceiveBy.Text = reader.Item("REQ_PCVReceivedBy")
+            If reader.Item("REQ_Release") = True Then
+                Me.txtReleaseBy.Text = reader.Item("REQ_ReleaseBy")
+                Me.txtReleaseDate.Text = reader.Item("REQ_ReleaseDate")
+                Me.txtReceiveBy.Text = reader.Item("REQ_PCVReceivedBy")
+            Else
+                Me.txtReleaseBy.Text = ""
+                Me.txtReleaseDate.Text = ""
+                Me.txtReceiveBy.Text = ""
+            End If
 
-            Me.txtPostBy.Text = reader.Item("REQ_LiquidatedBy")
-            Me.txtPostDate.Text = reader.Item("REQ_LiquidatedDate")
-            Me.txtReturnRefund.Text = Format(reader.Item("REQ_LiquidatedAmount"), "n2")
-            Me.txtLiquidationDate.Text = reader("REQ_LiquidationDate")
+            If reader.Item("REQ_Liquidated") = True Then
+                Me.txtPostBy.Text = reader.Item("REQ_LiquidatedBy")
+                Me.txtPostDate.Text = reader.Item("REQ_LiquidatedDate")
+                Me.txtReturnRefund.Text = Format(reader.Item("REQ_LiquidatedAmount"), "n2")
+                Me.txtLiquidationDate.Text = reader.Item("REQ_LiquidationDate")
+            Else
+                Me.txtPostBy.Text = ""
+                Me.txtPostDate.Text = ""
+                Me.txtReturnRefund.Text = ""
+                Me.txtLiquidationDate.Text = ""
+            End If
+
+
+
 
 
 
