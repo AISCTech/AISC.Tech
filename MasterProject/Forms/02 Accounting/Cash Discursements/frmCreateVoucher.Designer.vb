@@ -23,20 +23,13 @@ Partial Class frmCreateVoucher
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmCreateVoucher))
+        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.optCheck = New System.Windows.Forms.RadioButton()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.optMC = New System.Windows.Forms.RadioButton()
         Me.dtgRefNo = New System.Windows.Forms.DataGridView()
-        Me.colRefNo = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colPayee = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colDTNeeded = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colAmt = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colCVAmt = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colAPV = New System.Windows.Forms.DataGridViewCheckBoxColumn()
-        Me.colFull = New System.Windows.Forms.DataGridViewCheckBoxColumn()
         Me.txtDateNeeded = New System.Windows.Forms.TextBox()
         Me.cmdSelect = New System.Windows.Forms.Button()
         Me.txtRefNo = New System.Windows.Forms.TextBox()
@@ -58,6 +51,14 @@ Partial Class frmCreateVoucher
         Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
         Me.cmdClearAllEntry = New System.Windows.Forms.Button()
         Me.cmdRemoveEntry = New System.Windows.Forms.Button()
+        Me.colRefNo = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colPayee = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colDTNeeded = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colAmt = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colCVAmt = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colAPV = New System.Windows.Forms.DataGridViewCheckBoxColumn()
+        Me.colFull = New System.Windows.Forms.DataGridViewCheckBoxColumn()
+        Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.GroupBox1.SuspendLayout()
         CType(Me.dtgRefNo, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.gpType.SuspendLayout()
@@ -102,67 +103,12 @@ Partial Class frmCreateVoucher
         Me.dtgRefNo.AllowUserToAddRows = False
         Me.dtgRefNo.AllowUserToDeleteRows = False
         Me.dtgRefNo.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dtgRefNo.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.colRefNo, Me.colPayee, Me.colDTNeeded, Me.colAmt, Me.colCVAmt, Me.colAPV, Me.colFull})
+        Me.dtgRefNo.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.colRefNo, Me.colPayee, Me.colDTNeeded, Me.colAmt, Me.colCVAmt, Me.colAPV, Me.colFull, Me.Column1})
         Me.dtgRefNo.Location = New System.Drawing.Point(12, 190)
         Me.dtgRefNo.Name = "dtgRefNo"
         Me.dtgRefNo.ReadOnly = True
         Me.dtgRefNo.Size = New System.Drawing.Size(745, 165)
         Me.dtgRefNo.TabIndex = 441
-        '
-        'colRefNo
-        '
-        Me.colRefNo.Frozen = True
-        Me.colRefNo.HeaderText = "Ref. No."
-        Me.colRefNo.Name = "colRefNo"
-        Me.colRefNo.ReadOnly = True
-        Me.colRefNo.Width = 125
-        '
-        'colPayee
-        '
-        Me.colPayee.HeaderText = "Payee Name"
-        Me.colPayee.Name = "colPayee"
-        Me.colPayee.ReadOnly = True
-        Me.colPayee.Width = 250
-        '
-        'colDTNeeded
-        '
-        Me.colDTNeeded.HeaderText = "Date/Time Needed"
-        Me.colDTNeeded.Name = "colDTNeeded"
-        Me.colDTNeeded.ReadOnly = True
-        Me.colDTNeeded.Width = 125
-        '
-        'colAmt
-        '
-        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        Me.colAmt.DefaultCellStyle = DataGridViewCellStyle1
-        Me.colAmt.HeaderText = "Requested Amt"
-        Me.colAmt.Name = "colAmt"
-        Me.colAmt.ReadOnly = True
-        Me.colAmt.Width = 125
-        '
-        'colCVAmt
-        '
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.Blue
-        Me.colCVAmt.DefaultCellStyle = DataGridViewCellStyle2
-        Me.colCVAmt.HeaderText = "CV Amt"
-        Me.colCVAmt.Name = "colCVAmt"
-        Me.colCVAmt.ReadOnly = True
-        Me.colCVAmt.Width = 125
-        '
-        'colAPV
-        '
-        Me.colAPV.HeaderText = "APV"
-        Me.colAPV.Name = "colAPV"
-        Me.colAPV.ReadOnly = True
-        Me.colAPV.Width = 50
-        '
-        'colFull
-        '
-        Me.colFull.HeaderText = "Full"
-        Me.colFull.Name = "colFull"
-        Me.colFull.ReadOnly = True
-        Me.colFull.Width = 50
         '
         'txtDateNeeded
         '
@@ -384,6 +330,67 @@ Partial Class frmCreateVoucher
         Me.ToolTip1.SetToolTip(Me.cmdRemoveEntry, "Remove Selected Row")
         Me.cmdRemoveEntry.UseVisualStyleBackColor = True
         '
+        'colRefNo
+        '
+        Me.colRefNo.Frozen = True
+        Me.colRefNo.HeaderText = "Ref. No."
+        Me.colRefNo.Name = "colRefNo"
+        Me.colRefNo.ReadOnly = True
+        Me.colRefNo.Width = 125
+        '
+        'colPayee
+        '
+        Me.colPayee.HeaderText = "Payee Name"
+        Me.colPayee.Name = "colPayee"
+        Me.colPayee.ReadOnly = True
+        Me.colPayee.Width = 250
+        '
+        'colDTNeeded
+        '
+        Me.colDTNeeded.HeaderText = "Date/Time Needed"
+        Me.colDTNeeded.Name = "colDTNeeded"
+        Me.colDTNeeded.ReadOnly = True
+        Me.colDTNeeded.Width = 125
+        '
+        'colAmt
+        '
+        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        Me.colAmt.DefaultCellStyle = DataGridViewCellStyle5
+        Me.colAmt.HeaderText = "Requested Amt"
+        Me.colAmt.Name = "colAmt"
+        Me.colAmt.ReadOnly = True
+        Me.colAmt.Width = 125
+        '
+        'colCVAmt
+        '
+        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle6.ForeColor = System.Drawing.Color.Blue
+        Me.colCVAmt.DefaultCellStyle = DataGridViewCellStyle6
+        Me.colCVAmt.HeaderText = "CV Amt"
+        Me.colCVAmt.Name = "colCVAmt"
+        Me.colCVAmt.ReadOnly = True
+        Me.colCVAmt.Width = 125
+        '
+        'colAPV
+        '
+        Me.colAPV.HeaderText = "APV"
+        Me.colAPV.Name = "colAPV"
+        Me.colAPV.ReadOnly = True
+        Me.colAPV.Width = 50
+        '
+        'colFull
+        '
+        Me.colFull.HeaderText = "Full"
+        Me.colFull.Name = "colFull"
+        Me.colFull.ReadOnly = True
+        Me.colFull.Width = 50
+        '
+        'Column1
+        '
+        Me.Column1.HeaderText = "Company Code"
+        Me.Column1.Name = "Column1"
+        Me.Column1.ReadOnly = True
+        '
         'frmCreateVoucher
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -419,13 +426,6 @@ Partial Class frmCreateVoucher
     Friend WithEvents GroupBox1 As GroupBox
     Friend WithEvents optMC As RadioButton
     Friend WithEvents dtgRefNo As DataGridView
-    Friend WithEvents colRefNo As DataGridViewTextBoxColumn
-    Friend WithEvents colPayee As DataGridViewTextBoxColumn
-    Friend WithEvents colDTNeeded As DataGridViewTextBoxColumn
-    Friend WithEvents colAmt As DataGridViewTextBoxColumn
-    Friend WithEvents colCVAmt As DataGridViewTextBoxColumn
-    Friend WithEvents colAPV As DataGridViewCheckBoxColumn
-    Friend WithEvents colFull As DataGridViewCheckBoxColumn
     Friend WithEvents txtDateNeeded As TextBox
     Friend WithEvents cmdSelect As Button
     Friend WithEvents txtRefNo As TextBox
@@ -447,4 +447,12 @@ Partial Class frmCreateVoucher
     Friend WithEvents ToolTip1 As ToolTip
     Friend WithEvents cmdClearAllEntry As Button
     Friend WithEvents cmdRemoveEntry As Button
+    Friend WithEvents colRefNo As DataGridViewTextBoxColumn
+    Friend WithEvents colPayee As DataGridViewTextBoxColumn
+    Friend WithEvents colDTNeeded As DataGridViewTextBoxColumn
+    Friend WithEvents colAmt As DataGridViewTextBoxColumn
+    Friend WithEvents colCVAmt As DataGridViewTextBoxColumn
+    Friend WithEvents colAPV As DataGridViewCheckBoxColumn
+    Friend WithEvents colFull As DataGridViewCheckBoxColumn
+    Friend WithEvents Column1 As DataGridViewTextBoxColumn
 End Class

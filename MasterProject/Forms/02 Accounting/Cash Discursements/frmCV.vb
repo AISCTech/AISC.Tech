@@ -165,7 +165,10 @@ Public Class frmCV
     End Sub
 
     Public Sub SearchRecord() Implements ICommonFunction.SearchRecord
-        Throw New NotImplementedException()
+        With frmSearchCV
+            .Tag = Me.Tag
+            .ShowDialog()
+        End With
     End Sub
 
     Private Sub frmCV_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -173,7 +176,7 @@ Public Class frmCV
         FillComboBox(Me.cboBank, "Select Name from tbl_bank where Active = true", "Name")
     End Sub
 
-    Private Sub ChangeEnabledButtons(ByVal blNew As Boolean, ByVal blEdit As Boolean, ByVal blReset As Boolean, ByVal blSave As Boolean,
+    Public Sub ChangeEnabledButtons(ByVal blNew As Boolean, ByVal blEdit As Boolean, ByVal blReset As Boolean, ByVal blSave As Boolean,
 ByVal blPrintPreview As Boolean, ByVal blSearch As Boolean, ByVal blPost As Boolean, ByVal blCancel As Boolean,
 ByVal blReOpen As Boolean, ByVal blUserInput As Boolean)
         With EnableButtons
@@ -315,7 +318,7 @@ ByVal blReOpen As Boolean, ByVal blUserInput As Boolean)
             rdrCV = cmdSQL.ExecuteReader
 
             While rdrCV.Read
-                Me.dtgParticulars.Rows.Add(rdrCV.Item("ReqNo"), rdrCV.Item("APVNo"), "", rdrCV.Item("Fullpayment"), Format(rdrCV.Item("CVAmt"), "n2"))
+                Me.dtgParticulars.Rows.Add(rdrCV.Item("ReqNo"), rdrCV.Item("APVNo"), "", rdrCV.Item("Fullpayment"), Format(rdrCV.Item("CVAmt"), "n2"), rdrCV.Item("CompanyCode"))
             End While
 
             rdrCV.Close()
@@ -437,6 +440,7 @@ ByVal blReOpen As Boolean, ByVal blUserInput As Boolean)
             .txtCashInBank.Text = ""
             .txtCashInBankWords.Text = ""
             .txtDateNeeded.Text = ""
+            .txtCompanyCode.Text = strCompanyCode
             .ErrorProvider1.Clear()
         End With
     End Sub
@@ -697,8 +701,8 @@ ByVal blReOpen As Boolean, ByVal blUserInput As Boolean)
             cmdSQL.ExecuteNonQuery()
 
             For ctrRow As Integer = 0 To Me.dtgParticulars.Rows.Count - 1
-                strsql = "INSERT INTO tbl_cvp (CVNo, ReqNo, APVNo, FullPayment, CVAmt) " &
-                         "VALUES (@CVNo, @ReqNo, @APVNo, @FullPayment, @CVAmt)"
+                strsql = "INSERT INTO tbl_cvp (CVNo, ReqNo, APVNo, FullPayment, CVAmt, CompanyCode) " &
+                         "VALUES (@CVNo, @ReqNo, @APVNo, @FullPayment, @CVAmt, @CompanyCode)"
 
                 cmdSQL = New MySql.Data.MySqlClient.MySqlCommand(strsql, cnnDBMaster)
 
@@ -710,6 +714,7 @@ ByVal blReOpen As Boolean, ByVal blUserInput As Boolean)
                     .AddWithValue("@APVNo", dtgGridRow.Cells("colAPVNo").Value)
                     .AddWithValue("@FullPayment", dtgGridRow.Cells("colFull").Value)
                     .AddWithValue("@CVAmt", CDbl(dtgGridRow.Cells("colCVAmt").Value))
+                    .AddWithValue("@CompanyCode", dtgGridRow.Cells("colCompanyCode").Value)
                 End With
 
                 cmdSQL.ExecuteNonQuery()

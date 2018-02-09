@@ -7,8 +7,97 @@ Public Class frmPettyCashRelease
 
     Private Sub frmPettyCashRelease_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         FillComboBox(Me.cboPayee, "Select Description from tbl_vendor where Description is not null", "Description")
+        FillGridComboBox(Me.colGPAType, "Select `Description` from lib_chargesgpatype where PK is not null", "Description")
     End Sub
 
+    Public Sub UpdateGPAType(ByVal dg As DataGridView)
+        Dim i As Integer = 0
+        Dim h As DataGridViewRow
+        Dim cmdSQL As New MySqlCommand
+        For i = 0 To dg.Rows.Count - 1
+            h = dg.Rows(i)
+
+            If Len(h.Cells(0).Value) <> 0 Then
+                'update gpa type
+                Dim cnn As New MySqlConnection(strDBMaster)
+
+                If cnn.State <> ConnectionState.Open Then cnn.Open()
+
+                Dim sSQL As String = "UPDATE tbl_requestd SET "
+                sSQL += " REQD_GPAType=@REQD_GPAType, "
+                sSQL += " REQD_GPATypeDesc=@REQD_GPATypeDesc "
+
+                sSQL += " WHERE REQD_PK= " & h.Cells(0).Value & " "
+                cmdSQL.CommandText = sSQL
+
+                With cmdSQL.Parameters
+
+                    .AddWithValue("@REQD_GPAType", h.Cells(7).Value)
+                    .AddWithValue("@REQD_GPATypeDesc", h.Cells(8).Value)
+
+                End With
+
+                cmdSQL.Connection = cnn
+                cmdSQL.ExecuteNonQuery()
+                cmdSQL.Dispose()
+
+                Select Case h.Cells(7).Value
+                    Case 1
+                        UpdateToGPATable("BookNo", h.Cells(3).Value, "ForwChargesR", 2, "", CDbl(h.Cells(6).Value))
+                    Case 2
+                        UpdateToGPATable("BookNo", h.Cells(3).Value, "ForwChargesNR", 2, "", CDbl(h.Cells(6).Value))
+                    Case 3
+                        UpdateToGPATable("BookNo", h.Cells(3).Value, "BrkgChargesR", 2, "", CDbl(h.Cells(6).Value))
+                    Case 4
+                        UpdateToGPATable("BookNo", h.Cells(3).Value, "BrkgChargesNR", 2, "", CDbl(h.Cells(6).Value))
+                    Case 5
+                        UpdateToGPATable("BookNo", h.Cells(3).Value, "ShippingLineCharges", 2, "", CDbl(h.Cells(6).Value))
+                    Case 6
+                        UpdateToGPATable("BookNo", h.Cells(3).Value, "PortCharges", 2, "", CDbl(h.Cells(6).Value))
+                    Case 7
+                        UpdateToGPATable("BookNo", h.Cells(3).Value, "TruckingCharges", 2, "", CDbl(h.Cells(6).Value))
+                    Case 8
+                        UpdateToGPATable("BookNo", h.Cells(3).Value, "AgentCharges", 2, "", CDbl(h.Cells(6).Value))
+                    Case 9
+                        UpdateToGPATable("BookNo", h.Cells(3).Value, "WHChargesR", 2, "", CDbl(h.Cells(6).Value))
+                    Case 10
+                        UpdateToGPATable("BookNo", h.Cells(3).Value, "WHChargesNR", 2, "", CDbl(h.Cells(6).Value))
+                    Case 11
+                        UpdateToGPATable("BookNo", h.Cells(3).Value, "OthersCharges", 2, "", CDbl(h.Cells(6).Value))
+                End Select
+
+
+            End If
+
+        Next
+    End Sub
+
+    Private Sub PopulateCharges(ByVal dg As DataGridView, ByVal str As String)
+        dg.Rows.Clear()
+
+        Dim strSQL As String
+
+        strSQL = "SELECT * " &
+                 "FROM tbl_requestd " &
+                 "WHERE REQD_REQNbr = '" & str & "' " &
+                 "ORDER BY REQD_Index"
+
+        If cnnDBMaster.State <> ConnectionState.Open Then cnnDBMaster.Open()
+        Dim cmd = New MySqlCommand(strSQL, cnnDBMaster)
+        Dim reader As MySqlDataReader = cmd.ExecuteReader()
+
+        While reader.Read
+
+            If frmRequest.txtType.Text = "OPR" Then
+                dg.Rows.Add(reader.Item("PK"), reader.Item("REQD_REQNbr"), reader.Item("REQD_Particulars"), reader.Item("REQD_BookNbr"), reader.Item("REQD_HBL"), reader.Item("REQD_ContainerNo"), Format(reader.Item("REQD_Amount"), "n2"))
+            End If
+
+        End While
+
+        cmd.Dispose()
+        reader.Close()
+        cnnDBMaster.Close()
+    End Sub
     Public Sub RetrieveFund(ByVal str As String)
         Dim cmd As MySql.Data.MySqlClient.MySqlCommand
         Dim strSQL As String
@@ -207,10 +296,40 @@ Public Class frmPettyCashRelease
 
             Me.Refresh()
 
+
+            If frmPCV.txtType.Text = "OPR" Then
+                UpdateGPAType(Me.dgCharges)
+            End If
+
+
+
+
         End If
     End Sub
 
     Private Sub btRelease_Click(sender As Object, e As EventArgs) Handles btRelease.Click
+        Dim i As Integer = 0
+        Dim h As DataGridViewRow
+        Dim boolCheckEntry As Boolean = True
+        For i = 0 To Me.dgCharges.Rows.Count - 1
+            h = Me.dgCharges.Rows(i)
+            If Len(h.Cells(0).Value) <> 0 Then
+                If Len(h.Cells(7).Value) = 0 Then
+                    boolCheckEntry = False
+                    Exit For
+                End If
+            End If
+        Next
+
+        If frmPCV.txtType.Text = "OPR" Then
+            If boolCheckEntry = False Then
+                MsgBox("Please complete GPA Type per Charge Description", vbInformation, "System Message")
+                Exit Sub
+            End If
+        End If
+
+
+
         Release(frmPCV.lblReqNbr.Text)
         SaveEntry(frmPCV.lblReqNbr.Text)
 

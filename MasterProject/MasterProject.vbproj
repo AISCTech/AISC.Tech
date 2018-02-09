@@ -204,10 +204,22 @@
     <Compile Include="Forms\02 Accounting\Billing\frmInvoice.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Forms\02 Accounting\Billing\frmInvoiceExport.Designer.vb">
+      <DependentUpon>frmInvoiceExport.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\02 Accounting\Billing\frmInvoiceExport.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\02 Accounting\Billing\frmSOA.Designer.vb">
       <DependentUpon>frmSOA.vb</DependentUpon>
     </Compile>
     <Compile Include="Forms\02 Accounting\Billing\frmSOA.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\02 Accounting\Billing\frmSOAExport.Designer.vb">
+      <DependentUpon>frmSOAExport.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\02 Accounting\Billing\frmSOAExport.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\02 Accounting\Cash Discursements\frmAPV.designer.vb">
@@ -232,6 +244,60 @@
       <DependentUpon>frmEnterBookNo.vb</DependentUpon>
     </Compile>
     <Compile Include="Forms\02 Accounting\Billing\frmEnterBookNo.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\02 Accounting\Cash Discursements\frmSearchCV.Designer.vb">
+      <DependentUpon>frmSearchCV.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\02 Accounting\Cash Discursements\frmSearchCV.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\02 Accounting\Collection\frmAcknowledgementReceipt.Designer.vb">
+      <DependentUpon>frmAcknowledgementReceipt.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\02 Accounting\Collection\frmAcknowledgementReceipt.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\02 Accounting\Collection\frmARContRef.Designer.vb">
+      <DependentUpon>frmARContRef.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\02 Accounting\Collection\frmARContRef.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\02 Accounting\Collection\frmIncludeToAR.Designer.vb">
+      <DependentUpon>frmIncludeToAR.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\02 Accounting\Collection\frmIncludeToAR.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\02 Accounting\Collection\frmIncludeToOR.Designer.vb">
+      <DependentUpon>frmIncludeToOR.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\02 Accounting\Collection\frmIncludeToOR.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\02 Accounting\Collection\frmOfficialReceipt.Designer.vb">
+      <DependentUpon>frmOfficialReceipt.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\02 Accounting\Collection\frmOfficialReceipt.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\02 Accounting\Container Refund\frmContainerRefund.Designer.vb">
+      <DependentUpon>frmContainerRefund.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\02 Accounting\Container Refund\frmContainerRefund.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\02 Accounting\Container Refund\frmContainerRefundMonitoring.Designer.vb">
+      <DependentUpon>frmContainerRefundMonitoring.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\02 Accounting\Container Refund\frmContainerRefundMonitoring.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\02 Accounting\Container Refund\frmRetrieveContainerDepositRequest.Designer.vb">
+      <DependentUpon>frmRetrieveContainerDepositRequest.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\02 Accounting\Container Refund\frmRetrieveContainerDepositRequest.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\02 Accounting\frmManageVendor.designer.vb">
@@ -378,11 +444,37 @@
     <Compile Include="Forms\06 Sample Form\frmSampleForm.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Forms\07 Management Reports\frmBookingSummary.Designer.vb">
+      <DependentUpon>frmBookingSummary.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\07 Management Reports\frmBookingSummary.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\07 Management Reports\frmGeneralLedger.Designer.vb">
+      <DependentUpon>frmGeneralLedger.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\07 Management Reports\frmGeneralLedger.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\07 Management Reports\frmGPA.Designer.vb">
+      <DependentUpon>frmGPA.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\07 Management Reports\frmGPA.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\07 Management Reports\frmTrialBalance.Designer.vb">
+      <DependentUpon>frmTrialBalance.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\07 Management Reports\frmTrialBalance.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Interface\ICommonFunction.vb" />
     <Compile Include="Modules\modDBConn.vb" />
+    <Compile Include="Modules\modGeneralLedger.vb" />
     <Compile Include="Modules\modGetCtrlNbr.vb" />
     <Compile Include="Modules\modGlobalDeclaration.vb" />
     <Compile Include="Modules\modGlobalFunction.vb" />
+    <Compile Include="Modules\modGPA.vb" />
     <Compile Include="Modules\modSampleCodes.vb" />
     <Compile Include="Modules\modTransLogs.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
@@ -436,8 +528,14 @@
     <EmbeddedResource Include="Forms\02 Accounting\Billing\frmInvoice.resx">
       <DependentUpon>frmInvoice.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\02 Accounting\Billing\frmInvoiceExport.resx">
+      <DependentUpon>frmInvoiceExport.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\02 Accounting\Billing\frmSOA.resx">
       <DependentUpon>frmSOA.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\02 Accounting\Billing\frmSOAExport.resx">
+      <DependentUpon>frmSOAExport.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\02 Accounting\Cash Discursements\frmAPV.resx">
       <DependentUpon>frmAPV.vb</DependentUpon>
@@ -450,6 +548,33 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\02 Accounting\Billing\frmEnterBookNo.resx">
       <DependentUpon>frmEnterBookNo.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\02 Accounting\Cash Discursements\frmSearchCV.resx">
+      <DependentUpon>frmSearchCV.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\02 Accounting\Collection\frmAcknowledgementReceipt.resx">
+      <DependentUpon>frmAcknowledgementReceipt.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\02 Accounting\Collection\frmARContRef.resx">
+      <DependentUpon>frmARContRef.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\02 Accounting\Collection\frmIncludeToAR.resx">
+      <DependentUpon>frmIncludeToAR.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\02 Accounting\Collection\frmIncludeToOR.resx">
+      <DependentUpon>frmIncludeToOR.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\02 Accounting\Collection\frmOfficialReceipt.resx">
+      <DependentUpon>frmOfficialReceipt.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\02 Accounting\Container Refund\frmContainerRefund.resx">
+      <DependentUpon>frmContainerRefund.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\02 Accounting\Container Refund\frmContainerRefundMonitoring.resx">
+      <DependentUpon>frmContainerRefundMonitoring.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\02 Accounting\Container Refund\frmRetrieveContainerDepositRequest.resx">
+      <DependentUpon>frmRetrieveContainerDepositRequest.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\02 Accounting\frmManageVendor.resx">
       <DependentUpon>frmManageVendor.vb</DependentUpon>
@@ -522,6 +647,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\06 Sample Form\frmSampleForm.resx">
       <DependentUpon>frmSampleForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\07 Management Reports\frmGeneralLedger.resx">
+      <DependentUpon>frmGeneralLedger.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\07 Management Reports\frmGPA.resx">
+      <DependentUpon>frmGPA.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>

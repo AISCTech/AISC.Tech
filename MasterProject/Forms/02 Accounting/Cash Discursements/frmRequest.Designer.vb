@@ -26,6 +26,7 @@ Partial Class frmRequest
         Me.Label15 = New System.Windows.Forms.Label()
         Me.txtGrandTotal = New System.Windows.Forms.TextBox()
         Me.GroupBox6 = New System.Windows.Forms.GroupBox()
+        Me.txtCompanyCode = New System.Windows.Forms.TextBox()
         Me.optMC = New System.Windows.Forms.RadioButton()
         Me.optCheck = New System.Windows.Forms.RadioButton()
         Me.optPettyCash = New System.Windows.Forms.RadioButton()
@@ -154,6 +155,7 @@ Partial Class frmRequest
         '
         'GroupBox6
         '
+        Me.GroupBox6.Controls.Add(Me.txtCompanyCode)
         Me.GroupBox6.Controls.Add(Me.optMC)
         Me.GroupBox6.Controls.Add(Me.optCheck)
         Me.GroupBox6.Controls.Add(Me.optPettyCash)
@@ -172,10 +174,20 @@ Partial Class frmRequest
         Me.GroupBox6.TabIndex = 573
         Me.GroupBox6.TabStop = False
         '
+        'txtCompanyCode
+        '
+        Me.txtCompanyCode.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtCompanyCode.ForeColor = System.Drawing.Color.RoyalBlue
+        Me.txtCompanyCode.Location = New System.Drawing.Point(436, 13)
+        Me.txtCompanyCode.Name = "txtCompanyCode"
+        Me.txtCompanyCode.ReadOnly = True
+        Me.txtCompanyCode.Size = New System.Drawing.Size(87, 20)
+        Me.txtCompanyCode.TabIndex = 582
+        '
         'optMC
         '
         Me.optMC.AutoSize = True
-        Me.optMC.Location = New System.Drawing.Point(314, 16)
+        Me.optMC.Location = New System.Drawing.Point(235, 16)
         Me.optMC.Name = "optMC"
         Me.optMC.Size = New System.Drawing.Size(114, 17)
         Me.optMC.TabIndex = 581
@@ -185,7 +197,7 @@ Partial Class frmRequest
         'optCheck
         '
         Me.optCheck.AutoSize = True
-        Me.optCheck.Location = New System.Drawing.Point(246, 16)
+        Me.optCheck.Location = New System.Drawing.Point(167, 16)
         Me.optCheck.Name = "optCheck"
         Me.optCheck.Size = New System.Drawing.Size(62, 17)
         Me.optCheck.TabIndex = 580
@@ -196,7 +208,7 @@ Partial Class frmRequest
         '
         Me.optPettyCash.AutoSize = True
         Me.optPettyCash.Checked = True
-        Me.optPettyCash.Location = New System.Drawing.Point(164, 17)
+        Me.optPettyCash.Location = New System.Drawing.Point(85, 17)
         Me.optPettyCash.Name = "optPettyCash"
         Me.optPettyCash.Size = New System.Drawing.Size(76, 17)
         Me.optPettyCash.TabIndex = 215
@@ -301,7 +313,7 @@ Partial Class frmRequest
         Me.Label2.BackColor = System.Drawing.Color.Transparent
         Me.Label2.Font = New System.Drawing.Font("Tahoma", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label2.ForeColor = System.Drawing.Color.Black
-        Me.Label2.Location = New System.Drawing.Point(84, 18)
+        Me.Label2.Location = New System.Drawing.Point(5, 18)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(74, 13)
         Me.Label2.TabIndex = 451
@@ -1074,7 +1086,7 @@ Partial Class frmRequest
         Me.Label22.BackColor = System.Drawing.Color.Transparent
         Me.Label22.Font = New System.Drawing.Font("Tahoma", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label22.ForeColor = System.Drawing.Color.Black
-        Me.Label22.Location = New System.Drawing.Point(311, 20)
+        Me.Label22.Location = New System.Drawing.Point(311, 19)
         Me.Label22.Name = "Label22"
         Me.Label22.Size = New System.Drawing.Size(64, 14)
         Me.Label22.TabIndex = 603
@@ -1235,4 +1247,5 @@ Partial Class frmRequest
     Friend WithEvents cboReports As ComboBox
     Friend WithEvents Label22 As Label
     Friend WithEvents txtRequestNo As TextBox
+    Friend WithEvents txtCompanyCode As TextBox
 End Class

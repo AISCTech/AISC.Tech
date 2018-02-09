@@ -99,8 +99,8 @@ Public Class frmRequest
         If Len(Me.lblReqNbr.Text) = 0 Then
 
             Try
-                cmdSQL.CommandText = ("INSERT INTO tbl_request (`REQ_Nbr`, `REQ_ReqType`, `REQ_PayeeID`, REQ_DtNeed, REQ_Type,  REQ_PlateNbr, REQ_ChargeID, REQ_ChargeTo, REQ_Remarks, REQ_TotalAmt, REQ_PrepDate, REQ_PrepBy, REQ_ModBy, REQ_ModDate, REQ_Cancel, REQ_Release, REQ_Invoice, REQ_Liquidated, REQ_BranchCode)  VALUES " &
-                                     "               (@REQ_Nbr, @REQ_ReqType, @REQ_PayeeID, @REQ_DtNeed, @REQ_Type, @REQ_PlateNbr, @REQ_ChargeID, @REQ_ChargeTo, @REQ_Remarks, @REQ_TotalAmt, @REQ_PrepDate, @REQ_PrepBy, @REQ_ModBy, @REQ_ModDate, @REQ_Cancel, @REQ_Release, @REQ_Invoice, @REQ_Liquidated, @REQ_BranchCode)")
+                cmdSQL.CommandText = ("INSERT INTO tbl_request (`REQ_Nbr`, `REQ_ReqType`, `REQ_PayeeID`, REQ_DtNeed, REQ_Type,  REQ_PlateNbr, REQ_ChargeID, REQ_ChargeTo, REQ_Remarks, REQ_TotalAmt, REQ_PrepDate, REQ_PrepBy, REQ_ModBy, REQ_ModDate, REQ_Cancel, REQ_Release, REQ_Invoice, REQ_Liquidated, REQ_BranchCode, REQ_CompanyCode)  VALUES " &
+                                     "               (@REQ_Nbr, @REQ_ReqType, @REQ_PayeeID, @REQ_DtNeed, @REQ_Type, @REQ_PlateNbr, @REQ_ChargeID, @REQ_ChargeTo, @REQ_Remarks, @REQ_TotalAmt, @REQ_PrepDate, @REQ_PrepBy, @REQ_ModBy, @REQ_ModDate, @REQ_Cancel, @REQ_Release, @REQ_Invoice, @REQ_Liquidated, @REQ_BranchCode, @REQ_CompanyCode)")
 
 
                 With cmdSQL.Parameters
@@ -130,6 +130,7 @@ Public Class frmRequest
                     .AddWithValue("@REQ_Invoice", Me.txtInvoice.Text)
                     .AddWithValue("@REQ_Liquidated", 0)
                     .AddWithValue("@REQ_BranchCode", "MNL")
+                    .AddWithValue("@REQ_CompanyCode", Me.txtCompanyCode.Text)
                     Me.lblReqNbr.Text = crpNumber
                     Me.txtEncodedBy.Text = strCurrentUser
                     Me.txtDateEncoded.Text = Format(dtCurrent, "yyyy-MM-dd hh:mm:ss")
@@ -644,6 +645,7 @@ ByVal blReOpen As Boolean, ByVal blUserInput As Boolean)
         Me.txtDateEncoded.Text = ""
         Me.txtModifiedBy.Text = ""
         Me.txtDateModified.Text = ""
+        Me.txtCompanyCode.Text = strCompanyCode
     End Sub
 
     Private Sub PopulateItems(ByVal dg As DataGridView, ByVal str As String)
@@ -743,9 +745,9 @@ ByVal blReOpen As Boolean, ByVal blUserInput As Boolean)
         Dim strSQL As String
 
 
-        strSQL = "Select tbl_request.REQ_Nbr, tbl_request.REQ_ReqType, tbl_request.REQ_PayeeID, tbl_vendor.Description, lib_requestparams.ParamName, lib_requestparams_1.ParamName As ChargeName, tbl_request.REQ_DtNeed, tbl_request.REQ_Type, tbl_request.REQ_PlateNbr, tbl_request.REQ_ChargeID, tbl_request.REQ_ChargeTo, tbl_request.REQ_Remarks, tbl_request.REQ_TotalAmt, tbl_request.REQ_PrepDate, tbl_request.REQ_PrepBy, tbl_request.REQ_Cancel, tbl_request.REQ_Invoice, tbl_request.REQ_ModDate, tbl_request.REQ_ModBy " &
+        strSQL = "Select tbl_request.REQ_Nbr, tbl_request.REQ_ReqType, tbl_request.REQ_PayeeID, tbl_vendor.Description, lib_requestparams.ParamName, lib_requestparams_1.ParamName As ChargeName, tbl_request.REQ_DtNeed, tbl_request.REQ_Type, tbl_request.REQ_PlateNbr, tbl_request.REQ_ChargeID, tbl_request.REQ_ChargeTo, tbl_request.REQ_Remarks, tbl_request.REQ_TotalAmt, tbl_request.REQ_PrepDate, tbl_request.REQ_PrepBy, tbl_request.REQ_Cancel, tbl_request.REQ_Invoice, tbl_request.REQ_ModDate, tbl_request.REQ_ModBy, tbl_request.REQ_CompanyCode " &
                  "FROM ((tbl_request INNER JOIN lib_requestparams On tbl_request.REQ_Type = lib_requestparams.ParamCode) INNER JOIN lib_requestparams As lib_requestparams_1 On tbl_request.REQ_ChargeID = lib_requestparams_1.ParamCode) INNER JOIN tbl_vendor ON tbl_request.REQ_PayeeID = tbl_vendor.Code " &
-                 "WHERE tbl_request.REQ_Nbr = '" & str & " '"
+                 "WHERE tbl_request.REQ_Nbr like  '" & str & "'"
 
         If cnnDBMaster.State <> ConnectionState.Open Then cnnDBMaster.Open()
 
@@ -779,7 +781,6 @@ ByVal blReOpen As Boolean, ByVal blUserInput As Boolean)
             Me.dtReceipt.Value = reader.Item("REQ_DtNeed")
             Me.txtType.Text = reader.Item("REQ_Type")
             Me.cboType.Text = reader.Item("ParamName")
-            'Me.txtPONbr.Text = reader.Item("REQ_PONbr")
             Me.cboPlateNo.Text = IIf(IsDBNull(reader.Item("REQ_PlateNbr")), "", reader.Item("REQ_PlateNbr"))
             Me.cboChargeTo.Text = reader.Item("ChargeName")
             Me.txtChargeTo.Text = reader.Item("REQ_ChargeID")
@@ -803,6 +804,8 @@ ByVal blReOpen As Boolean, ByVal blUserInput As Boolean)
                 txtStatus.Text = "Open"
             End If
 
+
+            Me.txtCompanyCode.Text = reader.Item("REQ_CompanyCode")
         End While
 
         cmd.Dispose()

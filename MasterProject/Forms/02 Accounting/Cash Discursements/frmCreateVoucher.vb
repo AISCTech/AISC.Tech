@@ -114,7 +114,7 @@
         If cnnDBMaster.State <> ConnectionState.Open Then cnnDBMaster.Open()
 
         Dim strsql As String = "SELECT tbl_apv.APV_Nbr, tbl_apv.APV_Cancel, tbl_apvgl.APVGL_CR, tbl_apvgl.APVGL_Account_Code, " &
-                                "tbl_request.REQ_Nbr, tbl_request.REQ_PayeeID, tbl_request.REQ_DtNeed, tbl_vendor.VendorName " &
+                                "tbl_request.REQ_Nbr, tbl_request.REQ_PayeeID, tbl_request.REQ_DtNeed, tbl_vendor.VendorName, tbl_request.REQ_CompanyCode " &
                                 "FROM (((tbl_apv INNER JOIN tbl_apvgl ON tbl_apv.APV_Nbr = tbl_apvgl.APVGL_APVNbr) " &
                                 "INNER JOIN tbl_request ON tbl_apv.APV_ReqNo = tbl_request.REQ_Nbr) " &
                                 "INNER JOIN tbl_vendor ON tbl_request.REQ_PayeeID = tbl_vendor.VendorID) " &
@@ -182,14 +182,14 @@
                         MsgBox("AP Voucher No. " & reader.Item("APV_Nbr") & " remaining amount is " & Format(CDbl(dblBal), "n2") & "!", MsgBoxStyle.Exclamation, "System Message")
                         SelectAPVNo = False
                     Else
-                        Me.dtgRefNo.Rows.Add(reader.Item("APV_Nbr"), reader.Item("VendorName"), reader.Item("REQ_DtNeed"), Format(reader.Item("APVGL_CR"), "n2"), Format(dblBal, "n2"), True, IIf(reader.Item("APVGL_CR") = dblBal, blFull, False))
+                        Me.dtgRefNo.Rows.Add(reader.Item("APV_Nbr"), reader.Item("VendorName"), reader.Item("REQ_DtNeed"), Format(reader.Item("APVGL_CR"), "n2"), Format(dblBal, "n2"), True, IIf(reader.Item("APVGL_CR") = dblBal, blFull, False), reader.Item("REQ_CompanyCode"))
                     End If
                 Else
                     If CDbl(Me.txtVoucherAmt.Text) > dblBal Then
                         MsgBox("AP Voucher No. " & reader.Item("APV_Nbr") & " remaining amount is " & Format(CDbl(dblBal), "n2") & "!", MsgBoxStyle.Exclamation, "System Message")
                         SelectAPVNo = False
                     Else
-                        Me.dtgRefNo.Rows.Add(reader.Item("APV_Nbr"), reader.Item("VendorName"), reader.Item("REQ_DtNeed"), Format(reader.Item("APVGL_CR"), "n2"), Format(CDbl(Me.txtVoucherAmt.Text), "n2"), True, blFull)
+                        Me.dtgRefNo.Rows.Add(reader.Item("APV_Nbr"), reader.Item("VendorName"), reader.Item("REQ_DtNeed"), Format(reader.Item("APVGL_CR"), "n2"), Format(CDbl(Me.txtVoucherAmt.Text), "n2"), True, blFull, reader.Item("REQ_CompanyCode"))
                     End If
                 End If
             End While
@@ -447,13 +447,13 @@
                     Dim reader As MySql.Data.MySqlClient.MySqlDataReader = cmdSQL.ExecuteReader
 
                     While reader.Read
-                        frmCV.dtgParticulars.Rows.Add(reader.Item("APV_ReqNo"), .Cells("colRefNo").Value, Format(CDbl(.Cells("colAmt").Value), "n2"), .Cells("colFull").Value, Format(CDbl(.Cells("colCVAmt").Value), "n2"))
+                        frmCV.dtgParticulars.Rows.Add(reader.Item("APV_ReqNo"), .Cells("colRefNo").Value, Format(CDbl(.Cells("colAmt").Value), "n2"), .Cells("colFull").Value, Format(CDbl(.Cells("colCVAmt").Value), "n2"), strCompanyCode)
                     End While
 
                     reader.Close()
                     cmdSQL.Dispose()
                 Else
-                    frmCV.dtgParticulars.Rows.Add(.Cells("colRefNo").Value, "", Format(CDbl(.Cells("colAmt").Value), "n2"), .Cells("colFull").Value, Format(CDbl(.Cells("colCVAmt").Value), "n2"))
+                    frmCV.dtgParticulars.Rows.Add(.Cells("colRefNo").Value, "", Format(CDbl(.Cells("colAmt").Value), "n2"), .Cells("colFull").Value, Format(CDbl(.Cells("colCVAmt").Value), "n2"), strCompanyCode)
                 End If
             End With
         Next
@@ -672,5 +672,56 @@
         Me.txtPayeeID.Text = ""
         Me.txtPayeeName.Text = ""
         Me.txtDateNeeded.Text = ""
+    End Sub
+
+    Private Sub frmCreateVoucher_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+    End Sub
+
+    Private Sub dtgRefNo_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dtgRefNo.CellContentClick
+
+    End Sub
+
+    Private Sub cmdSelect_Click(sender As Object, e As EventArgs) Handles cmdSelect.Click
+        If CheckIfRefNoAlreadyAdded(Me.lblPrefix.Text & Me.txtRefNo.Text) = True Then Exit Sub
+
+        If Me.optPartial.Checked = True And Len(Me.txtVoucherAmt.Text) = 0 Then
+            MsgBox("Please enter Voucher Amount!", MsgBoxStyle.Exclamation, "System Message")
+            Me.txtVoucherAmt.Focus()
+            Exit Sub
+        End If
+
+        'Select Case Me.Tag
+        '    Case "CV"
+        '        If Me.optReqNo.Checked = True Then
+        '            If CheckCRStatus(Me.lblPrefix.Text & Me.txtRefNo.Text) = False Then Exit Sub
+        '            If CheckChkBookingStatus(Me.lblPrefix.Text & Me.txtRefNo.Text) = False Then Exit Sub
+        '            If CheckIfRequestHasAP(Me.lblPrefix.Text & Me.txtRefNo.Text) = True Then Exit Sub
+        '            If CheckCRIfAccrual(Me.lblPrefix.Text & Me.txtRefNo.Text) = False Then Exit Sub
+        '            If SelectCRNo(Me.lblPrefix.Text & Me.txtRefNo.Text) = False Then Exit Sub
+        '        ElseIf Me.optAPVNo.Checked = True Then
+        '            If SelectAPVCNo(Me.lblPrefix.Text & Me.txtRefNo.Text) = False Then Exit Sub
+        '        Else
+        '            MsgBox("Select if by Request No. or APV No.", MsgBoxStyle.Exclamation, "System Message")
+        '            Exit Sub
+        '        End If
+
+        '    Case "MCV"
+        '        If Me.optReqNo.Checked = True Then
+        '            If CheckMCRStatus(Me.lblPrefix.Text & Me.txtRefNo.Text) = False Then Exit Sub
+        '            If CheckMCBookingStatus(Me.lblPrefix.Text & Me.txtRefNo.Text) = False Then Exit Sub
+        '            If CheckIfRequestHasAP(Me.lblPrefix.Text & Me.txtRefNo.Text) = True Then Exit Sub
+        '            If CheckMCRIfAccrual(Me.lblPrefix.Text & Me.txtRefNo.Text) = False Then Exit Sub
+        '            If SelectMCRNo(Me.lblPrefix.Text & Me.txtRefNo.Text) = False Then Exit Sub
+        '        ElseIf Me.optAPVNo.Checked = True Then
+        '            If SelectAPVMNo(Me.lblPrefix.Text & Me.txtRefNo.Text) = False Then Exit Sub
+        '        Else
+        '            MsgBox("Select if by Request No. or APV No.", MsgBoxStyle.Exclamation, "System Message")
+        '            Exit Sub
+        '        End If
+        'End Select
+
+        Me.txtRefNo.Text = ""
+        Me.txtVoucherAmt.Text = ""
     End Sub
 End Class

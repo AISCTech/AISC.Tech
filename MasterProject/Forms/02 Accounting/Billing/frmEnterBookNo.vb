@@ -11,21 +11,29 @@
 
         Select Case Me.Tag
             Case "IMP SOA"
-                'If frmSOA.SearchBooking(Me.txtBookNo.Text) = True Then
-                '    frmSOA.EnableButtons(False, False, True, True, False, False, False, False, False)
-                '    frmSOA.ClearEntries(True)
-                '    frmSOA.LockControls(False)
-                '    Me.Dispose()
-                '    Me.Close()
-                'Else
-                '    Exit Sub
-                'End If
+                If frmSOA.SearchBooking(Me.txtBookNo.Text) = True Then
+                    frmSOA.ChangeEnabledButtons(False, False, True, True, False, False, False, False, False, False)
+                    frmSOA.ClearEntries(True)
+                    Me.Dispose()
+                    Me.Close()
+                Else
+                    Exit Sub
+                End If
             Case "IMP INV"
                 If frmInvoice.SearchBooking(Me.txtBookNo.Text) = True Then
                     frmInvoice.ChangeEnabledButtons(False, False, True, True, False, False, False, False, False, False)
                     frmInvoice.EnableButtons2(True, True)
                     frmInvoice.ClearEntries(True)
-                    'frmInvoice.LockControls(False)
+                    Me.Dispose()
+                    Me.Close()
+                Else
+                    Exit Sub
+                End If
+            Case "EXP INV"
+                If frmInvoiceExport.SearchBooking(Me.txtBookNo.Text) = True Then
+                    frmInvoiceExport.ChangeEnabledButtons(False, False, True, True, False, False, False, False, False, False)
+                    frmInvoiceExport.EnableButtons2(True, True)
+                    frmInvoiceExport.ClearEntries(True)
                     Me.Dispose()
                     Me.Close()
                 Else

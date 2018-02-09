@@ -881,5 +881,8 @@ ByVal blReOpen As Boolean, ByVal blUserInput As Boolean)
         'PopUnpostHistory(Me.dgUnpostHistory, "IMPB", Me.lblRefNo.Text)
     End Sub
 
-
+    Private Sub tscmdClose_Click(sender As Object, e As EventArgs) Handles tscmdClose.Click
+        Me.Dispose()
+        Me.Close()
+    End Sub
 End Class
