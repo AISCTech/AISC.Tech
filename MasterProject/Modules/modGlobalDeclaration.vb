@@ -6,4 +6,5 @@
     Public strAppPath As String = AppDomain.CurrentDomain.BaseDirectory()
     Public LocalFiles As New clsLocalFiles
     Public CurrentUser As New clsUserAccount
+    Public ListOfStatus As New List(Of clsStatus)
 End Module

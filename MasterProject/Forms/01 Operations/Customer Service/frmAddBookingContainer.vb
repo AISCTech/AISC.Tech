@@ -39,16 +39,6 @@
             .Cells(frmImportBookingMenu.colCContainerNo.Name).Value = dtgRow.Cells(colContainerNo.Name).Value
             .Cells(frmImportBookingMenu.colCContainerSizeID.Name).Value = dtgRow.Cells(colContainerSizeID.Name).Value
             .Cells(frmImportBookingMenu.colCContainerSizeName.Name).Value = dtgRow.Cells(colContainerSize.Name).Value
-            If chkPickupTBA.Checked = False Then
-                .Cells(frmImportBookingMenu.colCPickUpDate.Name).Value = dtPickup.Value
-            Else
-                .Cells(frmImportBookingMenu.colCPickUpDate.Name).Value = "TBA"
-            End If
-            If chkDeliveryTBA.Checked = False Then
-                .Cells(frmImportBookingMenu.colCDeliveryDate.Name).Value = dtDelivery.Value
-            Else
-                .Cells(frmImportBookingMenu.colCDeliveryDate.Name).Value = "TBA"
-            End If
         End With
     End Sub
 

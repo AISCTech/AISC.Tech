@@ -855,26 +855,6 @@ Public Class clsImportBookingContainers
             strContainerSizeName = value
         End Set
     End Property
-
-    Private dtPickupDate As Date
-    Property _PickupDate As Date
-        Get
-            Return dtPickupDate
-        End Get
-        Set(value As Date)
-            dtPickupDate = value
-        End Set
-    End Property
-
-    Private dtDeliveryDate As Date
-    Property _DeliveryDate As Date
-        Get
-            Return dtDeliveryDate
-        End Get
-        Set(value As Date)
-            dtDeliveryDate = value
-        End Set
-    End Property
 End Class
 
 Public Class clsImportBookingDocuments

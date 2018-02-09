@@ -190,23 +190,6 @@
 
                     cmdSQL.Parameters.AddWithValue("@p_ContainerID", ._ContainerID)
                     cmdSQL.Parameters("@p_ContainerID").Direction = ParameterDirection.Input
-
-                    If ._PickupDate = Nothing Then
-                        cmdSQL.Parameters.AddWithValue("@p_PickUpDate", DBNull.Value)
-                        cmdSQL.Parameters("@p_PickUpDate").Direction = ParameterDirection.Input
-                    Else
-                        cmdSQL.Parameters.AddWithValue("@p_PickUpDate", ._PickupDate)
-                        cmdSQL.Parameters("@p_PickUpDate").Direction = ParameterDirection.Input
-                    End If
-
-
-                    If ._DeliveryDate = Nothing Then
-                        cmdSQL.Parameters.AddWithValue("@p_DeliveryDate", DBNull.Value)
-                        cmdSQL.Parameters("@p_DeliveryDate").Direction = ParameterDirection.Input
-                    Else
-                        cmdSQL.Parameters.AddWithValue("@p_DeliveryDate", ._DeliveryDate)
-                        cmdSQL.Parameters("@p_DeliveryDate").Direction = ParameterDirection.Input
-                    End If
                 End With
 
                 cmdSQL.ExecuteNonQuery()
@@ -252,6 +235,330 @@
                       " was encountered while attempting to roll back the transaction.")
                 End If
             End Try
+        End Try
+    End Function
+
+    Public Function SaveExportMasterRecord(ByVal clsTempExpMaster As clsExportMasterBooking) As clsExportMasterBooking
+        If cnnDBMaster.State <> ConnectionState.Open Then cnnDBMaster.Open()
+
+        Dim cmdSQL = New MySql.Data.MySqlClient.MySqlCommand
+        Dim trnSQL As MySql.Data.MySqlClient.MySqlTransaction
+
+        trnSQL = cnnDBMaster.BeginTransaction
+
+        Try
+            cmdSQL.Connection = cnnDBMaster
+            cmdSQL.Transaction = trnSQL
+            cmdSQL.CommandText = "sp_exportmastersave"
+            cmdSQL.CommandType = CommandType.StoredProcedure
+
+            With clsTempExpMaster
+                cmdSQL.Parameters.AddWithValue("@p_ID", ._ID)
+                cmdSQL.Parameters("@p_ID").Direction = ParameterDirection.Input
+
+                cmdSQL.Parameters.AddWithValue("@p_RefNo", ._RefNo)
+                cmdSQL.Parameters("@p_RefNo").Direction = ParameterDirection.Input
+
+                cmdSQL.Parameters.AddWithValue("@p_Company_Code", ._CompanyDetails._Company_Code)
+                cmdSQL.Parameters("@p_Company_Code").Direction = ParameterDirection.Input
+
+                cmdSQL.Parameters.AddWithValue("@p_CarrierCode", ._CarrierDetails._Code)
+                cmdSQL.Parameters("@p_CarrierCode").Direction = ParameterDirection.Input
+
+                cmdSQL.Parameters.AddWithValue("@p_OriginID", ._OriginDetails._PK)
+                cmdSQL.Parameters("@p_OriginID").Direction = ParameterDirection.Input
+
+                cmdSQL.Parameters.AddWithValue("@p_DestinationID", ._DestinationDetails._PK)
+                cmdSQL.Parameters("@p_DestinationID").Direction = ParameterDirection.Input
+
+                cmdSQL.Parameters.AddWithValue("@p_ModeOfTransportID", ._ModeOfTransportDetails._PK)
+                cmdSQL.Parameters("@p_ModeOfTransportID").Direction = ParameterDirection.Input
+
+                cmdSQL.Parameters.AddWithValue("@p_LoadedPullOut", ._LoadedPullOut)
+                cmdSQL.Parameters("@p_LoadedPullOut").Direction = ParameterDirection.Input
+
+                cmdSQL.Parameters.AddWithValue("@p_ContainerYard", ._ContainerYard)
+                cmdSQL.Parameters("@p_ContainerYard").Direction = ParameterDirection.Input
+
+                cmdSQL.Parameters.AddWithValue("@p_WarehouseID", ._WarehouseDetails._ID)
+                cmdSQL.Parameters("@p_WarehouseID").Direction = ParameterDirection.Input
+
+                If ._ETD._DateValue = Nothing Then
+                    cmdSQL.Parameters.AddWithValue("@p_ETD", DBNull.Value)
+                    cmdSQL.Parameters("@p_ETD").Direction = ParameterDirection.Input
+                Else
+                    cmdSQL.Parameters.AddWithValue("@p_ETD", ._ETD._DateValue)
+                    cmdSQL.Parameters("@p_ETD").Direction = ParameterDirection.Input
+                End If
+
+                If ._ATD._DateValue = Nothing Then
+                    cmdSQL.Parameters.AddWithValue("@p_ATD", DBNull.Value)
+                    cmdSQL.Parameters("@p_ATD").Direction = ParameterDirection.Input
+                Else
+                    cmdSQL.Parameters.AddWithValue("@p_ATD", ._ATD._DateValue)
+                    cmdSQL.Parameters("@p_ATD").Direction = ParameterDirection.Input
+                End If
+
+                cmdSQL.Parameters.AddWithValue("@p_SealNo", ._SealNo)
+                cmdSQL.Parameters("@p_SealNo").Direction = ParameterDirection.Input
+
+                cmdSQL.Parameters.AddWithValue("@p_EmptyPositioning", ._EmptyPositioning)
+                cmdSQL.Parameters("@p_EmptyPositioning").Direction = ParameterDirection.Input
+
+                cmdSQL.Parameters.AddWithValue("@p_ChassisDepot", ._ChassisDepot)
+                cmdSQL.Parameters("@p_ChassisDepot").Direction = ParameterDirection.Input
+
+                cmdSQL.Parameters.AddWithValue("@p_VesselID", ._VesselDetails._ID)
+                cmdSQL.Parameters("@p_VesselID").Direction = ParameterDirection.Input
+
+                cmdSQL.Parameters.AddWithValue("@p_AirLineCode", ._AirlineDetails._Code)
+                cmdSQL.Parameters("@p_AirLineCode").Direction = ParameterDirection.Input
+
+                cmdSQL.Parameters.AddWithValue("@p_LCT", ._LCT)
+                cmdSQL.Parameters("@p_LCT").Direction = ParameterDirection.Input
+
+                If ._ETA._DateValue = Nothing Then
+                    cmdSQL.Parameters.AddWithValue("@p_ETA", DBNull.Value)
+                    cmdSQL.Parameters("@p_ETA").Direction = ParameterDirection.Input
+                Else
+                    cmdSQL.Parameters.AddWithValue("@p_ETA", ._ETA._DateValue)
+                    cmdSQL.Parameters("@p_ETA").Direction = ParameterDirection.Input
+                End If
+
+                If ._ATA._DateValue = Nothing Then
+                    cmdSQL.Parameters.AddWithValue("@p_ATA", DBNull.Value)
+                    cmdSQL.Parameters("@p_ATA").Direction = ParameterDirection.Input
+                Else
+                    cmdSQL.Parameters.AddWithValue("@p_ATA", ._ATA._DateValue)
+                    cmdSQL.Parameters("@p_ATA").Direction = ParameterDirection.Input
+                End If
+
+                cmdSQL.Parameters.AddWithValue("@p_LoadTypeID", ._LoadTypeDetails._PK)
+                cmdSQL.Parameters("@p_LoadTypeID").Direction = ParameterDirection.Input
+
+                cmdSQL.Parameters.AddWithValue("@p_PrepByID", ._PrepByDetails._User_ID)
+                cmdSQL.Parameters("@p_PrepByID").Direction = ParameterDirection.Input
+
+                cmdSQL.Parameters.AddWithValue("@p_ModByID", ._ModByDetails._User_ID)
+                cmdSQL.Parameters("@p_ModByID").Direction = ParameterDirection.Input
+
+                cmdSQL.Parameters.AddWithValue("@p_ID_Out", ._ID)
+                cmdSQL.Parameters("@p_ID_Out").Direction = ParameterDirection.Output
+
+                cmdSQL.Parameters.AddWithValue("@p_RefNo_Out", ._RefNo)
+                cmdSQL.Parameters("@p_RefNo_Out").Direction = ParameterDirection.Output
+
+                cmdSQL.ExecuteNonQuery()
+                ._ID = cmdSQL.Parameters("@p_ID_Out").Value
+                ._RefNo = cmdSQL.Parameters("@p_RefNo_Out").Value
+            End With
+
+            trnSQL.Commit()
+            cmdSQL.Dispose()
+            Return clsTempExpMaster
+        Catch ex As Exception
+            Try
+                trnSQL.Rollback()
+                MsgBox(ex.Message)
+            Catch ex1 As Exception
+                If Not trnSQL.Connection Is Nothing Then
+                    MsgBox("An exception of type " & ex1.GetType().ToString() &
+                      " was encountered while attempting to roll back the transaction.")
+                End If
+            End Try
+            Return Nothing
+        End Try
+    End Function
+
+    Public Function SaveExportBookingRecord(ByVal clsTempExpBook As clsExportBookingHeader) As clsExportBookingHeader
+        If cnnDBMaster.State <> ConnectionState.Open Then cnnDBMaster.Open()
+
+        Dim cmdSQL = New MySql.Data.MySqlClient.MySqlCommand
+        Dim trnSQL As MySql.Data.MySqlClient.MySqlTransaction
+
+        trnSQL = cnnDBMaster.BeginTransaction
+
+        Try
+            cmdSQL.Connection = cnnDBMaster
+            cmdSQL.Transaction = trnSQL
+            cmdSQL.CommandText = "sp_exportbookingheadersave"
+            cmdSQL.CommandType = CommandType.StoredProcedure
+
+            With clsTempExpBook
+                cmdSQL.Parameters.AddWithValue("@p_ID", ._ID)
+                cmdSQL.Parameters("@p_ID").Direction = ParameterDirection.Input
+
+                cmdSQL.Parameters.AddWithValue("@p_BookingNo", ._BookingNo)
+                cmdSQL.Parameters("@p_BookingNo").Direction = ParameterDirection.Input
+
+                cmdSQL.Parameters.AddWithValue("@p_BookingPrefix", ._BookingPrefix)
+                cmdSQL.Parameters("@p_BookingPrefix").Direction = ParameterDirection.Input
+
+                cmdSQL.Parameters.AddWithValue("@p_CompanyCode", ._CompanyDetails._Company_Code)
+                cmdSQL.Parameters("@p_CompanyCode").Direction = ParameterDirection.Input
+
+                cmdSQL.Parameters.AddWithValue("@p_ConsignorCode", ._ConsignorDetails._Code)
+                cmdSQL.Parameters("@p_ConsignorCode").Direction = ParameterDirection.Input
+
+                cmdSQL.Parameters.AddWithValue("@p_SiteCode", ._SiteDetails._Site_Code)
+                cmdSQL.Parameters("@p_SiteCode").Direction = ParameterDirection.Input
+
+                cmdSQL.Parameters.AddWithValue("@p_AccountTypeID", ._AccountTypeDetails._ID)
+                cmdSQL.Parameters("@p_AccountTypeID").Direction = ParameterDirection.Input
+
+                cmdSQL.Parameters.AddWithValue("@p_AccountHolderID", ._AccountHolderDetails._User_ID)
+                cmdSQL.Parameters("@p_AccountHolderID").Direction = ParameterDirection.Input
+
+                cmdSQL.Parameters.AddWithValue("@p_ShipperCode", ._ShipperDetails._Code)
+                cmdSQL.Parameters("@p_ShipperCode").Direction = ParameterDirection.Input
+
+                cmdSQL.Parameters.AddWithValue("@p_ConsigneeCode", ._ConsigneeDetails._Code)
+                cmdSQL.Parameters("@p_ConsigneeCode").Direction = ParameterDirection.Input
+
+                cmdSQL.Parameters.AddWithValue("@p_ModeOftransportID", ._ModeOfTransportDetails._PK)
+                cmdSQL.Parameters("@p_ModeOftransportID").Direction = ParameterDirection.Input
+
+                cmdSQL.Parameters.AddWithValue("@p_OriginID", ._OriginDetails._PK)
+                cmdSQL.Parameters("@p_OriginID").Direction = ParameterDirection.Input
+
+                cmdSQL.Parameters.AddWithValue("@p_FinalDestinationID", ._FinalDestinationDetails._PK)
+                cmdSQL.Parameters("@p_FinalDestinationID").Direction = ParameterDirection.Input
+
+                cmdSQL.Parameters.AddWithValue("@p_Commodity", ._Commodity)
+                cmdSQL.Parameters("@p_Commodity").Direction = ParameterDirection.Input
+
+                cmdSQL.Parameters.AddWithValue("@p_DangerousCargo", ._DangerousCargo)
+                cmdSQL.Parameters("@p_DangerousCargo").Direction = ParameterDirection.Input
+
+                cmdSQL.Parameters.AddWithValue("@p_GrossWeight", ._GrossWeight)
+                cmdSQL.Parameters("@p_GrossWeight").Direction = ParameterDirection.Input
+
+                cmdSQL.Parameters.AddWithValue("@p_Volume", ._Volume)
+                cmdSQL.Parameters("@p_Volume").Direction = ParameterDirection.Input
+
+                cmdSQL.Parameters.AddWithValue("@p_LoadTypeID", ._LoadTypeDetails._PK)
+                cmdSQL.Parameters("@p_LoadTypeID").Direction = ParameterDirection.Input
+
+                cmdSQL.Parameters.AddWithValue("@p_NoOfPackage", ._NoOfPackage)
+                cmdSQL.Parameters("@p_NoOfPackage").Direction = ParameterDirection.Input
+
+                cmdSQL.Parameters.AddWithValue("@p_PackageUnitID", ._PackageUnitDetails._PK)
+                cmdSQL.Parameters("@p_PackageUnitID").Direction = ParameterDirection.Input
+
+                cmdSQL.Parameters.AddWithValue("@p_CoLoadToID", ._ColoadToDetails._Code)
+                cmdSQL.Parameters("@p_CoLoadToID").Direction = ParameterDirection.Input
+
+                cmdSQL.Parameters.AddWithValue("@p_ActualVolume", ._ActualVolume)
+                cmdSQL.Parameters("@p_ActualVolume").Direction = ParameterDirection.Input
+
+                cmdSQL.Parameters.AddWithValue("@p_ActualGrossWeight", ._ActualGrossWeight)
+                cmdSQL.Parameters("@p_ActualGrossWeight").Direction = ParameterDirection.Input
+
+                cmdSQL.Parameters.AddWithValue("@p_RevisedMeasurement", ._RevisedMeasurement)
+                cmdSQL.Parameters("@p_RevisedMeasurement").Direction = ParameterDirection.Input
+
+                cmdSQL.Parameters.AddWithValue("@p_RevisedMeasurementTypeID", ._RevisedMeasurementTypeDetails._PK)
+                cmdSQL.Parameters("@p_RevisedMeasurementTypeID").Direction = ParameterDirection.Input
+
+                cmdSQL.Parameters.AddWithValue("@p_ApprovedPosting", ._ApprovedPosting)
+                cmdSQL.Parameters("@p_ApprovedPosting").Direction = ParameterDirection.Input
+
+                If ._KPIDate = Nothing Then
+                    cmdSQL.Parameters.AddWithValue("@p_KPIDate", DBNull.Value)
+                    cmdSQL.Parameters("@p_KPIDate").Direction = ParameterDirection.Input
+                Else
+                    cmdSQL.Parameters.AddWithValue("@p_KPIDate", ._KPIDate)
+                    cmdSQL.Parameters("@p_KPIDate").Direction = ParameterDirection.Input
+                End If
+
+                cmdSQL.Parameters.AddWithValue("@p_DocsCompleted", ._DocsCompleted)
+                cmdSQL.Parameters("@p_DocsCompleted").Direction = ParameterDirection.Input
+
+                cmdSQL.Parameters.AddWithValue("@p_MasterBookingID", ._MasterBookingDetails._ID)
+                cmdSQL.Parameters("@p_MasterBookingID").Direction = ParameterDirection.Input
+
+                cmdSQL.Parameters.AddWithValue("@p_ColoadSequenceID", 0)
+                cmdSQL.Parameters("@p_ColoadSequenceID").Direction = ParameterDirection.Input
+
+                cmdSQL.Parameters.AddWithValue("@p_PrepByID", ._PrepByDetails._User_ID)
+                cmdSQL.Parameters("@p_PrepByID").Direction = ParameterDirection.Input
+
+                cmdSQL.Parameters.AddWithValue("@p_ModByID", ._ModByDetails._User_ID)
+                cmdSQL.Parameters("@p_ID").Direction = ParameterDirection.Input
+
+                cmdSQL.Parameters.AddWithValue("@p_ID_Out", ._ID)
+                cmdSQL.Parameters("@p_ID_Out").Direction = ParameterDirection.Output
+
+                cmdSQL.Parameters.AddWithValue("@p_BookingNo_Out", ._BookingNo)
+                cmdSQL.Parameters("@p_BookingNo_Out").Direction = ParameterDirection.Output
+
+                cmdSQL.ExecuteNonQuery()
+                ._ID = cmdSQL.Parameters("@p_ID_Out").Value
+                ._BookingNo = cmdSQL.Parameters("@p_BookingNo_Out").Value
+            End With
+
+            cmdSQL.Parameters.Clear()
+
+            cmdSQL.CommandText = "DELETE FROM tbl_export_booking_services WHERE BookingID = @BookingID"
+            cmdSQL.CommandType = CommandType.TableDirect
+            cmdSQL.Parameters.AddWithValue("@BookingID", clsTempExpBook._ID)
+            cmdSQL.ExecuteNonQuery()
+            cmdSQL.Parameters.Clear()
+
+            For Each clsTemp As clsExportBookingServices In clsTempExpBook._ServiceDetails
+                cmdSQL.CommandText = "sp_exportbookingservicessave"
+                cmdSQL.CommandType = CommandType.StoredProcedure
+
+                With clsTemp
+                    cmdSQL.Parameters.AddWithValue("@p_BookingID", clsTempExpBook._ID)
+                    cmdSQL.Parameters("@p_BookingID").Direction = ParameterDirection.Input
+
+                    cmdSQL.Parameters.AddWithValue("@p_ServiceID", ._ServiceNameDetails._PK)
+                    cmdSQL.Parameters("@p_ServiceID").Direction = ParameterDirection.Input
+                End With
+
+                cmdSQL.ExecuteNonQuery()
+                cmdSQL.Parameters.Clear()
+            Next
+
+            cmdSQL.CommandText = "DELETE FROM tbl_export_booking_documents WHERE BookingID = @BookingID"
+            cmdSQL.CommandType = CommandType.TableDirect
+            cmdSQL.Parameters.AddWithValue("@BookingID", clsTempExpBook._ID)
+            cmdSQL.ExecuteNonQuery()
+            cmdSQL.Parameters.Clear()
+
+            For Each clsTemp As clsExportBookingDocuments In clsTempExpBook._DocumentDetails
+                cmdSQL.CommandText = "sp_exportbookingdocumentsave"
+                cmdSQL.CommandType = CommandType.StoredProcedure
+
+                With clsTemp
+                    cmdSQL.Parameters.AddWithValue("@p_BookingID", clsTempExpBook._ID)
+                    cmdSQL.Parameters("@p_BookingID").Direction = ParameterDirection.Input
+
+                    cmdSQL.Parameters.AddWithValue("@p_DocumentID", ._DocumentDetails._ID)
+                    cmdSQL.Parameters("@p_DocumentID").Direction = ParameterDirection.Input
+                End With
+
+                cmdSQL.ExecuteNonQuery()
+                cmdSQL.Parameters.Clear()
+            Next
+
+            trnSQL.Commit()
+            cmdSQL.Dispose()
+
+            Return clsTempExpBook
+        Catch ex As Exception
+            Try
+                trnSQL.Rollback()
+                MsgBox(ex.Message)
+            Catch ex1 As Exception
+                If Not trnSQL.Connection Is Nothing Then
+                    MsgBox("An exception of type " & ex1.GetType().ToString() &
+                      " was encountered while attempting to roll back the transaction.")
+                End If
+            End Try
+
+            Return Nothing
         End Try
     End Function
 
@@ -376,6 +683,354 @@
     End Function
 
     'Search Record
+    Public Function SearchCompanyRecord(ByVal strCompanyCode As String) As clsCompanyHeader
+        Try
+            Dim clsTemp As New clsCompanyHeader
+            Dim cmdSQL = New MySql.Data.MySqlClient.MySqlCommand
+
+            If cnnDBMaster.State <> ConnectionState.Open Then cnnDBMaster.Open()
+            cmdSQL.Connection = cnnDBMaster
+            cmdSQL.CommandText = "SELECT * FROM tbl_company WHERE `Company_Code` = @Company_Code"
+            cmdSQL.Parameters.AddWithValue("@Company_Code", strCompanyCode)
+
+            Dim reader As MySql.Data.MySqlClient.MySqlDataReader = cmdSQL.ExecuteReader
+
+            While reader.Read
+                With clsTemp
+                    ._Company_Code = reader.Item("Company_Code")
+                    ._Company_Main = reader.Item("Company_Main")
+                    ._Company_Name = reader.Item("Company_Name")
+                    ._Company_FullName = reader.Item("Company_FullName")
+                    ._Active = reader.Item("Active")
+                    ._Address = reader.Item("Address")
+                    ._ContactNo = reader.Item("ContactNo")
+                    ._Tin = reader.Item("Tin")
+                    ._AsClient._Code = reader.Item("ClientCode")
+                End With
+            End While
+
+            reader.Close()
+            cmdSQL.Dispose()
+
+            Return clsTemp
+        Catch ex As Exception
+            MsgBox(ex.Message)
+            Return Nothing
+        End Try
+    End Function
+
+    Public Function SearchExportMasterRecord(ByVal strRefNo As String, ByVal strCompanyCode As String) As clsExportMasterBooking
+        Try
+            Dim clsTemp As New clsExportMasterBooking
+            Dim cmdSQL = New MySql.Data.MySqlClient.MySqlCommand
+
+            If cnnDBMaster.State <> ConnectionState.Open Then cnnDBMaster.Open()
+            cmdSQL.Connection = cnnDBMaster
+            cmdSQL.CommandText = "SELECT * FROM v_exportmaster WHERE `RefNo` = @RefNo AND `CompanyCode` = @CompanyCode"
+            cmdSQL.Parameters.AddWithValue("@RefNo", strRefNo)
+            cmdSQL.Parameters.AddWithValue("@CompanyCode", strCompanyCode)
+
+            Dim reader As MySql.Data.MySqlClient.MySqlDataReader = cmdSQL.ExecuteReader
+
+            While reader.Read
+                With clsTemp
+                    ._ID = reader.Item("ID")
+                    ._RefNo = reader.Item("RefNo")
+                    With ._CompanyDetails
+                        ._Company_Code = reader.Item("CompanyCode")
+                        ._Company_Name = reader.Item("Company_Name")
+                        ._Company_FullName = reader.Item("Company_FullName")
+                    End With
+                    With ._CarrierDetails
+                        ._Code = _NotNull(reader.Item("CarrierCode"), "")
+                        ._Description = _NotNull(reader.Item("CarrierName"), "")
+                    End With
+                    With ._OriginDetails
+                        ._PK = _NotNull(reader.Item("OriginID"), -1)
+                        ._CountryDetails._PK = _NotNull(reader.Item("OriginCountry_PK"), -1)
+                        ._Description = _NotNull(reader.Item("OriginName"), "")
+                    End With
+                    With ._DestinationDetails
+                        ._PK = _NotNull(reader.Item("DestinationID"), -1)
+                        ._CountryDetails._PK = _NotNull(reader.Item("DestinationCountry_PK"), -1)
+                        ._Description = _NotNull(reader.Item("DestinationName"), "")
+                    End With
+                    With ._ModeOfTransportDetails
+                        ._PK = reader.Item("ModeOfTransportID")
+                        ._Param_Desc = reader.Item("ModeOfTransportDesc")
+                    End With
+                    ._LoadedPullOut = _NotNull(reader.Item("LoadedPullOut"), "")
+                    ._ContainerYard = _NotNull(reader.Item("ContainerYard"), "")
+                    With ._WarehouseDetails
+                        ._ID = _NotNull(reader.Item("WarehouseID"), -1)
+                        ._WarehouseName = _NotNull(reader.Item("WarehouseName"), "")
+                    End With
+                    ._ETD._DateValue = _NotNull(reader.Item("ETD"), Nothing)
+                    ._ATD._DateValue = _NotNull(reader.Item("ATD"), Nothing)
+                    ._SealNo = _NotNull(reader.Item("SealNo"), "")
+                    ._EmptyPositioning = _NotNull(reader.Item("EmptyPositioning"), "")
+                    ._ChassisDepot = _NotNull(reader.Item("ChassisDepot"), "")
+                    With ._VesselDetails
+                        ._ID = _NotNull(reader.Item("VesselID"), -1)
+                        ._VesselCode = _NotNull(reader.Item("VesselCode"), "")
+                        ._VesselName = _NotNull(reader.Item("VesselName"), "")
+                        ._NACCSUserCode = _NotNull(reader.Item("NACCSUserCode"), "")
+                    End With
+                    With ._AirlineDetails
+                        ._Code = _NotNull(reader.Item("AirLineCode"), "")
+                        ._Prefix = _NotNull(reader.Item("AirLinePrefix"), "")
+                        ._Description = _NotNull(reader.Item("AirLineName"), "")
+                    End With
+                    ._LCT = _NotNull(reader.Item("LCT"), "")
+                    ._ETA._DateValue = _NotNull(reader.Item("ETA"), Nothing)
+                    ._ATA._DateValue = _NotNull(reader.Item("ATA"), Nothing)
+                    With ._LoadTypeDetails
+                        ._PK = _NotNull(reader.Item("LoadTypeID"), -1)
+                        ._Param_Desc = _NotNull(reader.Item("LoadTypeDesc"), "")
+                    End With
+                    With ._StatusDetails
+                        ._Status_ID = _NotNull(reader.Item("StatusID"), -1)
+                        ._Status_Name = _NotNull(reader.Item("Status_Name"), "")
+                        ._Status_ColorR = _NotNull(reader.Item("Status_ColorR"), -1)
+                        ._Status_ColorG = _NotNull(reader.Item("Status_ColorG"), -1)
+                        ._Status_ColorB = _NotNull(reader.Item("Status_ColorB"), -1)
+                    End With
+                    With ._StatusByDetails
+                        ._User_ID = _NotNull(reader.Item("StatusByID"), "")
+                        ._Last_Name = _NotNull(reader.Item("StatusByLast_Name"), "")
+                        ._First_Name = _NotNull(reader.Item("StatusByFirst_Name"), "")
+                        ._Middle_Name = _NotNull(reader.Item("StatusByMiddle_Name"), "")
+                    End With
+                    ._StatusDate = _NotNull(reader.Item("StatusDate"), Nothing)
+                    With ._PrepByDetails
+                        ._User_ID = reader.Item("PrepByID")
+                        ._Last_Name = reader.Item("PrepByLast_Name")
+                        ._First_Name = reader.Item("PrepByFirst_Name")
+                        ._Middle_Name = reader.Item("PrepByMiddle_Name")
+                    End With
+                    ._PrepDate = reader.Item("PrepDate")
+                    With ._ModByDetails
+                        ._User_ID = reader.Item("ModByID")
+                        ._Last_Name = reader.Item("ModByLast_Name")
+                        ._First_Name = reader.Item("ModByFirst_Name")
+                        ._Middle_Name = reader.Item("ModByMiddle_Name")
+                    End With
+                    ._ModDate = reader.Item("ModDate")
+                End With
+            End While
+
+            reader.Close()
+            cmdSQL.Dispose()
+
+            Return clsTemp
+        Catch ex As Exception
+            MsgBox(ex.Message)
+            Return Nothing
+        End Try
+    End Function
+
+    Public Function SearchExportBookingRecord(ByVal strBookingNo As String, ByVal strCompanyCode As String) As clsExportBookingHeader
+        Try
+            Dim clsTempExport As New clsExportBookingHeader
+            Dim clsTempServices As New clsExportBookingServices
+            Dim clsTempDocuments As New clsExportBookingDocuments
+
+            Dim cmdSQL = New MySql.Data.MySqlClient.MySqlCommand
+
+            If cnnDBMaster.State <> ConnectionState.Open Then cnnDBMaster.Open()
+            cmdSQL.Connection = cnnDBMaster
+            cmdSQL.CommandText = "SELECT * FROM v_exportbookingheader WHERE BookingNo = @BookingNo AND CompanyCode = @CompanyCode"
+            With cmdSQL.Parameters
+                .AddWithValue("@BookingNo", strBookingNo)
+                .AddWithValue("@CompanyCode", strCompanyCode)
+            End With
+
+            Dim reader As MySql.Data.MySqlClient.MySqlDataReader = cmdSQL.ExecuteReader
+
+            While reader.Read
+                With clsTempExport
+                    ._ID = reader.Item("ID")
+                    ._BookingNo = reader.Item("BookingNo")
+                    ._BookingPrefix = reader.Item("BookingPrefix")
+                    With ._CompanyDetails
+                        ._Company_Code = reader.Item("CompanyCode")
+                        ._Company_FullName = reader.Item("Company_FullName")
+                    End With
+                    With ._ConsignorDetails
+                        ._Code = reader.Item("ConsignorCode")
+                        ._Description = reader.Item("ConsignorName")
+                        ._Addr1 = reader.Item("ConsignorAddr1")
+                        ._AddrCity = reader.Item("ConsignorAddrCity")
+                        ._AddrCountry = reader.Item("ConsignorAddrCountry")
+                    End With
+                    With ._SiteDetails
+                        ._Site_Code = reader.Item("SiteCode")
+                        ._Site_Name = reader.Item("Site_Name")
+                    End With
+                    With ._AccountTypeDetails
+                        ._ID = reader.Item("AccountTypeID")
+                        ._Prefix = reader.Item("AccountTypePrefix")
+                        ._Description = reader.Item("AccountTypeDescription")
+                    End With
+                    With ._AccountHolderDetails
+                        ._User_ID = reader.Item("AccountHolderID")
+                        ._Last_Name = reader.Item("AccountHolderLast_Name")
+                        ._First_Name = reader.Item("AccountHolderFirst_Name")
+                        ._Middle_Name = reader.Item("AccountHolderMiddle_Name")
+                    End With
+                    With ._ShipperDetails
+                        ._Code = reader.Item("ShipperCode")
+                        ._Description = reader.Item("ShipperName")
+                        ._Addr1 = reader.Item("ShipperAddr1")
+                        ._AddrCity = reader.Item("ShipperAddrCity")
+                        ._AddrCountry = reader.Item("ShipperAddrCountry")
+                    End With
+                    With ._ConsigneeDetails
+                        ._Code = reader.Item("ConsigneeCode")
+                        ._Description = reader.Item("ConsigneeName")
+                        ._Addr1 = reader.Item("ConsigneeAddr1")
+                        ._AddrCity = reader.Item("ConsigneeAddrCity")
+                        ._AddrCountry = reader.Item("ConsigneeAddrCountry")
+                    End With
+                    With ._ModeOfTransportDetails
+                        ._PK = reader.Item("ModeOfTransportID")
+                        ._Param_Desc = reader.Item("ModeOfTransportDesc")
+                    End With
+                    With ._OriginDetails
+                        ._PK = reader.Item("OriginID")
+                        ._CountryDetails._PK = reader.Item("OriginCountry_PK")
+                        ._Description = reader.Item("OriginName")
+                    End With
+                    With ._FinalDestinationDetails
+                        ._PK = reader.Item("FinalDestinationID")
+                        ._CountryDetails._PK = reader.Item("FinalDestinationCountry_PK")
+                        ._Description = reader.Item("FinalDestinationName")
+                    End With
+                    ._Commodity = reader.Item("Commodity")
+                    ._DangerousCargo = reader.Item("DangerousCargo")
+                    ._GrossWeight = reader.Item("GrossWeight")
+                    ._Volume = reader.Item("Volume")
+                    With ._LoadTypeDetails
+                        ._PK = reader.Item("LoadTypeID")
+                        ._Param_Desc = reader.Item("LoadTypeDesc")
+                    End With
+                    ._NoOfPackage = reader.Item("NoOfPackage")
+                    With ._PackageUnitDetails
+                        ._PK = reader.Item("PackageUnitID")
+                        ._Param_Desc = reader.Item("PackageUnitDesc")
+                    End With
+                    With ._ColoadToDetails
+                        ._Code = _NotNull(reader.Item("CoLoadToID"), "")
+                        ._Description = _NotNull(reader.Item("CoLoadToName"), "")
+                    End With
+                    ._ActualVolume = reader.Item("ActualVolume")
+                    ._ActualGrossWeight = reader.Item("ActualGrossWeight")
+                    ._RevisedMeasurement = reader.Item("RevisedMeasurement")
+                    With ._RevisedMeasurementTypeDetails
+                        ._PK = _NotNull(reader.Item("RevisedMeasurementTypeID"), "")
+                        ._Param_Desc = _NotNull(reader.Item("RevisedMeasurementTypeDesc"), "")
+                    End With
+                    ._ApprovedPosting = reader.Item("ApprovedPosting")
+                    ._KPIDate = _NotNull(reader.Item("KPIDate"), Nothing)
+                    ._DocsCompleted = reader.Item("DocsCompleted")
+                    ._DocsCompletedDate = _NotNull(reader.Item("DocsCompletedDate"), Nothing)
+                    With ._MasterBookingDetails
+                        ._ID = reader.Item("MasterBookingID")
+                        ._RefNo = _NotNull(reader.Item("MasterBookingNo"), "")
+                    End With
+                    With ._StatusDetails
+                        ._Status_ID = _NotNull(reader.Item("StatusID"), 0)
+                        ._Status_Name = _NotNull(reader.Item("Status_Name"), "")
+                    End With
+                    With ._StatusByDetails
+                        ._User_ID = _NotNull(reader.Item("StatusByID"), "")
+                        ._Last_Name = _NotNull(reader.Item("StatusByLast_Name"), "")
+                        ._First_Name = _NotNull(reader.Item("StatusByFirst_Name"), "")
+                        ._Middle_Name = _NotNull(reader.Item("StatusByMiddle_Name"), "")
+                    End With
+                    ._StatusDate = _NotNull(reader.Item("StatusDate"), Nothing)
+                    With ._PrepByDetails
+                        ._User_ID = reader.Item("PrepByID")
+                        ._Last_Name = reader.Item("PrepByLast_Name")
+                        ._First_Name = reader.Item("PrepByFirst_Name")
+                        ._Middle_Name = reader.Item("PrepByMiddle_Name")
+                    End With
+                    ._PrepDate = reader.Item("PrepDate")
+                    With ._ModByDetails
+                        ._User_ID = reader.Item("ModByID")
+                        ._Last_Name = reader.Item("ModByLast_Name")
+                        ._First_Name = reader.Item("ModByFirst_Name")
+                        ._Middle_Name = reader.Item("ModByMiddle_Name")
+                    End With
+                    ._ModDate = reader.Item("ModDate")
+                End With
+            End While
+            reader.Close()
+
+            If clsTempExport._MasterBookingDetails._ID > 0 Then
+                clsTempExport._MasterBookingDetails = SearchExportMasterRecord(clsTempExport._MasterBookingDetails._RefNo, clsTempExport._CompanyDetails._Company_Code)
+            End If
+
+            cmdSQL.Parameters.Clear()
+            cmdSQL.CommandText = "SELECT * FROM v_exportbookingservices WHERE BookingID = @BookingID"
+            With cmdSQL.Parameters
+                .AddWithValue("@BookingID", clsTempExport._ID)
+            End With
+
+            clsTempExport._ServiceDetails.Clear()
+
+            reader = cmdSQL.ExecuteReader
+            While reader.Read
+                clsTempServices = New clsExportBookingServices
+                With clsTempServices
+                    ._ID = reader.Item("ID")
+                    ._BookingID = reader.Item("BookingID")
+                    With ._ServiceNameDetails
+                        ._PK = reader.Item("ServiceID")
+                        ._Param_Desc = reader.Item("ServiceName")
+                        ._ParameterType._PK = reader.Item("Param_TypeID")
+                        ._ParameterType._Description = reader.Item("Param_TypeName")
+                        ._Param_Code = reader.Item("Param_Code")
+                        ._Param_Value = reader.Item("Param_Value")
+                    End With
+                End With
+                clsTempExport._ServiceDetails.Add(clsTempServices)
+            End While
+            reader.Close()
+
+            cmdSQL.Parameters.Clear()
+            cmdSQL.CommandText = "SELECT * FROM v_exportbookingdocuments WHERE BookingID = @BookingID"
+            With cmdSQL.Parameters
+                .AddWithValue("@BookingID", clsTempExport._ID)
+            End With
+
+            clsTempExport._DocumentDetails.Clear()
+
+            reader = cmdSQL.ExecuteReader
+            While reader.Read
+                clsTempDocuments = New clsExportBookingDocuments
+                With clsTempDocuments
+                    ._ID = reader.Item("ID")
+                    ._BookingID = reader.Item("BookingID")
+                    With ._DocumentDetails
+                        ._ID = reader.Item("DocumentID")
+                        ._DocumentName = reader.Item("DocumentName")
+                        ._Required = reader.Item("Required")
+                        ._Active = reader.Item("Active")
+                    End With
+                End With
+                clsTempExport._DocumentDetails.Add(clsTempDocuments)
+            End While
+            reader.Close()
+
+            cmdSQL.Dispose()
+            Return clsTempExport
+        Catch ex As Exception
+            MsgBox(ex.Message)
+            Return Nothing
+        End Try
+    End Function
+
     Public Function SearchClientRecord(ByVal strCode As String) As clsClientHeader
         Try
             Dim clsTemp As New clsClientHeader
@@ -413,8 +1068,9 @@
                     ._CreditLimitAmt = reader.Item("CreditLimitAmt")
                     ._CreditLimitCurrency = reader.Item("CreditLimitCurrency")
                     ._CurrencyDesc = reader.Item("CurrencyDesc")
-                    ._SitePK = reader.Item("SitePK")
-                    ._Site_Name = reader.Item("Site_Name")
+                    ._SiteDetails._PK = reader.Item("SitePK")
+                    ._SiteDetails._Site_Code = reader.Item("Site_Code")
+                    ._SiteDetails._Site_Name = reader.Item("Site_Name")
                     ._Account_TypeID = reader.Item("Account_TypeID")
                     ._Account_TypePrefix = reader.Item("Account_TypePrefix")
                     ._Account_TypeDesc = reader.Item("Account_TypeDesc")
@@ -593,16 +1249,6 @@
                     ._ContainerNo = reader.Item("ContainerNo")
                     ._ContainerSizeID = reader.Item("ContainerSizeID")
                     ._ContainerSizeName = reader.Item("ContainerSizeName")
-                    If IsDBNull(reader.Item("PickUpDate")) Then
-                        ._PickupDate = Nothing
-                    Else
-                        ._PickupDate = reader.Item("PickUpDate")
-                    End If
-                    If IsDBNull(reader.Item("DeliveryDate")) Then
-                        ._DeliveryDate = Nothing
-                    Else
-                        ._DeliveryDate = reader.Item("DeliveryDate")
-                    End If
                 End With
 
                 clsTempHead._ContainerDetails.Add(clsTempCont)
@@ -905,6 +1551,41 @@
                     ._ModDate = reader.Item("ModDate")
                 End With
 
+                clslstTemp.Add(clsTemp)
+            End While
+
+            reader.Close()
+            cmdSQL.Dispose()
+
+            Return clslstTemp
+        Catch ex As Exception
+            MsgBox(ex.Message)
+            Return Nothing
+        End Try
+    End Function
+
+    Public Function PopulateListOfStatus() As List(Of clsStatus)
+        Try
+            Dim clsTemp As New clsStatus
+            Dim clslstTemp As New List(Of clsStatus)
+
+            Dim cmdSQL = New MySql.Data.MySqlClient.MySqlCommand
+
+            If cnnDBMaster.State <> ConnectionState.Open Then cnnDBMaster.Open()
+            cmdSQL.Connection = cnnDBMaster
+            cmdSQL.CommandText = "SELECT * FROM `tbl_status`"
+
+            Dim reader As MySql.Data.MySqlClient.MySqlDataReader = cmdSQL.ExecuteReader
+
+            While reader.Read
+                clsTemp = New clsStatus
+                With clsTemp
+                    ._Status_ID = reader.Item("Status_ID")
+                    ._Status_Name = reader.Item("Status_Name")
+                    ._Status_ColorR = _NotNull(reader.Item("Status_ColorR"), -1)
+                    ._Status_ColorG = _NotNull(reader.Item("Status_ColorG"), -1)
+                    ._Status_ColorB = _NotNull(reader.Item("Status_ColorB"), -1)
+                End With
                 clslstTemp.Add(clsTemp)
             End While
 

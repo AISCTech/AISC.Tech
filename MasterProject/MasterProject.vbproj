@@ -124,9 +124,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\Database Transactions\clsDBTrans.vb" />
+    <Compile Include="Classes\Global Classes\clsDateValue.vb" />
     <Compile Include="Classes\Global Classes\clsEmailSending.vb" />
     <Compile Include="Classes\Global Classes\clsLocalFiles.vb" />
     <Compile Include="Classes\Global Classes\clsReportParameters.vb" />
+    <Compile Include="Classes\Maintenance\Account Type\clsAccountType.vb" />
+    <Compile Include="Classes\Maintenance\Booking Required Documents\clsBookingRequiredDocuments.vb" />
     <Compile Include="Classes\Maintenance\Client\clsClient.vb" />
     <Compile Include="Classes\Maintenance\Company\clsCompany.vb" />
     <Compile Include="Classes\Maintenance\Email\clsEmailAddress.vb" />
@@ -134,6 +137,14 @@
     <Compile Include="Classes\Maintenance\File Location\clsFileLocation.vb" />
     <Compile Include="Classes\Maintenance\Modules\clsModules.vb" />
     <Compile Include="Classes\Maintenance\Parameters\clsParameters.vb" />
+    <Compile Include="Classes\Maintenance\Port\clsPort.vb" />
+    <Compile Include="Classes\Maintenance\Site\clsSite.vb" />
+    <Compile Include="Classes\Maintenance\Status\clsStatus.vb" />
+    <Compile Include="Classes\Maintenance\Vendor\clsVendorHeader.vb" />
+    <Compile Include="Classes\Maintenance\Vessel\clsVessel.vb" />
+    <Compile Include="Classes\Maintenance\Warehouse\clsWarehouse.vb" />
+    <Compile Include="Classes\Operations\Customer Service\Export\clsExportBooking.vb" />
+    <Compile Include="Classes\Operations\Customer Service\Export\clsExportMasterBooking.vb" />
     <Compile Include="Classes\Operations\Customer Service\Import\clsImportBooking.vb" />
     <Compile Include="Classes\Global Classes\clsEnableToolstripObjects.vb" />
     <Compile Include="Classes\Global Classes\clsPopulateComboBox.vb" />
@@ -144,10 +155,28 @@
       <DependentUpon>rptImportBAC.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Forms\01 Operations\Customer Service\Export\frmExportBookingMenu.Designer.vb">
+    <Compile Include="Forms\01 Operations\Customer Service\Export\Export Booking\frmExportBookingMenu.Designer.vb">
       <DependentUpon>frmExportBookingMenu.vb</DependentUpon>
     </Compile>
-    <Compile Include="Forms\01 Operations\Customer Service\Export\frmExportBookingMenu.vb">
+    <Compile Include="Forms\01 Operations\Customer Service\Export\Export Booking\frmExportBookingMenu.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\01 Operations\Customer Service\Export\Master Booking\frmExportAddBookingToMaster.Designer.vb">
+      <DependentUpon>frmExportAddBookingToMaster.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\01 Operations\Customer Service\Export\Master Booking\frmExportAddBookingToMaster.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\01 Operations\Customer Service\Export\Master Booking\frmExportMasterBooking.Designer.vb">
+      <DependentUpon>frmExportMasterBooking.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\01 Operations\Customer Service\Export\Master Booking\frmExportMasterBooking.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\01 Operations\Customer Service\Export\Master Booking\frmSearchExportMasterBooking.Designer.vb">
+      <DependentUpon>frmSearchExportMasterBooking.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\01 Operations\Customer Service\Export\Master Booking\frmSearchExportMasterBooking.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\01 Operations\Customer Service\frmAddBookingContainer.Designer.vb">
@@ -186,10 +215,16 @@
     <Compile Include="Forms\01 Operations\Customer Service\Import\frmImportBookingMenu.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\01 Operations\Customer Service\Import\frmSearchImportBooking.Designer.vb">
-      <DependentUpon>frmSearchImportBooking.vb</DependentUpon>
+    <Compile Include="Forms\01 Operations\Customer Service\frmOtherCompanyRecord.Designer.vb">
+      <DependentUpon>frmOtherCompanyRecord.vb</DependentUpon>
     </Compile>
-    <Compile Include="Forms\01 Operations\Customer Service\Import\frmSearchImportBooking.vb">
+    <Compile Include="Forms\01 Operations\Customer Service\frmOtherCompanyRecord.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\01 Operations\Customer Service\frmSearchBooking.Designer.vb">
+      <DependentUpon>frmSearchBooking.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\01 Operations\Customer Service\frmSearchBooking.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\01 Operations\Customer Service\Import\frmSelectImportBookingPrintPrev.Designer.vb">
@@ -406,8 +441,17 @@
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>rptImportBAC.vb</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\01 Operations\Customer Service\Export\frmExportBookingMenu.resx">
+    <EmbeddedResource Include="Forms\01 Operations\Customer Service\Export\Export Booking\frmExportBookingMenu.resx">
       <DependentUpon>frmExportBookingMenu.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\01 Operations\Customer Service\Export\Master Booking\frmExportAddBookingToMaster.resx">
+      <DependentUpon>frmExportAddBookingToMaster.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\01 Operations\Customer Service\Export\Master Booking\frmExportMasterBooking.resx">
+      <DependentUpon>frmExportMasterBooking.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\01 Operations\Customer Service\Export\Master Booking\frmSearchExportMasterBooking.resx">
+      <DependentUpon>frmSearchExportMasterBooking.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\01 Operations\Customer Service\frmAddBookingContainer.resx">
       <DependentUpon>frmAddBookingContainer.vb</DependentUpon>
@@ -427,8 +471,11 @@
     <EmbeddedResource Include="Forms\01 Operations\Customer Service\Import\frmImportBookingMenu.resx">
       <DependentUpon>frmImportBookingMenu.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\01 Operations\Customer Service\Import\frmSearchImportBooking.resx">
-      <DependentUpon>frmSearchImportBooking.vb</DependentUpon>
+    <EmbeddedResource Include="Forms\01 Operations\Customer Service\frmOtherCompanyRecord.resx">
+      <DependentUpon>frmOtherCompanyRecord.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\01 Operations\Customer Service\frmSearchBooking.resx">
+      <DependentUpon>frmSearchBooking.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\01 Operations\Customer Service\Import\frmSelectImportBookingPrintPrev.resx">
       <DependentUpon>frmSelectImportBookingPrintPrev.vb</DependentUpon>
@@ -533,6 +580,7 @@
   <ItemGroup>
     <None Include="Config\cnn.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </None>
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>

@@ -1,5 +1,4 @@
-﻿Public Class clsClientHeader
-
+﻿Public Class clsVendorHeader
     Private strCode As String
     Property _Code As String
         Get

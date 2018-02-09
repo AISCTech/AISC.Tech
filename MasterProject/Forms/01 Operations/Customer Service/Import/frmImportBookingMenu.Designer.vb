@@ -24,7 +24,7 @@ Partial Class frmImportBookingMenu
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmImportBookingMenu))
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.txtBookingNo = New System.Windows.Forms.TextBox()
@@ -115,8 +115,6 @@ Partial Class frmImportBookingMenu
         Me.colCContainerNo = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.colCContainerSizeID = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.colCContainerSizeName = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colCPickUpDate = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colCDeliveryDate = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.StatusStrip1 = New System.Windows.Forms.StatusStrip()
         Me.tslblContainerSizes = New System.Windows.Forms.ToolStripStatusLabel()
         Me.ToolStrip1 = New System.Windows.Forms.ToolStrip()
@@ -135,6 +133,7 @@ Partial Class frmImportBookingMenu
         Me.grpRemarks = New System.Windows.Forms.GroupBox()
         Me.txtRemarks = New System.Windows.Forms.TextBox()
         Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.cmdImportRecord = New System.Windows.Forms.Button()
         Me.grpForwarder = New System.Windows.Forms.GroupBox()
         Me.txtForwarder = New System.Windows.Forms.TextBox()
         Me.cmdSelectForwader = New System.Windows.Forms.Button()
@@ -224,7 +223,7 @@ Partial Class frmImportBookingMenu
         Me.txtBookingNo.Location = New System.Drawing.Point(198, 13)
         Me.txtBookingNo.Name = "txtBookingNo"
         Me.txtBookingNo.ReadOnly = True
-        Me.txtBookingNo.Size = New System.Drawing.Size(170, 20)
+        Me.txtBookingNo.Size = New System.Drawing.Size(137, 20)
         Me.txtBookingNo.TabIndex = 2
         Me.txtBookingNo.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
@@ -234,7 +233,7 @@ Partial Class frmImportBookingMenu
         Me.txtHouseBL.Font = New System.Drawing.Font("Arial Narrow", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtHouseBL.Location = New System.Drawing.Point(120, 32)
         Me.txtHouseBL.Name = "txtHouseBL"
-        Me.txtHouseBL.Size = New System.Drawing.Size(248, 20)
+        Me.txtHouseBL.Size = New System.Drawing.Size(215, 20)
         Me.txtHouseBL.TabIndex = 0
         '
         'Label3
@@ -784,7 +783,7 @@ Partial Class frmImportBookingMenu
         '
         Me.grpDescriptionOfGoods.Controls.Add(Me.txtDescriptionOfGoods)
         Me.grpDescriptionOfGoods.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.grpDescriptionOfGoods.Location = New System.Drawing.Point(392, 273)
+        Me.grpDescriptionOfGoods.Location = New System.Drawing.Point(395, 272)
         Me.grpDescriptionOfGoods.Name = "grpDescriptionOfGoods"
         Me.grpDescriptionOfGoods.Size = New System.Drawing.Size(336, 96)
         Me.grpDescriptionOfGoods.TabIndex = 11
@@ -862,11 +861,11 @@ Partial Class frmImportBookingMenu
         Me.TabControl1.Controls.Add(Me.tabContainer)
         Me.TabControl1.Controls.Add(Me.tabDocuments)
         Me.TabControl1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TabControl1.Location = New System.Drawing.Point(759, 0)
+        Me.TabControl1.Location = New System.Drawing.Point(760, 0)
         Me.TabControl1.Multiline = True
         Me.TabControl1.Name = "TabControl1"
         Me.TabControl1.SelectedIndex = 0
-        Me.TabControl1.Size = New System.Drawing.Size(332, 477)
+        Me.TabControl1.Size = New System.Drawing.Size(331, 490)
         Me.TabControl1.TabIndex = 0
         '
         'tabShippingDetails
@@ -940,7 +939,7 @@ Partial Class frmImportBookingMenu
         Me.tabShippingDetails.Location = New System.Drawing.Point(4, 22)
         Me.tabShippingDetails.Name = "tabShippingDetails"
         Me.tabShippingDetails.Padding = New System.Windows.Forms.Padding(3)
-        Me.tabShippingDetails.Size = New System.Drawing.Size(355, 451)
+        Me.tabShippingDetails.Size = New System.Drawing.Size(323, 464)
         Me.tabShippingDetails.TabIndex = 2
         Me.tabShippingDetails.Text = "Shipping Details"
         Me.tabShippingDetails.UseVisualStyleBackColor = True
@@ -1073,7 +1072,7 @@ Partial Class frmImportBookingMenu
         Me.tabContainer.Location = New System.Drawing.Point(4, 22)
         Me.tabContainer.Name = "tabContainer"
         Me.tabContainer.Padding = New System.Windows.Forms.Padding(3)
-        Me.tabContainer.Size = New System.Drawing.Size(324, 451)
+        Me.tabContainer.Size = New System.Drawing.Size(323, 464)
         Me.tabContainer.TabIndex = 0
         Me.tabContainer.Text = "Containers"
         Me.tabContainer.UseVisualStyleBackColor = True
@@ -1083,12 +1082,12 @@ Partial Class frmImportBookingMenu
         Me.dtgContainer.AllowUserToAddRows = False
         Me.dtgContainer.AllowUserToDeleteRows = False
         Me.dtgContainer.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dtgContainer.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.colCPK, Me.colCContainerID, Me.colCContainerNo, Me.colCContainerSizeID, Me.colCContainerSizeName, Me.colCPickUpDate, Me.colCDeliveryDate})
+        Me.dtgContainer.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.colCPK, Me.colCContainerID, Me.colCContainerNo, Me.colCContainerSizeID, Me.colCContainerSizeName})
         Me.dtgContainer.Dock = System.Windows.Forms.DockStyle.Fill
         Me.dtgContainer.Location = New System.Drawing.Point(3, 28)
         Me.dtgContainer.Name = "dtgContainer"
         Me.dtgContainer.ReadOnly = True
-        Me.dtgContainer.Size = New System.Drawing.Size(318, 398)
+        Me.dtgContainer.Size = New System.Drawing.Size(317, 411)
         Me.dtgContainer.TabIndex = 1
         '
         'colCPK
@@ -1125,26 +1124,12 @@ Partial Class frmImportBookingMenu
         Me.colCContainerSizeName.Name = "colCContainerSizeName"
         Me.colCContainerSizeName.ReadOnly = True
         '
-        'colCPickUpDate
-        '
-        Me.colCPickUpDate.HeaderText = "Pickup Date"
-        Me.colCPickUpDate.Name = "colCPickUpDate"
-        Me.colCPickUpDate.ReadOnly = True
-        Me.colCPickUpDate.Width = 125
-        '
-        'colCDeliveryDate
-        '
-        Me.colCDeliveryDate.HeaderText = "Delivery Date"
-        Me.colCDeliveryDate.Name = "colCDeliveryDate"
-        Me.colCDeliveryDate.ReadOnly = True
-        Me.colCDeliveryDate.Width = 125
-        '
         'StatusStrip1
         '
         Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tslblContainerSizes})
-        Me.StatusStrip1.Location = New System.Drawing.Point(3, 426)
+        Me.StatusStrip1.Location = New System.Drawing.Point(3, 439)
         Me.StatusStrip1.Name = "StatusStrip1"
-        Me.StatusStrip1.Size = New System.Drawing.Size(318, 22)
+        Me.StatusStrip1.Size = New System.Drawing.Size(317, 22)
         Me.StatusStrip1.TabIndex = 2
         Me.StatusStrip1.Text = "StatusStrip1"
         '
@@ -1159,7 +1144,7 @@ Partial Class frmImportBookingMenu
         Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tscmdContainerAdd, Me.tscmdContainerRemove})
         Me.ToolStrip1.Location = New System.Drawing.Point(3, 3)
         Me.ToolStrip1.Name = "ToolStrip1"
-        Me.ToolStrip1.Size = New System.Drawing.Size(318, 25)
+        Me.ToolStrip1.Size = New System.Drawing.Size(317, 25)
         Me.ToolStrip1.TabIndex = 0
         Me.ToolStrip1.Text = "ToolStrip1"
         '
@@ -1188,7 +1173,7 @@ Partial Class frmImportBookingMenu
         Me.tabDocuments.Location = New System.Drawing.Point(4, 22)
         Me.tabDocuments.Name = "tabDocuments"
         Me.tabDocuments.Padding = New System.Windows.Forms.Padding(3)
-        Me.tabDocuments.Size = New System.Drawing.Size(355, 451)
+        Me.tabDocuments.Size = New System.Drawing.Size(323, 464)
         Me.tabDocuments.TabIndex = 1
         Me.tabDocuments.Text = "Documents"
         Me.tabDocuments.UseVisualStyleBackColor = True
@@ -1202,7 +1187,7 @@ Partial Class frmImportBookingMenu
         Me.dtgDocuments.Dock = System.Windows.Forms.DockStyle.Fill
         Me.dtgDocuments.Location = New System.Drawing.Point(3, 3)
         Me.dtgDocuments.Name = "dtgDocuments"
-        Me.dtgDocuments.Size = New System.Drawing.Size(349, 371)
+        Me.dtgDocuments.Size = New System.Drawing.Size(317, 384)
         Me.dtgDocuments.TabIndex = 2
         '
         'colDSelected
@@ -1239,9 +1224,9 @@ Partial Class frmImportBookingMenu
         Me.Panel2.Controls.Add(Me.GroupBox6)
         Me.Panel2.Controls.Add(Me.chkDocsCompleted)
         Me.Panel2.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.Panel2.Location = New System.Drawing.Point(3, 374)
+        Me.Panel2.Location = New System.Drawing.Point(3, 387)
         Me.Panel2.Name = "Panel2"
-        Me.Panel2.Size = New System.Drawing.Size(349, 74)
+        Me.Panel2.Size = New System.Drawing.Size(317, 74)
         Me.Panel2.TabIndex = 3
         '
         'GroupBox6
@@ -1250,7 +1235,7 @@ Partial Class frmImportBookingMenu
         Me.GroupBox6.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.GroupBox6.Location = New System.Drawing.Point(0, 23)
         Me.GroupBox6.Name = "GroupBox6"
-        Me.GroupBox6.Size = New System.Drawing.Size(349, 51)
+        Me.GroupBox6.Size = New System.Drawing.Size(317, 51)
         Me.GroupBox6.TabIndex = 1
         Me.GroupBox6.TabStop = False
         Me.GroupBox6.Text = "Docs Completed Date"
@@ -1279,7 +1264,7 @@ Partial Class frmImportBookingMenu
         'grpRemarks
         '
         Me.grpRemarks.Controls.Add(Me.txtRemarks)
-        Me.grpRemarks.Location = New System.Drawing.Point(392, 375)
+        Me.grpRemarks.Location = New System.Drawing.Point(395, 374)
         Me.grpRemarks.Name = "grpRemarks"
         Me.grpRemarks.Size = New System.Drawing.Size(336, 96)
         Me.grpRemarks.TabIndex = 12
@@ -1298,6 +1283,7 @@ Partial Class frmImportBookingMenu
         'Panel1
         '
         Me.Panel1.AutoScroll = True
+        Me.Panel1.Controls.Add(Me.cmdImportRecord)
         Me.Panel1.Controls.Add(Me.grpForwarder)
         Me.Panel1.Controls.Add(Me.lblStatusDetails)
         Me.Panel1.Controls.Add(Me.Label5)
@@ -1320,8 +1306,18 @@ Partial Class frmImportBookingMenu
         Me.Panel1.Dock = System.Windows.Forms.DockStyle.Left
         Me.Panel1.Location = New System.Drawing.Point(0, 0)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(754, 477)
+        Me.Panel1.Size = New System.Drawing.Size(755, 490)
         Me.Panel1.TabIndex = 0
+        '
+        'cmdImportRecord
+        '
+        Me.cmdImportRecord.Image = CType(resources.GetObject("cmdImportRecord.Image"), System.Drawing.Image)
+        Me.cmdImportRecord.Location = New System.Drawing.Point(341, 13)
+        Me.cmdImportRecord.Name = "cmdImportRecord"
+        Me.cmdImportRecord.Size = New System.Drawing.Size(27, 24)
+        Me.cmdImportRecord.TabIndex = 26
+        Me.ToolTip1.SetToolTip(Me.cmdImportRecord, "Import booking from other business unit")
+        Me.cmdImportRecord.UseVisualStyleBackColor = True
         '
         'grpForwarder
         '
@@ -1329,7 +1325,7 @@ Partial Class frmImportBookingMenu
         Me.grpForwarder.Controls.Add(Me.cmdSelectForwader)
         Me.grpForwarder.Controls.Add(Me.txtForwarderAddress)
         Me.grpForwarder.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.grpForwarder.Location = New System.Drawing.Point(392, 13)
+        Me.grpForwarder.Location = New System.Drawing.Point(395, 12)
         Me.grpForwarder.Name = "grpForwarder"
         Me.grpForwarder.Size = New System.Drawing.Size(336, 103)
         Me.grpForwarder.TabIndex = 9
@@ -1547,16 +1543,16 @@ Partial Class frmImportBookingMenu
         Me.dtgServices.AllowUserToDeleteRows = False
         Me.dtgServices.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dtgServices.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.colSSelected, Me.colSPK, Me.colSParam_Type, Me.colSParam_Code, Me.colSPrefix, Me.colSParam_Desc})
-        Me.dtgServices.Location = New System.Drawing.Point(392, 122)
+        Me.dtgServices.Location = New System.Drawing.Point(395, 121)
         Me.dtgServices.Name = "dtgServices"
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle3.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText
-        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.dtgServices.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.dtgServices.RowHeadersDefaultCellStyle = DataGridViewCellStyle2
         Me.dtgServices.Size = New System.Drawing.Size(336, 145)
         Me.dtgServices.TabIndex = 10
         '
@@ -1642,16 +1638,16 @@ Partial Class frmImportBookingMenu
         'Splitter1
         '
         Me.Splitter1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.Splitter1.Location = New System.Drawing.Point(754, 0)
+        Me.Splitter1.Location = New System.Drawing.Point(755, 0)
         Me.Splitter1.Name = "Splitter1"
-        Me.Splitter1.Size = New System.Drawing.Size(5, 477)
+        Me.Splitter1.Size = New System.Drawing.Size(5, 490)
         Me.Splitter1.TabIndex = 0
         Me.Splitter1.TabStop = False
         '
         'StatusStrip2
         '
         Me.StatusStrip2.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripStatusLabel1, Me.tslblPrepBy, Me.ToolStripStatusLabel3, Me.tslblPrepDate, Me.ToolStripStatusLabel2, Me.tslblModBy, Me.ToolStripStatusLabel5, Me.tslblModDate})
-        Me.StatusStrip2.Location = New System.Drawing.Point(0, 477)
+        Me.StatusStrip2.Location = New System.Drawing.Point(0, 490)
         Me.StatusStrip2.Name = "StatusStrip2"
         Me.StatusStrip2.Size = New System.Drawing.Size(1091, 22)
         Me.StatusStrip2.TabIndex = 2
@@ -1718,7 +1714,7 @@ Partial Class frmImportBookingMenu
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1091, 499)
+        Me.ClientSize = New System.Drawing.Size(1091, 512)
         Me.Controls.Add(Me.TabControl1)
         Me.Controls.Add(Me.Splitter1)
         Me.Controls.Add(Me.Panel1)
@@ -1868,13 +1864,6 @@ Partial Class frmImportBookingMenu
     Friend WithEvents Label48 As Label
     Friend WithEvents txtAccountHolder As TextBox
     Friend WithEvents dtgServices As DataGridView
-    Friend WithEvents colCPK As DataGridViewTextBoxColumn
-    Friend WithEvents colCContainerID As DataGridViewTextBoxColumn
-    Friend WithEvents colCContainerNo As DataGridViewTextBoxColumn
-    Friend WithEvents colCContainerSizeID As DataGridViewTextBoxColumn
-    Friend WithEvents colCContainerSizeName As DataGridViewTextBoxColumn
-    Friend WithEvents colCPickUpDate As DataGridViewTextBoxColumn
-    Friend WithEvents colCDeliveryDate As DataGridViewTextBoxColumn
     Friend WithEvents Label51 As Label
     Friend WithEvents Label52 As Label
     Friend WithEvents cmdSelectShipper As Button
@@ -1915,5 +1904,11 @@ Partial Class frmImportBookingMenu
     Friend WithEvents cboWarehouse As ComboBox
     Friend WithEvents Label54 As Label
     Friend WithEvents Label55 As Label
+    Friend WithEvents colCPK As DataGridViewTextBoxColumn
+    Friend WithEvents colCContainerID As DataGridViewTextBoxColumn
+    Friend WithEvents colCContainerNo As DataGridViewTextBoxColumn
+    Friend WithEvents colCContainerSizeID As DataGridViewTextBoxColumn
+    Friend WithEvents colCContainerSizeName As DataGridViewTextBoxColumn
+    Friend WithEvents cmdImportRecord As Button
     Friend WithEvents ErrorProvider1 As ErrorProvider
 End Class

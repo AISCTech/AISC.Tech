@@ -94,6 +94,7 @@ Partial Class mdiMain
         Me.cmdOperations = New System.Windows.Forms.Button()
         Me.Splitter1 = New System.Windows.Forms.Splitter()
         Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.ColorDialog1 = New System.Windows.Forms.ColorDialog()
         Me.MenuStrip.SuspendLayout()
         Me.ToolStrip.SuspendLayout()
         Me.StatusStrip.SuspendLayout()
@@ -736,4 +737,5 @@ Partial Class mdiMain
     Friend WithEvents SearchToolStripButton As ToolStripButton
     Friend WithEvents SearchToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ContextMenuStrip1 As ContextMenuStrip
+    Friend WithEvents ColorDialog1 As ColorDialog
 End Class
