@@ -111,12 +111,12 @@
                                 .AddWithValue("@reg_no", dtgRow.Cells(colFormNo.Name).Value)
                                 .AddWithValue("@reg_group", Me.cboFormType.SelectedValue)
                                 .AddWithValue("@related_ref", "")
-                                .AddWithValue("@reg_by", strCurrentUser)
+                                .AddWithValue("@reg_by", CurrentUser)
                                 .AddWithValue("@reg_date", dtCurrent)
-                                .AddWithValue("@reg_modby", strCurrentUser)
+                                .AddWithValue("@reg_modby", CurrentUser)
                                 .AddWithValue("@reg_moddate", dtCurrent)
                                 .AddWithValue("@reg_status", 1)
-                                .AddWithValue("@reg_statusby", strCurrentUser)
+                                .AddWithValue("@reg_statusby", CurrentUser)
                                 .AddWithValue("@reg_statusdate", dtCurrent)
                             End With
 
@@ -234,26 +234,15 @@
             End If
 
             Dim reader As MySql.Data.MySqlClient.MySqlDataReader = cmdSQL.ExecuteReader
-            Dim strRegModule As String = ""
-            Dim strModName As String = ""
+
             Me.dtgFormList.Rows.Clear()
             While reader.Read
                 Me.dtgFormList.Rows.Add()
                 With Me.dtgFormList.Rows(Me.dtgFormList.Rows.Count - 1)
                     .Cells(colFormTypeID.Name).Value = CStr(reader.Item("reg_group"))
                     .Cells(colFormType.Name).Value = CStr(reader.Item("grp_name"))
-                    If IsDBNull(reader.Item("reg_module")) = True Then
-                        strRegModule = ""
-                    Else
-                        strRegModule = reader.Item("reg_module")
-                    End If
-                    If IsDBNull(reader.Item("mod_name")) = True Then
-                        strModName = ""
-                    Else
-                        strModName = reader.Item("mod_name")
-                    End If
-                    .Cells(colModID.Name).Value = strRegModule
-                    .Cells(colModName.Name).Value = strModName
+                    .Cells(colModID.Name).Value = CStr(reader.Item("reg_module"))
+                    .Cells(colModName.Name).Value = CStr(reader.Item("mod_name"))
                     .Cells(colFormNo.Name).Value = CStr(reader.Item("reg_no"))
                     .Cells(colRefNo.Name).Value = CStr(reader.Item("related_ref"))
                     .Cells(colPrepBy.Name).Value = CStr(reader.Item("reg_by"))
@@ -295,8 +284,7 @@
             cmdSQL.Parameters.AddWithValue("@reg_group", intFormType)
 
             Dim reader As MySql.Data.MySqlClient.MySqlDataReader = cmdSQL.ExecuteReader
-            Dim strRegModule As String = ""
-            Dim strModName As String = ""
+
             Me.dtgFormList.Rows.Clear()
             While reader.Read
                 Me.dtgFormList.Rows.Add()
@@ -304,18 +292,8 @@
                     .Cells(colSelected.Name).Value = True
                     .Cells(colFormTypeID.Name).Value = CStr(reader.Item("reg_group"))
                     .Cells(colFormType.Name).Value = CStr(reader.Item("grp_name"))
-                    If IsDBNull(reader.Item("reg_module")) = True Then
-                        strRegModule = ""
-                    Else
-                        strRegModule = reader.Item("reg_module")
-                    End If
-                    If IsDBNull(reader.Item("mod_name")) = True Then
-                        strModName = ""
-                    Else
-                        strModName = reader.Item("mod_name")
-                    End If
-                    .Cells(colModID.Name).Value = strRegModule
-                    .Cells(colModName.Name).Value = strModName
+                    .Cells(colModID.Name).Value = CStr(reader.Item("reg_module"))
+                    .Cells(colModName.Name).Value = CStr(reader.Item("mod_name"))
                     .Cells(colFormNo.Name).Value = CStr(reader.Item("reg_no"))
                     .Cells(colRefNo.Name).Value = CStr(reader.Item("related_ref"))
                     .Cells(colPrepBy.Name).Value = CStr(reader.Item("reg_by"))
@@ -467,10 +445,10 @@
     End Sub
 
     Private Sub tscmdNew_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tscmdNew.Click
-        'If _blNewAccess = False Then
-        '    MsgBox("You are not allowed to create new record.", MsgBoxStyle.Exclamation)
-        '    Exit Sub
-        'End If
+        If _blNewAccess = False Then
+            MsgBox("You are not allowed to create new record.", MsgBoxStyle.Exclamation)
+            Exit Sub
+        End If
 
         ClearEntries()
         Me.dtgFormList.Rows.Clear()
@@ -595,10 +573,10 @@
     End Sub
 
     Private Sub tscmdRelease_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tscmdRelease.Click
-        'If _blReleaseAccess = False Then
-        '    MsgBox("You are not allowed to release forms.", MsgBoxStyle.Exclamation)
-        '    Exit Sub
-        'End If
+        If _blReleaseAccess = False Then
+            MsgBox("You are not allowed to release forms.", MsgBoxStyle.Exclamation)
+            Exit Sub
+        End If
 
         ClearEntries()
         Me.dtgFormList.Rows.Clear()
