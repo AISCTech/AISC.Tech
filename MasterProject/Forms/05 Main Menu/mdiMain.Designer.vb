@@ -88,6 +88,7 @@ Partial Class mdiMain
         Me.lblMenuTitle = New System.Windows.Forms.Label()
         Me.Splitter2 = New System.Windows.Forms.Splitter()
         Me.Panel2 = New System.Windows.Forms.Panel()
+        Me.cmdBDG = New System.Windows.Forms.Button()
         Me.cmdMaintenance = New System.Windows.Forms.Button()
         Me.cmdAccounting = New System.Windows.Forms.Button()
         Me.cmdLogout = New System.Windows.Forms.Button()
@@ -577,6 +578,7 @@ Partial Class mdiMain
         '
         'Panel2
         '
+        Me.Panel2.Controls.Add(Me.cmdBDG)
         Me.Panel2.Controls.Add(Me.cmdMaintenance)
         Me.Panel2.Controls.Add(Me.cmdAccounting)
         Me.Panel2.Controls.Add(Me.cmdLogout)
@@ -586,6 +588,16 @@ Partial Class mdiMain
         Me.Panel2.Name = "Panel2"
         Me.Panel2.Size = New System.Drawing.Size(242, 233)
         Me.Panel2.TabIndex = 0
+        '
+        'cmdBDG
+        '
+        Me.cmdBDG.Dock = System.Windows.Forms.DockStyle.Top
+        Me.cmdBDG.Location = New System.Drawing.Point(0, 75)
+        Me.cmdBDG.Name = "cmdBDG"
+        Me.cmdBDG.Size = New System.Drawing.Size(242, 25)
+        Me.cmdBDG.TabIndex = 13
+        Me.cmdBDG.Text = "Business Development Group"
+        Me.cmdBDG.UseVisualStyleBackColor = True
         '
         'cmdMaintenance
         '
@@ -738,4 +750,5 @@ Partial Class mdiMain
     Friend WithEvents SearchToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ContextMenuStrip1 As ContextMenuStrip
     Friend WithEvents ColorDialog1 As ColorDialog
+    Friend WithEvents cmdBDG As Button
 End Class

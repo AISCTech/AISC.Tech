@@ -79,6 +79,7 @@
                 CurrentUser._Site_Name = .Cells(colSiteName.Name).Value
             End With
 
+            strCompanyCode = Me.dtgCompany.CurrentRow.Cells(0).Value
             mdiMain.Show()
             frmLogIn.Close()
             Me.Close()

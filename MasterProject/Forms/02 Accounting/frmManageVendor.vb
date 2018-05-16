@@ -47,6 +47,8 @@
                 frmPCVCheckRequest.txtPayeeName.Text = Me.dgVendorList.CurrentRow.Cells(1).Value
                 Me.Dispose()
                 Me.Close()
+            Case "Fund Transfer From"
+
         End Select
     End Sub
 End Class
