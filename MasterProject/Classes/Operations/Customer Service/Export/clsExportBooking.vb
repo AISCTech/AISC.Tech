@@ -300,6 +300,26 @@
         End Set
     End Property
 
+    Private blIfBrkg As Boolean
+    Property _IfBrkg As Boolean
+        Get
+            Return blIfBrkg
+        End Get
+        Set(value As Boolean)
+            blIfBrkg = value
+        End Set
+    End Property
+
+    Private clsBrkg As New clsBrkgJO
+    Property _BrkgDetails As clsBrkgJO
+        Get
+            Return clsBrkg
+        End Get
+        Set(value As clsBrkgJO)
+            clsBrkg = value
+        End Set
+    End Property
+
     Private clsStatusDetails As New clsStatus
     Property _StatusDetails As clsStatus
         Get

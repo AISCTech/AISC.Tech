@@ -31,7 +31,8 @@
             Dim clsTempService As New clsImportBookingServices
             Dim clsTempContainer As New clsImportBookingContainers
             Dim clsTempDocument As New clsImportBookingDocuments
-            Dim clsImportDBTrans As New clsDBTrans
+            Dim clsDB As New clsDBTrans
+            Dim blBrkg As Boolean = CheckIfBrokerageSelected()
 
             With clsImportBooking
                 ._BookingNo = txtBookingNo.Text
@@ -75,6 +76,7 @@
                 ._WarehouseID = cboWarehouse.SelectedValue
                 ._AccountTypeID = txtAccountType.Tag
                 ._AccountHolderID = txtAccountHolder.Tag
+                ._IfBrkg = CheckIfBrokerageSelected()
                 ._PrepByID = CurrentUser._User_ID
                 ._ModByID = CurrentUser._User_ID
                 ._StatusByID = CurrentUser._User_ID
@@ -82,14 +84,13 @@
 
             clsImportBooking._ServiceDetails.Clear()
             For Each dtgRow As DataGridViewRow In dtgServices.Rows
-                If dtgRow.Cells(colSSelected.Name).Value = True Then
-                    clsTempService = New clsImportBookingServices
-                    With clsTempService
-                        ._ServiceID = dtgRow.Cells(colSPK.Name).Value
-                    End With
+                clsTempService = New clsImportBookingServices
+                With clsTempService
+                    ._ServiceID = dtgRow.Cells(colSPK.Name).Value
+                    ._Selected = dtgRow.Cells(colSSelected.Name).Value
+                End With
 
-                    clsImportBooking._ServiceDetails.Add(clsTempService)
-                End If
+                clsImportBooking._ServiceDetails.Add(clsTempService)
             Next
 
             clsImportBooking._ContainerDetails.Clear()
@@ -110,7 +111,7 @@
                 End If
             Next
 
-            clsImportBooking = clsImportDBTrans.SaveImportBookingRecord(clsImportBooking)
+            clsImportBooking = clsDB.CustomerServiceImportSave(clsImportBooking)
             PopulateBooking(clsImportBooking)
         End If
     End Sub
@@ -122,7 +123,7 @@
         clsComboBox = New clsPopulateComboBox(cboLoadType, "SELECT * FROM lib_params WHERE Param_Type = 2 ORDER BY `PK`", "Param_Desc", "PK")
         clsComboBox.PopComboBox()
 
-        clsComboBox = New clsPopulateComboBox(cboUnitOfMeasure, "SELECT * FROM lib_params WHERE Param_Type = 5 ORDER BY `Param_Desc`", "Param_Desc", "PK")
+        clsComboBox = New clsPopulateComboBox(cboUnitOfMeasure, "SELECT * FROM lib_uom ORDER BY `Unit`", "Unit", "PK")
         clsComboBox.PopComboBox()
 
         clsComboBox = New clsPopulateComboBox(cboOrigin, "SELECT * FROM lib_port ORDER BY `Description`", "Description", "PK")
@@ -151,7 +152,7 @@
             ChangeEnabledButtons(True, False, False, True, False, True, False, False, False, False)
         Else
             Dim clsDBTemp As New clsDBTrans
-            PopulateBooking(clsDBTemp.SearchImportBookingRecord(txtBookingNo.Text, CurrentUser._Company_Code))
+            PopulateBooking(clsDBTemp.CustomerServiceImportSearch(txtBookingNo.Text, CurrentUser._Company_Code))
         End If
     End Sub
 
@@ -272,7 +273,7 @@
                     cmdSQL.Dispose()
 
                     Dim clsDBTemp As New clsDBTrans
-                    PopulateBooking(clsDBTemp.SearchImportBookingRecord(txtBookingNo.Text, CurrentUser._Company_Code))
+                    PopulateBooking(clsDBTemp.CustomerServiceImportSearch(txtBookingNo.Text, CurrentUser._Company_Code))
                 Catch ex As Exception
                     Try
                         trnSQL.Rollback()
@@ -321,7 +322,7 @@
                     cmdSQL.Dispose()
 
                     Dim clsDBTemp As New clsDBTrans
-                    PopulateBooking(clsDBTemp.SearchImportBookingRecord(txtBookingNo.Text, CurrentUser._Company_Code))
+                    PopulateBooking(clsDBTemp.CustomerServiceImportSearch(txtBookingNo.Text, CurrentUser._Company_Code))
                 Catch ex As Exception
                     Try
                         trnSQL.Rollback()
@@ -370,7 +371,7 @@
                     cmdSQL.Dispose()
 
                     Dim clsDBTemp As New clsDBTrans
-                    PopulateBooking(clsDBTemp.SearchImportBookingRecord(txtBookingNo.Text, CurrentUser._Company_Code))
+                    PopulateBooking(clsDBTemp.CustomerServiceImportSearch(txtBookingNo.Text, CurrentUser._Company_Code))
                 Catch ex As Exception
                     Try
                         trnSQL.Rollback()
@@ -545,7 +546,24 @@
             blTemp = False
         End If
 
+        If clsImportBooking._BrkgDetails._ID > 0 Then
+            If CheckIfBrokerageSelected() = False Then
+                MsgBox("Cannot remove Brokerage service. Cancel Brokerage J.O. first.", MsgBoxStyle.Exclamation, "System Message")
+                dtgServices.Focus()
+                blTemp = False
+            End If
+        End If
+
         Return blTemp
+    End Function
+
+    Private Function CheckIfBrokerageSelected() As Boolean
+        CheckIfBrokerageSelected = False
+        For Each dtgRow As DataGridViewRow In dtgServices.Rows
+            If dtgRow.Cells(colSPK.Name).Value = 28 And dtgRow.Cells(colSSelected.Name).Value = True Then
+                CheckIfBrokerageSelected = True
+            End If
+        Next
     End Function
 
     Public Sub PopulateBooking(ByVal clsImpBook As clsImportBookingHeader)
@@ -624,7 +642,7 @@
 
             For Each clsTemp As clsImportBookingServices In clsImpBook._ServiceDetails
                 For Each dtgTemp As DataGridViewRow In dtgServices.Rows
-                    If clsTemp._ServiceID = dtgTemp.Cells(colSPK.Name).Value Then
+                    If clsTemp._ServiceID = dtgTemp.Cells(colSPK.Name).Value And clsTemp._Selected = True Then
                         dtgTemp.Cells(colSSelected.Name).Value = True
                         Exit For
                     End If
@@ -786,6 +804,7 @@
             cmdSQL.Dispose()
 
             'Service Type
+            dtgServices.EndEdit()
             For Each dtgRow As DataGridViewRow In dtgServices.Rows
                 If dtgRow.Cells(colSParam_Code.Name).Value = "SFRGT" And dtgRow.Cells(colSSelected.Name).Value = True Then
                     Select Case cboModeOfTransport.Text
@@ -793,6 +812,8 @@
                             strTemp = strTemp & "AI"
                         Case "Sea"
                             strTemp = strTemp & "SI"
+                        Case "Land"
+                            strTemp = strTemp & "LI"
                     End Select
                     GoTo lnAccountType
                 ElseIf dtgRow.Cells(colSSelected.Name).Value = True Then

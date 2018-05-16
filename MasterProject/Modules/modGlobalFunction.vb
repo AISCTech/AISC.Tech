@@ -771,4 +771,23 @@ Module modGlobalFunction
             MsgBox(ex.Message)
         End Try
     End Function
+
+    Public Function DivideString(ByVal strValue As String, ByVal intMaxItemLength As Integer) As List(Of String)
+        Dim strTemp As String = System.Text.RegularExpressions.Regex.Replace(Trim(strValue), "\s{2,}", " ")
+        Dim strArray As String() = Split(strTemp, " ")
+        Dim lstOutput As New List(Of String)
+
+        strTemp = ""
+        For intctr As Integer = 0 To strArray.Length - 1
+            If Len(Trim(strTemp & " " & strArray(intctr))) <= intMaxItemLength Then
+                strTemp = Trim(strTemp & " " & strArray(intctr))
+            Else
+                lstOutput.Add(strTemp)
+                strTemp = Trim(strArray(intctr))
+            End If
+        Next
+        lstOutput.Add(strTemp)
+
+        Return lstOutput
+    End Function
 End Module

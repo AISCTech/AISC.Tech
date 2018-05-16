@@ -24,7 +24,7 @@ Partial Class frmExportBookingMenu
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmExportBookingMenu))
-        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.pnlHeader = New System.Windows.Forms.Panel()
         Me.pnlRightMenu = New System.Windows.Forms.Panel()
         Me.pnlColoadTo = New System.Windows.Forms.Panel()
@@ -236,7 +236,7 @@ Partial Class frmExportBookingMenu
         Me.pnlHeader.Dock = System.Windows.Forms.DockStyle.Fill
         Me.pnlHeader.Location = New System.Drawing.Point(0, 0)
         Me.pnlHeader.Name = "pnlHeader"
-        Me.pnlHeader.Size = New System.Drawing.Size(1007, 508)
+        Me.pnlHeader.Size = New System.Drawing.Size(1129, 508)
         Me.pnlHeader.TabIndex = 0
         '
         'pnlRightMenu
@@ -251,7 +251,7 @@ Partial Class frmExportBookingMenu
         Me.pnlRightMenu.Dock = System.Windows.Forms.DockStyle.Fill
         Me.pnlRightMenu.Location = New System.Drawing.Point(776, 0)
         Me.pnlRightMenu.Name = "pnlRightMenu"
-        Me.pnlRightMenu.Size = New System.Drawing.Size(231, 508)
+        Me.pnlRightMenu.Size = New System.Drawing.Size(353, 508)
         Me.pnlRightMenu.TabIndex = 88
         '
         'pnlColoadTo
@@ -265,23 +265,23 @@ Partial Class frmExportBookingMenu
         Me.pnlColoadTo.Dock = System.Windows.Forms.DockStyle.Top
         Me.pnlColoadTo.Location = New System.Drawing.Point(0, 314)
         Me.pnlColoadTo.Name = "pnlColoadTo"
-        Me.pnlColoadTo.Size = New System.Drawing.Size(231, 135)
+        Me.pnlColoadTo.Size = New System.Drawing.Size(353, 118)
         Me.pnlColoadTo.TabIndex = 86
         '
         'txtColoadTo
         '
         Me.txtColoadTo.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.txtColoadTo.Font = New System.Drawing.Font("Arial Narrow", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtColoadTo.Location = New System.Drawing.Point(35, 9)
+        Me.txtColoadTo.Location = New System.Drawing.Point(39, 9)
         Me.txtColoadTo.Name = "txtColoadTo"
         Me.txtColoadTo.ReadOnly = True
-        Me.txtColoadTo.Size = New System.Drawing.Size(301, 20)
+        Me.txtColoadTo.Size = New System.Drawing.Size(290, 20)
         Me.txtColoadTo.TabIndex = 1
         '
         'lblRemoveColoadTo
         '
         Me.lblRemoveColoadTo.AutoSize = True
-        Me.lblRemoveColoadTo.Location = New System.Drawing.Point(6, 98)
+        Me.lblRemoveColoadTo.Location = New System.Drawing.Point(36, 92)
         Me.lblRemoveColoadTo.Name = "lblRemoveColoadTo"
         Me.lblRemoveColoadTo.Size = New System.Drawing.Size(83, 13)
         Me.lblRemoveColoadTo.TabIndex = 33
@@ -302,11 +302,11 @@ Partial Class frmExportBookingMenu
         '
         Me.txtColoadToAddress.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.txtColoadToAddress.Font = New System.Drawing.Font("Arial Narrow", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtColoadToAddress.Location = New System.Drawing.Point(35, 28)
+        Me.txtColoadToAddress.Location = New System.Drawing.Point(39, 28)
         Me.txtColoadToAddress.Multiline = True
         Me.txtColoadToAddress.Name = "txtColoadToAddress"
         Me.txtColoadToAddress.ReadOnly = True
-        Me.txtColoadToAddress.Size = New System.Drawing.Size(301, 59)
+        Me.txtColoadToAddress.Size = New System.Drawing.Size(290, 59)
         Me.txtColoadToAddress.TabIndex = 2
         '
         'ToolStrip3
@@ -314,7 +314,7 @@ Partial Class frmExportBookingMenu
         Me.ToolStrip3.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripLabel3, Me.tscmdColoadToShow, Me.tscmdColoadToHide})
         Me.ToolStrip3.Location = New System.Drawing.Point(0, 289)
         Me.ToolStrip3.Name = "ToolStrip3"
-        Me.ToolStrip3.Size = New System.Drawing.Size(231, 25)
+        Me.ToolStrip3.Size = New System.Drawing.Size(353, 25)
         Me.ToolStrip3.TabIndex = 90
         Me.ToolStrip3.Text = "ToolStrip3"
         '
@@ -403,7 +403,7 @@ Partial Class frmExportBookingMenu
         Me.pnlMasterBooking.Dock = System.Windows.Forms.DockStyle.Top
         Me.pnlMasterBooking.Location = New System.Drawing.Point(0, 104)
         Me.pnlMasterBooking.Name = "pnlMasterBooking"
-        Me.pnlMasterBooking.Size = New System.Drawing.Size(231, 185)
+        Me.pnlMasterBooking.Size = New System.Drawing.Size(353, 185)
         Me.pnlMasterBooking.TabIndex = 87
         '
         'lblRemoveMaster
@@ -940,7 +940,7 @@ Partial Class frmExportBookingMenu
         Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripLabel1, Me.tscmdMasterShow, Me.tscmdMasterHide})
         Me.ToolStrip1.Location = New System.Drawing.Point(0, 79)
         Me.ToolStrip1.Name = "ToolStrip1"
-        Me.ToolStrip1.Size = New System.Drawing.Size(231, 25)
+        Me.ToolStrip1.Size = New System.Drawing.Size(353, 25)
         Me.ToolStrip1.TabIndex = 88
         Me.ToolStrip1.Text = "ToolStrip1"
         '
@@ -978,7 +978,7 @@ Partial Class frmExportBookingMenu
         Me.pnlReqDocs.Dock = System.Windows.Forms.DockStyle.Top
         Me.pnlReqDocs.Location = New System.Drawing.Point(0, 25)
         Me.pnlReqDocs.Name = "pnlReqDocs"
-        Me.pnlReqDocs.Size = New System.Drawing.Size(231, 54)
+        Me.pnlReqDocs.Size = New System.Drawing.Size(353, 54)
         Me.pnlReqDocs.TabIndex = 85
         '
         'dtgDocuments
@@ -990,7 +990,7 @@ Partial Class frmExportBookingMenu
         Me.dtgDocuments.Dock = System.Windows.Forms.DockStyle.Fill
         Me.dtgDocuments.Location = New System.Drawing.Point(0, 0)
         Me.dtgDocuments.Name = "dtgDocuments"
-        Me.dtgDocuments.Size = New System.Drawing.Size(229, 0)
+        Me.dtgDocuments.Size = New System.Drawing.Size(351, 0)
         Me.dtgDocuments.TabIndex = 83
         '
         'colDSelected
@@ -1029,7 +1029,7 @@ Partial Class frmExportBookingMenu
         Me.Panel2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Panel2.Location = New System.Drawing.Point(0, -22)
         Me.Panel2.Name = "Panel2"
-        Me.Panel2.Size = New System.Drawing.Size(229, 74)
+        Me.Panel2.Size = New System.Drawing.Size(351, 74)
         Me.Panel2.TabIndex = 84
         '
         'GroupBox6
@@ -1038,7 +1038,7 @@ Partial Class frmExportBookingMenu
         Me.GroupBox6.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.GroupBox6.Location = New System.Drawing.Point(0, 23)
         Me.GroupBox6.Name = "GroupBox6"
-        Me.GroupBox6.Size = New System.Drawing.Size(229, 51)
+        Me.GroupBox6.Size = New System.Drawing.Size(351, 51)
         Me.GroupBox6.TabIndex = 1
         Me.GroupBox6.TabStop = False
         Me.GroupBox6.Text = "Docs Completed Date"
@@ -1069,7 +1069,7 @@ Partial Class frmExportBookingMenu
         Me.ToolStrip2.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripLabel2, Me.tscmdReqDocsShow, Me.tscmdReqDocsHide})
         Me.ToolStrip2.Location = New System.Drawing.Point(0, 0)
         Me.ToolStrip2.Name = "ToolStrip2"
-        Me.ToolStrip2.Size = New System.Drawing.Size(231, 25)
+        Me.ToolStrip2.Size = New System.Drawing.Size(353, 25)
         Me.ToolStrip2.TabIndex = 89
         Me.ToolStrip2.Text = "ToolStrip2"
         '
@@ -1175,7 +1175,7 @@ Partial Class frmExportBookingMenu
         Me.GroupBox2.Controls.Add(Me.Label32)
         Me.GroupBox2.Controls.Add(Me.cboOriginPort)
         Me.GroupBox2.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.GroupBox2.Location = New System.Drawing.Point(387, 151)
+        Me.GroupBox2.Location = New System.Drawing.Point(387, 148)
         Me.GroupBox2.Name = "GroupBox2"
         Me.GroupBox2.Size = New System.Drawing.Size(360, 66)
         Me.GroupBox2.TabIndex = 83
@@ -1252,7 +1252,7 @@ Partial Class frmExportBookingMenu
         Me.GroupBox1.Controls.Add(Me.cboFinalDestPort)
         Me.GroupBox1.Controls.Add(Me.cboFinalDestCountry)
         Me.GroupBox1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.GroupBox1.Location = New System.Drawing.Point(387, 223)
+        Me.GroupBox1.Location = New System.Drawing.Point(387, 220)
         Me.GroupBox1.Name = "GroupBox1"
         Me.GroupBox1.Size = New System.Drawing.Size(360, 66)
         Me.GroupBox1.TabIndex = 82
@@ -1322,7 +1322,7 @@ Partial Class frmExportBookingMenu
         'cmdImportRecord
         '
         Me.cmdImportRecord.Image = CType(resources.GetObject("cmdImportRecord.Image"), System.Drawing.Image)
-        Me.cmdImportRecord.Location = New System.Drawing.Point(341, 10)
+        Me.cmdImportRecord.Location = New System.Drawing.Point(341, 7)
         Me.cmdImportRecord.Name = "cmdImportRecord"
         Me.cmdImportRecord.Size = New System.Drawing.Size(27, 24)
         Me.cmdImportRecord.TabIndex = 81
@@ -1331,7 +1331,7 @@ Partial Class frmExportBookingMenu
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(10, 13)
+        Me.Label1.Location = New System.Drawing.Point(10, 10)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(66, 13)
         Me.Label1.TabIndex = 25
@@ -1340,7 +1340,7 @@ Partial Class frmExportBookingMenu
         'lblStatusDetails
         '
         Me.lblStatusDetails.AutoSize = True
-        Me.lblStatusDetails.Location = New System.Drawing.Point(728, 475)
+        Me.lblStatusDetails.Location = New System.Drawing.Point(728, 472)
         Me.lblStatusDetails.Name = "lblStatusDetails"
         Me.lblStatusDetails.Size = New System.Drawing.Size(16, 13)
         Me.lblStatusDetails.TabIndex = 80
@@ -1350,7 +1350,7 @@ Partial Class frmExportBookingMenu
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(104, 13)
+        Me.Label2.Location = New System.Drawing.Point(104, 10)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(10, 13)
         Me.Label2.TabIndex = 26
@@ -1361,7 +1361,7 @@ Partial Class frmExportBookingMenu
         Me.txtStatus.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.txtStatus.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.txtStatus.Font = New System.Drawing.Font("Arial Narrow", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtStatus.Location = New System.Drawing.Point(523, 472)
+        Me.txtStatus.Location = New System.Drawing.Point(523, 469)
         Me.txtStatus.Name = "txtStatus"
         Me.txtStatus.ReadOnly = True
         Me.txtStatus.Size = New System.Drawing.Size(224, 20)
@@ -1372,7 +1372,7 @@ Partial Class frmExportBookingMenu
         '
         Me.txtBookingNo.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.txtBookingNo.Font = New System.Drawing.Font("Arial Narrow", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtBookingNo.Location = New System.Drawing.Point(198, 10)
+        Me.txtBookingNo.Location = New System.Drawing.Point(198, 7)
         Me.txtBookingNo.Name = "txtBookingNo"
         Me.txtBookingNo.ReadOnly = True
         Me.txtBookingNo.Size = New System.Drawing.Size(137, 20)
@@ -1382,7 +1382,7 @@ Partial Class frmExportBookingMenu
         'Label49
         '
         Me.Label49.AutoSize = True
-        Me.Label49.Location = New System.Drawing.Point(507, 476)
+        Me.Label49.Location = New System.Drawing.Point(507, 473)
         Me.Label49.Name = "Label49"
         Me.Label49.Size = New System.Drawing.Size(10, 13)
         Me.Label49.TabIndex = 78
@@ -1392,7 +1392,7 @@ Partial Class frmExportBookingMenu
         '
         Me.txtBookingPrefix.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.txtBookingPrefix.Font = New System.Drawing.Font("Arial Narrow", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtBookingPrefix.Location = New System.Drawing.Point(120, 10)
+        Me.txtBookingPrefix.Location = New System.Drawing.Point(120, 7)
         Me.txtBookingPrefix.Name = "txtBookingPrefix"
         Me.txtBookingPrefix.ReadOnly = True
         Me.txtBookingPrefix.Size = New System.Drawing.Size(63, 20)
@@ -1402,7 +1402,7 @@ Partial Class frmExportBookingMenu
         'Label50
         '
         Me.Label50.AutoSize = True
-        Me.Label50.Location = New System.Drawing.Point(389, 476)
+        Me.Label50.Location = New System.Drawing.Point(389, 473)
         Me.Label50.Name = "Label50"
         Me.Label50.Size = New System.Drawing.Size(37, 13)
         Me.Label50.TabIndex = 77
@@ -1412,7 +1412,7 @@ Partial Class frmExportBookingMenu
         '
         Me.Label5.AutoSize = True
         Me.Label5.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label5.Location = New System.Drawing.Point(185, 12)
+        Me.Label5.Location = New System.Drawing.Point(185, 9)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(13, 16)
         Me.Label5.TabIndex = 29
@@ -1422,7 +1422,7 @@ Partial Class frmExportBookingMenu
         '
         Me.Label25.AutoSize = True
         Me.Label25.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label25.Location = New System.Drawing.Point(387, 457)
+        Me.Label25.Location = New System.Drawing.Point(387, 454)
         Me.Label25.Name = "Label25"
         Me.Label25.Size = New System.Drawing.Size(98, 13)
         Me.Label25.TabIndex = 74
@@ -1443,7 +1443,7 @@ Partial Class frmExportBookingMenu
         Me.grpConsignor.Controls.Add(Me.Label48)
         Me.grpConsignor.Controls.Add(Me.Label47)
         Me.grpConsignor.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.grpConsignor.Location = New System.Drawing.Point(13, 36)
+        Me.grpConsignor.Location = New System.Drawing.Point(13, 33)
         Me.grpConsignor.Name = "grpConsignor"
         Me.grpConsignor.Size = New System.Drawing.Size(355, 167)
         Me.grpConsignor.TabIndex = 30
@@ -1576,7 +1576,7 @@ Partial Class frmExportBookingMenu
         '
         Me.Label26.AutoSize = True
         Me.Label26.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label26.Location = New System.Drawing.Point(507, 457)
+        Me.Label26.Location = New System.Drawing.Point(507, 454)
         Me.Label26.Name = "Label26"
         Me.Label26.Size = New System.Drawing.Size(10, 13)
         Me.Label26.TabIndex = 75
@@ -1588,7 +1588,7 @@ Partial Class frmExportBookingMenu
         Me.grpConsignee.Controls.Add(Me.cmdSelectConsignee)
         Me.grpConsignee.Controls.Add(Me.txtConsigneeAddress)
         Me.grpConsignee.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.grpConsignee.Location = New System.Drawing.Point(13, 318)
+        Me.grpConsignee.Location = New System.Drawing.Point(13, 315)
         Me.grpConsignee.Name = "grpConsignee"
         Me.grpConsignee.Size = New System.Drawing.Size(355, 103)
         Me.grpConsignee.TabIndex = 32
@@ -1630,7 +1630,7 @@ Partial Class frmExportBookingMenu
         '
         Me.txtMeasurementType.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.txtMeasurementType.Font = New System.Drawing.Font("Arial Narrow", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtMeasurementType.Location = New System.Drawing.Point(523, 453)
+        Me.txtMeasurementType.Location = New System.Drawing.Point(523, 450)
         Me.txtMeasurementType.Name = "txtMeasurementType"
         Me.txtMeasurementType.ReadOnly = True
         Me.txtMeasurementType.Size = New System.Drawing.Size(224, 20)
@@ -1642,7 +1642,7 @@ Partial Class frmExportBookingMenu
         Me.grpShipper.Controls.Add(Me.cmdSelectShipper)
         Me.grpShipper.Controls.Add(Me.txtShipperAddress)
         Me.grpShipper.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.grpShipper.Location = New System.Drawing.Point(13, 209)
+        Me.grpShipper.Location = New System.Drawing.Point(13, 206)
         Me.grpShipper.Name = "grpShipper"
         Me.grpShipper.Size = New System.Drawing.Size(355, 103)
         Me.grpShipper.TabIndex = 31
@@ -1684,7 +1684,7 @@ Partial Class frmExportBookingMenu
         '
         Me.Label23.AutoSize = True
         Me.Label23.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label23.Location = New System.Drawing.Point(387, 438)
+        Me.Label23.Location = New System.Drawing.Point(387, 435)
         Me.Label23.Name = "Label23"
         Me.Label23.Size = New System.Drawing.Size(113, 13)
         Me.Label23.TabIndex = 71
@@ -1694,7 +1694,7 @@ Partial Class frmExportBookingMenu
         '
         Me.Label36.AutoSize = True
         Me.Label36.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label36.Location = New System.Drawing.Point(10, 431)
+        Me.Label36.Location = New System.Drawing.Point(10, 428)
         Me.Label36.Name = "Label36"
         Me.Label36.Size = New System.Drawing.Size(113, 13)
         Me.Label36.TabIndex = 33
@@ -1704,7 +1704,7 @@ Partial Class frmExportBookingMenu
         '
         Me.Label24.AutoSize = True
         Me.Label24.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label24.Location = New System.Drawing.Point(507, 438)
+        Me.Label24.Location = New System.Drawing.Point(507, 435)
         Me.Label24.Name = "Label24"
         Me.Label24.Size = New System.Drawing.Size(10, 13)
         Me.Label24.TabIndex = 72
@@ -1714,7 +1714,7 @@ Partial Class frmExportBookingMenu
         '
         Me.Label35.AutoSize = True
         Me.Label35.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label35.Location = New System.Drawing.Point(126, 431)
+        Me.Label35.Location = New System.Drawing.Point(126, 428)
         Me.Label35.Name = "Label35"
         Me.Label35.Size = New System.Drawing.Size(11, 13)
         Me.Label35.TabIndex = 34
@@ -1724,7 +1724,7 @@ Partial Class frmExportBookingMenu
         '
         Me.txtRevisedMeasurement.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.txtRevisedMeasurement.Font = New System.Drawing.Font("Arial Narrow", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtRevisedMeasurement.Location = New System.Drawing.Point(523, 434)
+        Me.txtRevisedMeasurement.Location = New System.Drawing.Point(523, 431)
         Me.txtRevisedMeasurement.Name = "txtRevisedMeasurement"
         Me.txtRevisedMeasurement.ReadOnly = True
         Me.txtRevisedMeasurement.Size = New System.Drawing.Size(224, 20)
@@ -1735,7 +1735,7 @@ Partial Class frmExportBookingMenu
         Me.cboModeOfTransport.Font = New System.Drawing.Font("Arial Narrow", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cboModeOfTransport.FormattingEnabled = True
         Me.cboModeOfTransport.IntegralHeight = False
-        Me.cboModeOfTransport.Location = New System.Drawing.Point(144, 427)
+        Me.cboModeOfTransport.Location = New System.Drawing.Point(144, 424)
         Me.cboModeOfTransport.Name = "cboModeOfTransport"
         Me.cboModeOfTransport.Size = New System.Drawing.Size(224, 23)
         Me.cboModeOfTransport.TabIndex = 35
@@ -1744,7 +1744,7 @@ Partial Class frmExportBookingMenu
         '
         Me.Label21.AutoSize = True
         Me.Label21.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label21.Location = New System.Drawing.Point(387, 419)
+        Me.Label21.Location = New System.Drawing.Point(387, 416)
         Me.Label21.Name = "Label21"
         Me.Label21.Size = New System.Drawing.Size(75, 13)
         Me.Label21.TabIndex = 68
@@ -1754,7 +1754,7 @@ Partial Class frmExportBookingMenu
         '
         Me.Label22.AutoSize = True
         Me.Label22.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label22.Location = New System.Drawing.Point(507, 419)
+        Me.Label22.Location = New System.Drawing.Point(507, 416)
         Me.Label22.Name = "Label22"
         Me.Label22.Size = New System.Drawing.Size(10, 13)
         Me.Label22.TabIndex = 69
@@ -1764,7 +1764,7 @@ Partial Class frmExportBookingMenu
         '
         Me.txtActualVolume.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.txtActualVolume.Font = New System.Drawing.Font("Arial Narrow", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtActualVolume.Location = New System.Drawing.Point(523, 415)
+        Me.txtActualVolume.Location = New System.Drawing.Point(523, 412)
         Me.txtActualVolume.Name = "txtActualVolume"
         Me.txtActualVolume.ReadOnly = True
         Me.txtActualVolume.Size = New System.Drawing.Size(224, 20)
@@ -1774,7 +1774,7 @@ Partial Class frmExportBookingMenu
         '
         Me.Label17.AutoSize = True
         Me.Label17.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label17.Location = New System.Drawing.Point(387, 400)
+        Me.Label17.Location = New System.Drawing.Point(387, 397)
         Me.Label17.Name = "Label17"
         Me.Label17.Size = New System.Drawing.Size(104, 13)
         Me.Label17.TabIndex = 65
@@ -1784,7 +1784,7 @@ Partial Class frmExportBookingMenu
         '
         Me.Label4.AutoSize = True
         Me.Label4.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label4.Location = New System.Drawing.Point(127, 452)
+        Me.Label4.Location = New System.Drawing.Point(127, 449)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(11, 13)
         Me.Label4.TabIndex = 40
@@ -1794,7 +1794,7 @@ Partial Class frmExportBookingMenu
         '
         Me.Label18.AutoSize = True
         Me.Label18.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label18.Location = New System.Drawing.Point(507, 400)
+        Me.Label18.Location = New System.Drawing.Point(507, 397)
         Me.Label18.Name = "Label18"
         Me.Label18.Size = New System.Drawing.Size(10, 13)
         Me.Label18.TabIndex = 66
@@ -1804,7 +1804,7 @@ Partial Class frmExportBookingMenu
         '
         Me.Label3.AutoSize = True
         Me.Label3.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label3.Location = New System.Drawing.Point(10, 452)
+        Me.Label3.Location = New System.Drawing.Point(10, 449)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(67, 13)
         Me.Label3.TabIndex = 39
@@ -1814,7 +1814,7 @@ Partial Class frmExportBookingMenu
         '
         Me.txtActualGrossWeight.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.txtActualGrossWeight.Font = New System.Drawing.Font("Arial Narrow", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtActualGrossWeight.Location = New System.Drawing.Point(523, 396)
+        Me.txtActualGrossWeight.Location = New System.Drawing.Point(523, 393)
         Me.txtActualGrossWeight.Name = "txtActualGrossWeight"
         Me.txtActualGrossWeight.ReadOnly = True
         Me.txtActualGrossWeight.Size = New System.Drawing.Size(224, 20)
@@ -1822,7 +1822,7 @@ Partial Class frmExportBookingMenu
         '
         'txtCommodity
         '
-        Me.txtCommodity.Location = New System.Drawing.Point(144, 449)
+        Me.txtCommodity.Location = New System.Drawing.Point(144, 446)
         Me.txtCommodity.Name = "txtCommodity"
         Me.txtCommodity.Size = New System.Drawing.Size(224, 20)
         Me.txtCommodity.TabIndex = 41
@@ -1831,7 +1831,7 @@ Partial Class frmExportBookingMenu
         '
         Me.Label15.AutoSize = True
         Me.Label15.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label15.Location = New System.Drawing.Point(387, 377)
+        Me.Label15.Location = New System.Drawing.Point(387, 374)
         Me.Label15.Name = "Label15"
         Me.Label15.Size = New System.Drawing.Size(99, 13)
         Me.Label15.TabIndex = 62
@@ -1841,7 +1841,7 @@ Partial Class frmExportBookingMenu
         '
         Me.chkDangerousCargo.AutoSize = True
         Me.chkDangerousCargo.ForeColor = System.Drawing.Color.Red
-        Me.chkDangerousCargo.Location = New System.Drawing.Point(144, 475)
+        Me.chkDangerousCargo.Location = New System.Drawing.Point(144, 472)
         Me.chkDangerousCargo.Name = "chkDangerousCargo"
         Me.chkDangerousCargo.Size = New System.Drawing.Size(109, 17)
         Me.chkDangerousCargo.TabIndex = 42
@@ -1852,7 +1852,7 @@ Partial Class frmExportBookingMenu
         '
         Me.Label16.AutoSize = True
         Me.Label16.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label16.Location = New System.Drawing.Point(506, 378)
+        Me.Label16.Location = New System.Drawing.Point(506, 375)
         Me.Label16.Name = "Label16"
         Me.Label16.Size = New System.Drawing.Size(11, 13)
         Me.Label16.TabIndex = 63
@@ -1864,16 +1864,16 @@ Partial Class frmExportBookingMenu
         Me.dtgServices.AllowUserToDeleteRows = False
         Me.dtgServices.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dtgServices.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.colSSelected, Me.colSPK, Me.colSParam_Type, Me.colSParam_Code, Me.colSPrefix, Me.colSParam_Desc})
-        Me.dtgServices.Location = New System.Drawing.Point(387, 10)
+        Me.dtgServices.Location = New System.Drawing.Point(387, 7)
         Me.dtgServices.Name = "dtgServices"
-        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle6.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText
-        DataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.dtgServices.RowHeadersDefaultCellStyle = DataGridViewCellStyle6
+        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.dtgServices.RowHeadersDefaultCellStyle = DataGridViewCellStyle1
         Me.dtgServices.Size = New System.Drawing.Size(360, 135)
         Me.dtgServices.TabIndex = 43
         '
@@ -1931,7 +1931,7 @@ Partial Class frmExportBookingMenu
         Me.cboUnit.Font = New System.Drawing.Font("Arial Narrow", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cboUnit.FormattingEnabled = True
         Me.cboUnit.IntegralHeight = False
-        Me.cboUnit.Location = New System.Drawing.Point(523, 374)
+        Me.cboUnit.Location = New System.Drawing.Point(523, 371)
         Me.cboUnit.Name = "cboUnit"
         Me.cboUnit.Size = New System.Drawing.Size(224, 23)
         Me.cboUnit.TabIndex = 64
@@ -1941,14 +1941,14 @@ Partial Class frmExportBookingMenu
         Me.cboLoadType.Font = New System.Drawing.Font("Arial Narrow", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cboLoadType.FormattingEnabled = True
         Me.cboLoadType.IntegralHeight = False
-        Me.cboLoadType.Location = New System.Drawing.Point(523, 295)
+        Me.cboLoadType.Location = New System.Drawing.Point(523, 292)
         Me.cboLoadType.Name = "cboLoadType"
         Me.cboLoadType.Size = New System.Drawing.Size(224, 23)
         Me.cboLoadType.TabIndex = 52
         '
         'txtNoOfPackage
         '
-        Me.txtNoOfPackage.Location = New System.Drawing.Point(523, 355)
+        Me.txtNoOfPackage.Location = New System.Drawing.Point(523, 352)
         Me.txtNoOfPackage.Name = "txtNoOfPackage"
         Me.txtNoOfPackage.Size = New System.Drawing.Size(224, 20)
         Me.txtNoOfPackage.TabIndex = 61
@@ -1957,7 +1957,7 @@ Partial Class frmExportBookingMenu
         '
         Me.Label12.AutoSize = True
         Me.Label12.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label12.Location = New System.Drawing.Point(506, 299)
+        Me.Label12.Location = New System.Drawing.Point(506, 296)
         Me.Label12.Name = "Label12"
         Me.Label12.Size = New System.Drawing.Size(11, 13)
         Me.Label12.TabIndex = 51
@@ -1967,7 +1967,7 @@ Partial Class frmExportBookingMenu
         '
         Me.Label13.AutoSize = True
         Me.Label13.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label13.Location = New System.Drawing.Point(387, 357)
+        Me.Label13.Location = New System.Drawing.Point(387, 354)
         Me.Label13.Name = "Label13"
         Me.Label13.Size = New System.Drawing.Size(92, 13)
         Me.Label13.TabIndex = 59
@@ -1977,7 +1977,7 @@ Partial Class frmExportBookingMenu
         '
         Me.Label11.AutoSize = True
         Me.Label11.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label11.Location = New System.Drawing.Point(387, 298)
+        Me.Label11.Location = New System.Drawing.Point(387, 295)
         Me.Label11.Name = "Label11"
         Me.Label11.Size = New System.Drawing.Size(67, 13)
         Me.Label11.TabIndex = 50
@@ -1987,7 +1987,7 @@ Partial Class frmExportBookingMenu
         '
         Me.Label14.AutoSize = True
         Me.Label14.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label14.Location = New System.Drawing.Point(506, 358)
+        Me.Label14.Location = New System.Drawing.Point(506, 355)
         Me.Label14.Name = "Label14"
         Me.Label14.Size = New System.Drawing.Size(11, 13)
         Me.Label14.TabIndex = 60
@@ -1997,7 +1997,7 @@ Partial Class frmExportBookingMenu
         '
         Me.Label8.AutoSize = True
         Me.Label8.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label8.Location = New System.Drawing.Point(506, 320)
+        Me.Label8.Location = New System.Drawing.Point(506, 317)
         Me.Label8.Name = "Label8"
         Me.Label8.Size = New System.Drawing.Size(11, 13)
         Me.Label8.TabIndex = 54
@@ -2005,7 +2005,7 @@ Partial Class frmExportBookingMenu
         '
         'txtVolume
         '
-        Me.txtVolume.Location = New System.Drawing.Point(523, 336)
+        Me.txtVolume.Location = New System.Drawing.Point(523, 333)
         Me.txtVolume.Name = "txtVolume"
         Me.txtVolume.Size = New System.Drawing.Size(224, 20)
         Me.txtVolume.TabIndex = 58
@@ -2014,7 +2014,7 @@ Partial Class frmExportBookingMenu
         '
         Me.Label7.AutoSize = True
         Me.Label7.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label7.Location = New System.Drawing.Point(387, 319)
+        Me.Label7.Location = New System.Drawing.Point(387, 316)
         Me.Label7.Name = "Label7"
         Me.Label7.Size = New System.Drawing.Size(83, 13)
         Me.Label7.TabIndex = 53
@@ -2024,7 +2024,7 @@ Partial Class frmExportBookingMenu
         '
         Me.Label9.AutoSize = True
         Me.Label9.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label9.Location = New System.Drawing.Point(387, 338)
+        Me.Label9.Location = New System.Drawing.Point(387, 335)
         Me.Label9.Name = "Label9"
         Me.Label9.Size = New System.Drawing.Size(48, 13)
         Me.Label9.TabIndex = 56
@@ -2032,7 +2032,7 @@ Partial Class frmExportBookingMenu
         '
         'txtGrossWeight
         '
-        Me.txtGrossWeight.Location = New System.Drawing.Point(523, 317)
+        Me.txtGrossWeight.Location = New System.Drawing.Point(523, 314)
         Me.txtGrossWeight.Name = "txtGrossWeight"
         Me.txtGrossWeight.Size = New System.Drawing.Size(224, 20)
         Me.txtGrossWeight.TabIndex = 55
@@ -2041,7 +2041,7 @@ Partial Class frmExportBookingMenu
         '
         Me.Label10.AutoSize = True
         Me.Label10.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label10.Location = New System.Drawing.Point(506, 339)
+        Me.Label10.Location = New System.Drawing.Point(506, 336)
         Me.Label10.Name = "Label10"
         Me.Label10.Size = New System.Drawing.Size(11, 13)
         Me.Label10.TabIndex = 57
@@ -2052,7 +2052,7 @@ Partial Class frmExportBookingMenu
         Me.StatusStrip2.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripStatusLabel1, Me.tslblPrepBy, Me.ToolStripStatusLabel3, Me.tslblPrepDate, Me.ToolStripStatusLabel2, Me.tslblModBy, Me.ToolStripStatusLabel5, Me.tslblModDate})
         Me.StatusStrip2.Location = New System.Drawing.Point(0, 508)
         Me.StatusStrip2.Name = "StatusStrip2"
-        Me.StatusStrip2.Size = New System.Drawing.Size(1007, 22)
+        Me.StatusStrip2.Size = New System.Drawing.Size(1129, 22)
         Me.StatusStrip2.TabIndex = 3
         Me.StatusStrip2.Text = "StatusStrip2"
         '
@@ -2112,7 +2112,7 @@ Partial Class frmExportBookingMenu
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1007, 530)
+        Me.ClientSize = New System.Drawing.Size(1129, 530)
         Me.Controls.Add(Me.pnlHeader)
         Me.Controls.Add(Me.StatusStrip2)
         Me.Name = "frmExportBookingMenu"
