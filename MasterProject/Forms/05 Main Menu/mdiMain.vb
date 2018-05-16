@@ -398,7 +398,7 @@ Public Class mdiMain
 
             MyNode(0).Nodes.Add("4.1.1", "Export Sea")
             MyNode = .Nodes.Find("4.1.1", True)
-            MyNode(0).Nodes.Add("4.1.1.1", "Export Sea LCL - Forwarding")
+            MyNode(0).Nodes.Add("4.1.1.1", "Export Sea LCL - Forwarding.")
             MyNode(0).Nodes.Add("4.1.1.2", "Export Sea FCL - Forwarding")
 
             MyNode = .Nodes.Find("4.1", True)
