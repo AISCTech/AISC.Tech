@@ -473,6 +473,8 @@ ByVal blReOpen As Boolean, ByVal blUserInput As Boolean)
 
             cmdSQL.ExecuteNonQuery()
 
+            DeleteToGLTable(Me.txtORNo.Text, 3)
+
             For ctrRow = 0 To Me.dtgAcctgTitle.Rows.Count - 1
                 strsql = "INSERT INTO or_acctg_entry (ORNo, AcctCode, SubAcctCode, SubAcctDept, SubAcctDeptName, " &
                                                     "SubAcctList, SubAcctListItem, SubAcctListItemName, DR, CR, GLClose) " &
@@ -496,6 +498,9 @@ ByVal blReOpen As Boolean, ByVal blUserInput As Boolean)
                 End With
 
                 cmdSQL.ExecuteNonQuery()
+
+                InsertToGLTable(3, GetGeneralLedgerModuleName(3), Me.txtORNo.Text, Me.dtgAcctgTitle.Rows(ctrRow).Cells(colAcctCode.Name).Value, GetAccountTitle(Me.dtgAcctgTitle.Rows(ctrRow).Cells(colAcctCode.Name).Value), Me.dtgAcctgTitle.Rows(ctrRow).Cells(colSubAcctCode.Name).Value, GetSubAccountTitle(Me.dtgAcctgTitle.Rows(ctrRow).Cells(colAcctCode.Name).Value, Me.dtgAcctgTitle.Rows(ctrRow).Cells(colSubAcctCode.Name).Value), CDbl(Me.dtgAcctgTitle.Rows(ctrRow).Cells(colDR.Name).Value), CDbl(Me.dtgAcctgTitle.Rows(ctrRow).Cells(colCR.Name).Value), Me.dtgAcctgTitle.Rows(ctrRow).Cells(colDept.Name).Value, Me.dtgAcctgTitle.Rows(ctrRow).Cells(colDeptName.Name).Value, Me.dtgAcctgTitle.Rows(ctrRow).Cells(colList.Name).Value, Me.dtgAcctgTitle.Rows(ctrRow).Cells(colListItem.Name).Value, Me.dtgAcctgTitle.Rows(ctrRow).Cells(colListItemName.Name).Value)
+
             Next
 
             cmdSQL.Dispose()

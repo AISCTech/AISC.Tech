@@ -182,18 +182,26 @@ Public Class mdiMain
             MyNode(0).Nodes.Add("2.1.2", "Accounts Payables Voucher")
             MyNode(0).Nodes.Add("2.1.3", "Check/MC Voucher")
             MyNode(0).Nodes.Add("2.1.4", "Petty Cash Voucher")
-
+            MyNode(0).Nodes.Add("2.1.5", "Cheque / MC Funding")
+            MyNode(0).Nodes.Add("2.1.6", "Fund Transfer")
             'Billing
             .Nodes.Add("2.2", "Billing")
             MyNode = .Nodes.Find("2.2", True)
             MyNode(0).Nodes.Add("2.2.1", "Invoice Billing")
+            MyNode = .Nodes.Find("2.2.1", True)
             MyNode(0).Nodes.Add("2.2.1.1", "Import")
             MyNode(0).Nodes.Add("2.2.1.2", "Export")
+            MyNode(0).Nodes.Add("2.2.1.3", "Import Forwarding")
+            MyNode = .Nodes.Find("2.2", True)
             MyNode(0).Nodes.Add("2.2.2", "S.O.A Billing")
+            MyNode = .Nodes.Find("2.2.2", True)
             MyNode(0).Nodes.Add("2.2.2.1", "Import")
             MyNode(0).Nodes.Add("2.2.2.2", "Export")
+            MyNode(0).Nodes.Add("2.2.2.3", "Import Forwarding")
+            MyNode(0).Nodes.Add("2.2.2.4", "Agency Fee - Import Forwarding")
 
-            MyNode(0).Nodes.Add("2.2.3", "...")
+
+            'MyNode(0).Nodes.Add("2.2.3", "...")
 
             'OR/AR
             .Nodes.Add("2.3", "Collection")
@@ -202,7 +210,7 @@ Public Class mdiMain
             MyNode(0).Nodes.Add("2.3.2", "Acknowledgment Receipt")
             MyNode(0).Nodes.Add("2.3.3", "Container Refund")
             MyNode(0).Nodes.Add("2.3.4", "Acknowledgment Receipt - Container Refund")
-
+            MyNode(0).Nodes.Add("2.3.5", "Advances")
 
 
             'Reports
@@ -304,6 +312,40 @@ Public Class mdiMain
                     ChildForm = frmCompanyServiceOffered
                 Case "3.4"
                     ChildForm = frmRegForm
+                Case "4.1.1.1"
+                    ChildForm = frmExportSeaTariffForwLCL
+                Case "4.1.1.2"
+                    ChildForm = frmExportSeaTariffForwFCL
+                Case "4.2"
+                    ChildForm = frmAISCSalesQuotation
+                Case "2.2.1.3"
+                    ChildForm = frmInvoiceImpF
+                Case "2.2.2.3"
+                    ChildForm = frmSOAImpF
+                Case "2.2.2.4"
+                    ChildForm = frmAgencyFeeBillingImpF
+                Case "2.1.5"
+                    ChildForm = frmChequeMCFund
+                Case "2.1.6"
+                    ChildForm = frmFundTransfer
+                Case "2.3.5"
+                    ChildForm = frmAdvances
+                Case "4.1.6.1"
+                    ChildForm = frmTruckingTariffLCL
+                Case "4.1.6.2"
+                    ChildForm = frmTruckingTariffFCL
+                Case "4.1.5.2"
+                    ChildForm = frmBrokerageImportTariffFCL
+                Case "4.1.5.1"
+                    ChildForm = frmBrokerageImportTariffLCL
+                Case "4.1.5.4"
+                    ChildForm = frmBrokerageExportTariffFCL
+                Case "4.1.5.3"
+                    ChildForm = frmBrokerageExporttariffLCL
+                Case "4.1.3.2"
+                    ChildForm = frmImportSeaTariffForwFCL
+                Case "4.1.3.1"
+                    ChildForm = frmImportSeaTariffForwLCL
                 Case Else
                     Exit Sub
             End Select
@@ -371,5 +413,57 @@ Public Class mdiMain
 
     Private Sub HelpToolStripButton_Click(sender As Object, e As EventArgs) Handles HelpToolStripButton.Click
 
+    End Sub
+
+    Private Sub cmdBDG_Click(sender As Object, e As EventArgs) Handles cmdBDG.Click
+        Me.lblMenuTitle.Text = "BUSINESS DEVELOPMENT GROUP"
+        Dim MyNode() As TreeNode
+
+        With trvMenu
+            .Nodes.Clear()
+            'Tariff Rates
+            .Nodes.Add("4.1", "Tariff Rates")
+            MyNode = .Nodes.Find("4.1", True)
+
+            MyNode(0).Nodes.Add("4.1.1", "Export Sea")
+            MyNode = .Nodes.Find("4.1.1", True)
+            MyNode(0).Nodes.Add("4.1.1.1", "Export Sea LCL - Forwarding")
+            MyNode(0).Nodes.Add("4.1.1.2", "Export Sea FCL - Forwarding")
+
+            MyNode = .Nodes.Find("4.1", True)
+            MyNode(0).Nodes.Add("4.1.2", "Export Air")
+            MyNode = .Nodes.Find("4.1.2", True)
+            MyNode(0).Nodes.Add("4.1.2.1", "Export Air LCL - Forwarding")
+            MyNode(0).Nodes.Add("4.1.2.2", "Export Air FCL - Forwarding")
+
+            MyNode = .Nodes.Find("4.1", True)
+            MyNode(0).Nodes.Add("4.1.3", "Import Sea")
+            MyNode = .Nodes.Find("4.1.3", True)
+            MyNode(0).Nodes.Add("4.1.3.1", "Import Sea LCL - Forwarding")
+            MyNode(0).Nodes.Add("4.1.3.2", "Import Sea FCL - Forwarding")
+
+            MyNode = .Nodes.Find("4.1", True)
+            MyNode(0).Nodes.Add("4.1.4", "Import Air")
+            MyNode = .Nodes.Find("4.1.4", True)
+            MyNode(0).Nodes.Add("4.1.4.1", "Import Air LCL - Forwarding")
+            MyNode(0).Nodes.Add("4.1.4.2", "Import Air FCL - Forwarding")
+
+            MyNode = .Nodes.Find("4.1", True)
+            MyNode(0).Nodes.Add("4.1.5", "Brokerage")
+            MyNode = .Nodes.Find("4.1.5", True)
+            MyNode(0).Nodes.Add("4.1.5.1", "Import LCL")
+            MyNode(0).Nodes.Add("4.1.5.2", "Import FCL")
+            MyNode(0).Nodes.Add("4.1.5.3", "Export LCL")
+            MyNode(0).Nodes.Add("4.1.5.4", "Export FCL")
+
+            MyNode = .Nodes.Find("4.1", True)
+            MyNode(0).Nodes.Add("4.1.6", "Trucking")
+            MyNode = .Nodes.Find("4.1.6", True)
+            MyNode(0).Nodes.Add("4.1.6.1", "LCL Trucking")
+            MyNode(0).Nodes.Add("4.1.6.2", "FCL Trucking")
+
+            .Nodes.Add("4.2", "Sales Quotation")
+            MyNode = .Nodes.Find("4.2", True)
+        End With
     End Sub
 End Class

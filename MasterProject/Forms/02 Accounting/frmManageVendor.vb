@@ -54,6 +54,8 @@
                 End With
                 Me.Close()
                 Me.Dispose()
+            Case "Fund Transfer From"
+    
         End Select
     End Sub
 End Class
