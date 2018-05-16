@@ -9,31 +9,35 @@ Public Class frmSendEmail
 
 
     Private Sub CreateImportBAC(ByVal lngBookingID As Long, ByVal strCompanyName As String, ByVal strBookingNo As String)
-        Dim rptTemp As New rptImportBAC
-        Dim clsDB As New clsDBTrans
-        Dim lstOfReportParameters As List(Of clsReportParameters) = clsDB.PopulateListOfReportParameter(CurrentUser._Company_Code, "rptImportBAC")
+        Try
+            Dim rptTemp As New rptImportBAC
+            Dim clsDB As New clsDBTrans
+            Dim lstOfReportParameters As List(Of clsReportParameters) = clsDB.PopulateListOfReportParameter(CurrentUser._Company_Code, "rptImportBAC")
 
-        Me.Text = "Import Booking Acknowledgement"
-        strAttachLoc = LocalFiles._PDFFiles._PDFBAC._FileLocation & "\" & strCompanyName & " BAC - " & strBookingNo & ".pdf"
-        txtSubject.Text = strCompanyName & " BOOKING ACKNOWLEDGEMENT (" & strBookingNo & ")"
+            Me.Text = "Import Booking Acknowledgement"
+            strAttachLoc = LocalFiles._PDFFiles._PDFBAC._FileLocation & "\" & strCompanyName & " BAC - " & strBookingNo & ".pdf"
+            txtSubject.Text = strCompanyName & " BOOKING ACKNOWLEDGEMENT (" & strBookingNo & ")"
 
-        rptTemp.RecordSelectionFormula = "{v_importbookingheader1.ID}= " & lngBookingID
+            rptTemp.RecordSelectionFormula = "{v_importbookingheader1.ID}= " & lngBookingID
 
-        rptTemp.SetParameterValue("p_AttnTo", strAttnTo)
-        rptTemp.SetParameterValue("p_Greeting", GetGreeting)
-        rptTemp.SetParameterValue("p_NoOfContainers", frmImportBookingMenu.tslblContainerSizes.Text)
-        rptTemp.SetParameterValue("p_Email", clsEmailCredentials._EmailReplyTo._EmailAddress)
-        rptTemp.SetParameterValue("p_SenderName", UpperFirstLetter(CurrentUser._First_Name & " " & CurrentUser._Last_Name))
-        rptTemp.SetParameterValue("p_SenderDesignation", CurrentUser._Position_Name & " | " & CurrentUser._Dept_Name)
+            rptTemp.SetParameterValue("p_AttnTo", strAttnTo)
+            rptTemp.SetParameterValue("p_Greeting", GetGreeting)
+            rptTemp.SetParameterValue("p_NoOfContainers", frmImportBookingMenu.tslblContainerSizes.Text)
+            rptTemp.SetParameterValue("p_Email", clsEmailCredentials._EmailReplyTo._EmailAddress)
+            rptTemp.SetParameterValue("p_SenderName", UpperFirstLetter(CurrentUser._First_Name & " " & CurrentUser._Last_Name))
+            rptTemp.SetParameterValue("p_SenderDesignation", CurrentUser._Position_Name & " | " & CurrentUser._Dept_Name)
 
-        For Each clsRptParam As clsReportParameters In lstOfReportParameters
-            rptTemp.SetParameterValue(clsRptParam._Parameter_Name, clsRptParam._Parameter_Value)
-        Next
+            For Each clsRptParam As clsReportParameters In lstOfReportParameters
+                rptTemp.SetParameterValue(clsRptParam._Parameter_Name, clsRptParam._Parameter_Value)
+            Next
 
-        CrystalReportViewer1.ReportSource = rptTemp
+            CrystalReportViewer1.ReportSource = rptTemp
 
-        rptTemp.ExportToDisk(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat, strAttachLoc)
-        rptTemp.Dispose()
+            rptTemp.ExportToDisk(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat, strAttachLoc)
+            rptTemp.Dispose()
+        Catch ex As Exception
+            MsgBox(ex.Message, MsgBoxStyle.OkOnly, "System Message")
+        End Try
     End Sub
 
     Private Sub GetEmailCredentials(ByVal strCompany_Code As String, ByVal lngModule_ID As Long)
@@ -65,12 +69,6 @@ Public Class frmSendEmail
     End Sub
 
     Private Sub cmdSend_Click(sender As Object, e As EventArgs) Handles cmdSend.Click
-        'If BackgroundWorker1.IsBusy <> True Then
-        '' Start the asynchronous operation.
-        'Label1.Visible = True
-        'BackgroundWorker1.RunWorkerAsync()
-        'End If
-
         Dim clsMail As New clsEmailSending
 
         With clsMail

@@ -162,13 +162,15 @@ Public Class frmImportBookingMonitoring
     End Sub
 
     Private Sub dtgImportBooking_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles dtgImportBooking.CellDoubleClick
-        Dim clsImpTemp As New clsImportBookingHeader
-        Dim clsDBTemp As New clsDBTrans
-        clsImpTemp = clsDBTemp.SearchImportBookingRecord(dtgImportBooking.Rows(e.RowIndex).Cells(1).Value, CurrentUser._Company_Code)
+        If e.RowIndex >= 0 Then
+            Dim clsImpTemp As New clsImportBookingHeader
+            Dim clsDBTemp As New clsDBTrans
+            clsImpTemp = clsDBTemp.CustomerServiceImportSearch(dtgImportBooking.Rows(e.RowIndex).Cells(1).Value, CurrentUser._Company_Code)
 
-        If Not IsNothing(clsImpTemp) Then
-            frmImportBookingMenu.PopulateBooking(clsImpTemp)
-            ShowChildForm(frmImportBookingMenu)
+            If Not IsNothing(clsImpTemp) Then
+                frmImportBookingMenu.PopulateBooking(clsImpTemp)
+                ShowChildForm(frmImportBookingMenu)
+            End If
         End If
     End Sub
 End Class

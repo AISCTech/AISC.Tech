@@ -28,6 +28,16 @@
             strDescription = value
         End Set
     End Property
+
+    Private strUNLOCODE As String
+    Property _UNLOCODE As String
+        Get
+            Return strUNLOCODE
+        End Get
+        Set(value As String)
+            strUNLOCODE = value
+        End Set
+    End Property
 End Class
 
 Public Class clsCountry

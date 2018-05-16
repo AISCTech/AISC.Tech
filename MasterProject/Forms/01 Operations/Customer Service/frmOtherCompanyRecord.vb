@@ -178,7 +178,7 @@
                 Dim clsConsignor As New clsClientHeader
                 Dim clsDB As New clsDBTrans
                 With dtgBooking.Rows(e.RowIndex)
-                    clsImpBook = clsDB.SearchImportBookingRecord(.Cells(1).Value, .Cells(2).Value)
+                    clsImpBook = clsDB.CustomerServiceImportSearch(.Cells(1).Value, .Cells(2).Value)
                 End With
 
                 With frmImportBookingMenu
@@ -190,7 +190,7 @@
                 Dim clsConsignor As New clsClientHeader
                 Dim clsDB As New clsDBTrans
                 With dtgBooking.Rows(e.RowIndex)
-                    clsExpBook = clsDB.SearchExportBookingRecord(.Cells(1).Value, .Cells(2).Value)
+                    clsExpBook = clsDB.CustomerServiceExportBookingSearch(.Cells(1).Value, .Cells(2).Value)
                 End With
 
                 With frmExportBookingMenu
