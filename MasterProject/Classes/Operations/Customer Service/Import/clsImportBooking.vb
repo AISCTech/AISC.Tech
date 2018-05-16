@@ -610,6 +610,26 @@
         End Set
     End Property
 
+    Private blIfBrkg As Boolean
+    Property _IfBrkg As Boolean
+        Get
+            Return blIfBrkg
+        End Get
+        Set(value As Boolean)
+            blIfBrkg = value
+        End Set
+    End Property
+
+    Private clsBrkg As New clsBrkgJO
+    Property _BrkgDetails As clsBrkgJO
+        Get
+            Return clsBrkg
+        End Get
+        Set(value As clsBrkgJO)
+            clsBrkg = value
+        End Set
+    End Property
+
     Private intStatusID As Integer
     Property _StatusID As Integer
         Get
@@ -790,6 +810,16 @@ Public Class clsImportBookingServices
         End Get
         Set(value As String)
             strServiceDesc = value
+        End Set
+    End Property
+
+    Private blSelected As Boolean
+    Property _Selected As Boolean
+        Get
+            Return blSelected
+        End Get
+        Set(value As Boolean)
+            blSelected = value
         End Set
     End Property
 End Class
