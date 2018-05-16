@@ -590,9 +590,6 @@ ByVal blReOpen As Boolean, ByVal blUserInput As Boolean)
 
         cmdsql.ExecuteNonQuery()
 
-        'delete to tbl_generalledger
-        DeleteToGLTable(Me.txtARNo.Text, 1)
-
         Dim ctrRow As Integer
 
         For ctrRow = 0 To Me.dtgAcctgTitle.Rows.Count - 1
@@ -608,9 +605,6 @@ ByVal blReOpen As Boolean, ByVal blUserInput As Boolean)
                 cmdsql = New MySqlCommand(strsql, cnn)
 
                 cmdsql.ExecuteNonQuery()
-
-                InsertToGLTable(1, GetGeneralLedgerModuleName(1), Me.txtARNo.Text, .Cells(0).Value, .Cells(1).Value, .Cells(2).Value, .Cells(3).Value, CDbl(.Cells(9).Value), CDbl(.Cells(10).Value), .Cells(4).Value, .Cells(5).Value, .Cells(6).Value, .Cells(7).Value, .Cells(8).Value)
-
             End With
         Next
 

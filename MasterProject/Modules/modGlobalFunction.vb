@@ -1,9 +1,9 @@
 ﻿Imports System.Runtime.InteropServices
 Imports System.Runtime.CompilerServices
 Module modGlobalFunction
-    Public strCurrentUser As String = ""
+    Public strCurrentUser As String = "admin"
     Public strSiteCode As String = "MNL"
-    Public strCompanyCode = ""
+    Public strCompanyCode = "C101"
 
 
     Public Function GetHostIP(ByVal af As System.Net.Sockets.AddressFamily) As String
@@ -58,9 +58,9 @@ Module modGlobalFunction
     Public Function GetServerDate() As Date
         Dim cmdSQL = New MySql.Data.MySqlClient.MySqlCommand
         Dim dtTemp As New Date
-        Dim cnn As New MySql.Data.MySqlClient.MySqlConnection(strDBMaster)
-        If cnn.State <> ConnectionState.Open Then cnn.Open()
-        cmdSQL.Connection = cnn
+
+        If cnnDBMaster.State <> ConnectionState.Open Then cnnDBMaster.Open()
+        cmdSQL.Connection = cnnDBMaster
         cmdSQL.CommandText = "SELECT NOW()as CurrentDateTime"
 
         Dim reader As MySql.Data.MySqlClient.MySqlDataReader = cmdSQL.ExecuteReader
@@ -742,11 +742,11 @@ Module modGlobalFunction
         Try
             Dim intTemp As Integer = 0
             Dim cmdSQL = New MySql.Data.MySqlClient.MySqlCommand
-            Dim cnn As New MySql.Data.MySqlClient.MySqlConnection(strDBMaster)
-            If cnn.State <> ConnectionState.Open Then cnn.Open()
+
+            If cnnDBMaster.State <> ConnectionState.Open Then cnnDBMaster.Open()
             cmdSQL.Connection = cnnDBMaster
 
-            cmdSQL.CommandText = "SELECT MIN(reg_no) AS FormNo FROM reg_trn_main " &
+            cmdSQL.CommandText = "SELECT MIN(reg_no) AS FormNo FROM aismaster.reg_trn_main " &
                                 "WHERE reg_group = @reg_group AND reg_module = @reg_module " &
                                     "AND reg_status = 2"
 
