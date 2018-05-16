@@ -1,6 +1,7 @@
 ﻿Public Class frmSearchExportMasterBooking
     Dim dvDataView As DataView
     Public strCaller As String
+    Public clsTempBook As New clsExportBookingHeader
 
     Private Sub PopGrid()
         Dim cmdSQL As New MySql.Data.MySqlClient.MySqlCommand
@@ -13,7 +14,11 @@
             End With
 
             cmdSQL.Connection = cnnDBMaster
-            cmdSQL.CommandText = "SELECT ID, " & '0
+
+            Select Case strCaller
+                Case "Master"
+                    Me.Text = "Search Master Booking"
+                    cmdSQL.CommandText = "SELECT ID, " & '0
                                     "CompanyCode, " & '1
                                     "RefNo AS `Reference No.`, " & '2
                                     "DestinationID AS `DestinationID`, " & '3
@@ -36,11 +41,54 @@
                                     "PrepDate BETWEEN @DateFrom AND @DateTo " &
                                 "ORDER BY " &
                                     "PrepDate DESC"
-            With cmdSQL.Parameters
-                .AddWithValue("@CompanyCode", CurrentUser._Company_Code)
-                .AddWithValue("@DateFrom", dtFrom.Value)
-                .AddWithValue("@DateTo", dtTo.Value)
-            End With
+                    With cmdSQL.Parameters
+                        .AddWithValue("@CompanyCode", CurrentUser._Company_Code)
+                        .AddWithValue("@DateFrom", dtFrom.Value)
+                        .AddWithValue("@DateTo", dtTo.Value)
+                    End With
+                Case "Booking"
+                    With frmExportBookingMenu
+                        Me.Text = "Search Master Booking [" & cboModeOfTransport.SelectedValue & " | " &
+                                                            .cboLoadType.SelectedValue & " | " &
+                                                            .cboOriginPort.SelectedValue & "]"
+                    End With
+                    cmdSQL.CommandText = "SELECT ID, " & '0
+                                    "CompanyCode, " & '1
+                                    "RefNo AS `Reference No.`, " & '2
+                                    "DestinationID AS `DestinationID`, " & '3
+                                    "DestinationName AS `Port Of Destination`, " & '4
+                                    "CarrierCode AS `CarrierCode`, " & '5
+                                    "CarrierName AS `Carrier`, " & '6
+                                    "ModeOfTransportID AS `ModeOfTransportID`, " & '7
+                                    "ModeOfTransportDesc AS `Mode Of Transport`, " & '8
+                                    "PrepDate AS `Prepared Date`, " & '9
+                                    "LoadTypeID, " & '10
+                                    "LoadTypeDesc AS `Load Type`, " & '11
+                                    "Status_Name AS `Status`, " & '12
+                                    "Status_ColorR, " & '13
+                                    "Status_ColorG, " & '14
+                                    "Status_ColorB " & '15
+                                "FROM " &
+                                    "v_exportmaster " &
+                                "WHERE " &
+                                    "CompanyCode = @CompanyCode AND " &
+                                    "ModeOfTransportID = @ModeOfTransportID AND " &
+                                    "OriginID = @OriginID AND " &
+                                    "LoadTypeID = @LoadTypeID AND " &
+                                    "PrepDate BETWEEN @DateFrom AND @DateTo " &
+                                "ORDER BY " &
+                                    "PrepDate DESC"
+                    With frmExportBookingMenu
+                        cmdSQL.Parameters.AddWithValue("@CompanyCode", CurrentUser._Company_Code)
+                        cmdSQL.Parameters.AddWithValue("@ModeOfTransportID", cboModeOfTransport.SelectedValue)
+                        cmdSQL.Parameters.AddWithValue("@OriginID", .cboOriginPort.SelectedValue)
+                        cmdSQL.Parameters.AddWithValue("@LoadTypeID", .cboLoadType.SelectedValue)
+                        cmdSQL.Parameters.AddWithValue("@DateFrom", dtFrom.Value)
+                        cmdSQL.Parameters.AddWithValue("@DateTo", dtTo.Value)
+                    End With
+                Case Else
+                    MsgBox("Wrong Caller!", MsgBoxStyle.OkOnly, "System Message")
+            End Select
 
             adapterCV.SelectCommand = cmdSQL
             adapterCV.Fill(dsConn)
@@ -188,33 +236,31 @@
         FilterGrid()
     End Sub
 
-    Private Sub chkConsol_CheckedChanged(sender As Object, e As EventArgs)
-        FilterGrid()
-    End Sub
-
     Private Sub dtgMasterBooking_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dtgMasterBooking.CellContentClick
 
     End Sub
 
     Private Sub dtgMasterBooking_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles dtgMasterBooking.CellDoubleClick
-        Select Case strCaller
-            Case "Master"
-                Dim clsDB As New clsDBTrans
-                With frmExportMasterBooking
-                    .clsExportMasterRecord = clsDB.SearchExportMasterRecord(dtgMasterBooking.Rows(e.RowIndex).Cells(2).Value, dtgMasterBooking.Rows(e.RowIndex).Cells(1).Value)
-                    .PopulateUserInput(.clsExportMasterRecord)
-                    .ChangeEnabledButtons(True, True, False, True, True, True, True, True, True, False, True)
-                End With
-            Case "Booking"
-                Dim clsDB As New clsDBTrans
-                With frmExportBookingMenu
-                    .clsExportRecord._MasterBookingDetails = clsDB.SearchExportMasterRecord(dtgMasterBooking.Rows(e.RowIndex).Cells(2).Value, dtgMasterBooking.Rows(e.RowIndex).Cells(1).Value)
-                    .PopulateMasterBooking(.clsExportRecord._MasterBookingDetails)
-                End With
-            Case Else
-                MsgBox("Wrong Caller!", MsgBoxStyle.OkOnly, "System Message")
-        End Select
-        Me.Close()
+        If e.RowIndex >= 0 Then
+            Select Case strCaller
+                Case "Master"
+                    Dim clsDB As New clsDBTrans
+                    With frmExportMasterBooking
+                        .clsExportMasterRecord = clsDB.CustomerServiceExportMasterSearch(dtgMasterBooking.Rows(e.RowIndex).Cells(2).Value, dtgMasterBooking.Rows(e.RowIndex).Cells(1).Value)
+                        .PopulateUserInput(.clsExportMasterRecord)
+                        .ChangeEnabledButtons(True, True, False, True, True, True, True, True, True, False)
+                    End With
+                Case "Booking"
+                    Dim clsDB As New clsDBTrans
+                    With frmExportBookingMenu
+                        .clsExportRecord._MasterBookingDetails = clsDB.CustomerServiceExportMasterSearch(dtgMasterBooking.Rows(e.RowIndex).Cells(2).Value, dtgMasterBooking.Rows(e.RowIndex).Cells(1).Value)
+                        .PopulateMasterBooking(.clsExportRecord._MasterBookingDetails)
+                    End With
+                Case Else
+                    MsgBox("Wrong Caller!", MsgBoxStyle.OkOnly, "System Message")
+            End Select
+            Me.Close()
+        End If
     End Sub
 
     Private Sub frmSearchExportMasterBooking_FormClosed(sender As Object, e As FormClosedEventArgs) Handles Me.FormClosed

@@ -72,6 +72,24 @@ Public Class mdiMain
     Private Sub mdiMain_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Dim clsDB As New clsDBTrans
         ListOfStatus = clsDB.PopulateListOfStatus
+        For Each clsTemp As clsStatus In ListOfStatus
+            With clsTemp
+                Select Case ._Status_ID
+                    Case 1
+                        tstxtOpen.Text = ._Status_Name
+                        tstxtOpen.BackColor = Color.FromArgb(._Status_ColorR, ._Status_ColorG, ._Status_ColorB)
+                    Case 2
+                        tstxtPosted.Text = ._Status_Name
+                        tstxtPosted.BackColor = Color.FromArgb(._Status_ColorR, ._Status_ColorG, ._Status_ColorB)
+                    Case 3
+                        tstxtCancelled.Text = ._Status_Name
+                        tstxtCancelled.BackColor = Color.FromArgb(._Status_ColorR, ._Status_ColorG, ._Status_ColorB)
+                    Case 5
+                        tstxtFoul.Text = ._Status_Name
+                        tstxtFoul.BackColor = Color.FromArgb(._Status_ColorR, ._Status_ColorG, ._Status_ColorB)
+                End Select
+            End With
+        Next
 
         Me.Text = strSystemName & " v. " & strSystemVersion & " " & CurrentUser._Company_Name
     End Sub
@@ -91,7 +109,7 @@ Public Class mdiMain
             MyNode(0).Nodes.Add("1.1.1.1", "Export Booking Menu")
             MyNode(0).Nodes.Add("1.1.1.2", "Export Master Booking Menu")
             MyNode(0).Nodes.Add("1.1.1.3", "Export Co-Load Sequence")
-            MyNode(0).Nodes.Add("1.1.1.4", "Export Monitoring Sheet")
+            MyNode(0).Nodes.Add("1.1.1.4", "Export Booking Monitoring")
             MyNode(0).Nodes.Add("1.1.1.5", "Export Shipping/Flight Details")
             'Import CS
             MyNode = .Nodes.Find("1.1", True)
@@ -126,8 +144,9 @@ Public Class mdiMain
             'Brokerage
             .Nodes.Add("1.3", "Brokerage")
             MyNode = .Nodes.Find("1.3", True)
-            MyNode(0).Nodes.Add("1.3.1", "Brokerage Status Update/Monitoring")
-            MyNode(0).Nodes.Add("1.3.2", "Processor Monitoring")
+            MyNode(0).Nodes.Add("1.3.1", "Brokerage Status Monitoring")
+            MyNode(0).Nodes.Add("1.3.2", "Brokerage Itinerary")
+            MyNode(0).Nodes.Add("1.3.3", "Processor Monitoring")
 
             'Trucking
             .Nodes.Add("1.4", "Trucking")
@@ -249,10 +268,20 @@ Public Class mdiMain
                     ChildForm = frmExportBookingMenu
                 Case "1.1.1.2"
                     ChildForm = frmExportMasterBooking
+                Case "1.1.1.4"
+                    ChildForm = frmExportBookingMonitoring
                 Case "1.1.2.1"
                     ChildForm = frmImportBookingMenu
                 Case "1.1.2.2"
                     ChildForm = frmImportBookingMonitoring
+                Case "1.2.2.1"
+                    ChildForm = frmExportFrwdgDocs
+                Case "1.2.1.2"
+                    ChildForm = frmExportFrwdgDocs
+                Case "1.3.1"
+                    ChildForm = frmBrkgMonitoring
+                Case "1.3.2"
+                    ChildForm = frmBrkgItinerary
                 Case "2.1.1"
                     ChildForm = frmRequest
                 Case "2.1.2"

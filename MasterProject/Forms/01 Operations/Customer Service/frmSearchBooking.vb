@@ -11,14 +11,14 @@
 
             Select Case strCaller
                 Case "Import"
-                    Dim clsImpTemp As clsImportBookingHeader = clsDBTemp.SearchImportBookingRecord(txtBookingNo.Text, CurrentUser._Company_Code)
+                    Dim clsImpTemp As clsImportBookingHeader = clsDBTemp.CustomerServiceImportSearch(txtBookingNo.Text, CurrentUser._Company_Code)
 
                     If Not IsNothing(clsImpTemp) Then
                         frmImportBookingMenu.PopulateBooking(clsImpTemp)
                         Me.Close()
                     End If
                 Case "Export"
-                    Dim clsExpTemp As clsExportBookingHeader = clsDBTemp.SearchExportBookingRecord(txtBookingNo.Text, CurrentUser._Company_Code)
+                    Dim clsExpTemp As clsExportBookingHeader = clsDBTemp.CustomerServiceExportBookingSearch(txtBookingNo.Text, CurrentUser._Company_Code)
 
                     With frmExportBookingMenu
                         .clsExportRecord = clsExpTemp

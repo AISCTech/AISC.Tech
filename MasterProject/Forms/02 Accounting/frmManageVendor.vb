@@ -40,13 +40,21 @@
             Case "Request"
                 frmRequest.txtPayeeCode.Text = Me.dgVendorList.CurrentRow.Cells(0).Value
                 frmRequest.txtPayeeName.Text = Me.dgVendorList.CurrentRow.Cells(1).Value
-                Me.Dispose()
                 Me.Close()
+                Me.Dispose()
             Case "PCV Check Request"
                 frmPCVCheckRequest.txtPayeeCode.Text = Me.dgVendorList.CurrentRow.Cells(0).Value
                 frmPCVCheckRequest.txtPayeeName.Text = Me.dgVendorList.CurrentRow.Cells(1).Value
-                Me.Dispose()
                 Me.Close()
+                Me.Dispose()
+            Case "OPRReq"
+                With frmOprReq
+                    .txtPayeeCode.Text = Me.dgVendorList.CurrentRow.Cells(0).Value
+                    .txtPayeeName.Text = Me.dgVendorList.CurrentRow.Cells(1).Value
+                End With
+                Me.Close()
+                Me.Dispose()
+
             Case "Fund Transfer From"
 
         End Select
