@@ -42,6 +42,18 @@
         End With
     End Sub
 
+    Private Sub PopulateExportMasterContainer(ByVal intRow As Integer)
+        Dim dtgRow As DataGridViewRow = dtgContainer.Rows(intRow)
+
+        frmExportMasterBooking.dtgContainer.Rows.Add()
+        With frmExportMasterBooking.dtgContainer.Rows(frmExportMasterBooking.dtgContainer.Rows.Count - 1)
+            .Cells(frmExportMasterBooking.colCContainerID.Name).Value = dtgRow.Cells(colPK.Name).Value
+            .Cells(frmExportMasterBooking.colCContainerNo.Name).Value = dtgRow.Cells(colContainerNo.Name).Value
+            .Cells(frmExportMasterBooking.colCContainerSizeID.Name).Value = dtgRow.Cells(colContainerSizeID.Name).Value
+            .Cells(frmExportMasterBooking.colCContainerSizeName.Name).Value = dtgRow.Cells(colContainerSize.Name).Value
+        End With
+    End Sub
+
     Private Sub frmAddBookingContainer_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         dtPickup.Value = New DateTime(Now.Year, Now.Month, Now.Day, Now.Hour, 0, 0)
         dtDelivery.Value = New DateTime(Now.Year, Now.Month, Now.Day, Now.Hour, 0, 0)
@@ -63,6 +75,8 @@
         Select Case strCaller
             Case "ImpBook"
                 PopulateImportBookingContainer(e.RowIndex)
+            Case "ExpMaster"
+                PopulateExportMasterContainer(e.RowIndex)
         End Select
 
         Me.Close()

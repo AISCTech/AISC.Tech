@@ -278,4 +278,87 @@
             dtModDate = value
         End Set
     End Property
+
+    Private lstBookingDetails As New List(Of clsExportBookingHeader)
+    Property _ListOfBookingDetails As List(Of clsExportBookingHeader)
+        Get
+            Return lstBookingDetails
+        End Get
+        Set(value As List(Of clsExportBookingHeader))
+            lstBookingDetails = value
+        End Set
+    End Property
+
+    Private lstContainers As New List(Of clsExportMasterContainers)
+    Property _ListOfContainers As List(Of clsExportMasterContainers)
+        Get
+            Return lstContainers
+        End Get
+        Set(value As List(Of clsExportMasterContainers))
+            lstContainers = value
+        End Set
+    End Property
+End Class
+
+Public Class clsExportMasterContainers
+
+    Private lngID As Long
+    Property _ID As Long
+        Get
+            Return lngID
+        End Get
+        Set(value As Long)
+            lngID = value
+        End Set
+    End Property
+
+    Private lngMasterID As Long
+    Property _MasterID As Long
+        Get
+            Return lngMasterID
+        End Get
+        Set(value As Long)
+            lngMasterID = value
+        End Set
+    End Property
+
+    Private lngContainerID As Long
+    Property _ContainerID As Long
+        Get
+            Return lngContainerID
+        End Get
+        Set(value As Long)
+            lngContainerID = value
+        End Set
+    End Property
+
+    Private strContainerNo As String
+    Property _ContainerNo As String
+        Get
+            Return strContainerNo
+        End Get
+        Set(value As String)
+            strContainerNo = value
+        End Set
+    End Property
+
+    Private intContainerSizeID As Integer
+    Property _ContainerSizeID As Integer
+        Get
+            Return intContainerSizeID
+        End Get
+        Set(value As Integer)
+            intContainerSizeID = value
+        End Set
+    End Property
+
+    Private strContainerSizeName As String
+    Property _ContainerSizeName As String
+        Get
+            Return strContainerSizeName
+        End Get
+        Set(value As String)
+            strContainerSizeName = value
+        End Set
+    End Property
 End Class

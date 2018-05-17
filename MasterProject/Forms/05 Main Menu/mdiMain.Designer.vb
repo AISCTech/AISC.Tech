@@ -88,7 +88,6 @@ Partial Class mdiMain
         Me.lblMenuTitle = New System.Windows.Forms.Label()
         Me.Splitter2 = New System.Windows.Forms.Splitter()
         Me.Panel2 = New System.Windows.Forms.Panel()
-        Me.cmdBDG = New System.Windows.Forms.Button()
         Me.cmdMaintenance = New System.Windows.Forms.Button()
         Me.cmdAccounting = New System.Windows.Forms.Button()
         Me.cmdLogout = New System.Windows.Forms.Button()
@@ -96,6 +95,12 @@ Partial Class mdiMain
         Me.Splitter1 = New System.Windows.Forms.Splitter()
         Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.ColorDialog1 = New System.Windows.Forms.ColorDialog()
+        Me.ToolStripLabel2 = New System.Windows.Forms.ToolStripLabel()
+        Me.ToolStripSeparator10 = New System.Windows.Forms.ToolStripSeparator()
+        Me.tstxtCancelled = New System.Windows.Forms.ToolStripTextBox()
+        Me.tstxtPosted = New System.Windows.Forms.ToolStripTextBox()
+        Me.tstxtOpen = New System.Windows.Forms.ToolStripTextBox()
+        Me.tstxtFoul = New System.Windows.Forms.ToolStripTextBox()
         Me.MenuStrip.SuspendLayout()
         Me.ToolStrip.SuspendLayout()
         Me.StatusStrip.SuspendLayout()
@@ -398,7 +403,7 @@ Partial Class mdiMain
         '
         'ToolStrip
         '
-        Me.ToolStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.NewToolStripButton, Me.EditToolStripButton, Me.SaveToolStripButton, Me.PrintPreviewToolStripButton, Me.SearchToolStripButton, Me.ToolStripSeparator1, Me.ResetToolStripButton, Me.ToolStripSeparator2, Me.PostToolStripButton, Me.CancelToolStripButton, Me.ReOpenToolStripButton, Me.ToolStripSeparator9, Me.HelpToolStripButton})
+        Me.ToolStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.NewToolStripButton, Me.EditToolStripButton, Me.SaveToolStripButton, Me.PrintPreviewToolStripButton, Me.SearchToolStripButton, Me.ToolStripSeparator1, Me.ResetToolStripButton, Me.ToolStripSeparator2, Me.PostToolStripButton, Me.CancelToolStripButton, Me.ReOpenToolStripButton, Me.ToolStripSeparator9, Me.HelpToolStripButton, Me.ToolStripSeparator10, Me.tstxtFoul, Me.tstxtCancelled, Me.tstxtPosted, Me.tstxtOpen, Me.ToolStripLabel2})
         Me.ToolStrip.Location = New System.Drawing.Point(0, 24)
         Me.ToolStrip.Name = "ToolStrip"
         Me.ToolStrip.Size = New System.Drawing.Size(891, 25)
@@ -578,7 +583,6 @@ Partial Class mdiMain
         '
         'Panel2
         '
-        Me.Panel2.Controls.Add(Me.cmdBDG)
         Me.Panel2.Controls.Add(Me.cmdMaintenance)
         Me.Panel2.Controls.Add(Me.cmdAccounting)
         Me.Panel2.Controls.Add(Me.cmdLogout)
@@ -588,16 +592,6 @@ Partial Class mdiMain
         Me.Panel2.Name = "Panel2"
         Me.Panel2.Size = New System.Drawing.Size(242, 233)
         Me.Panel2.TabIndex = 0
-        '
-        'cmdBDG
-        '
-        Me.cmdBDG.Dock = System.Windows.Forms.DockStyle.Top
-        Me.cmdBDG.Location = New System.Drawing.Point(0, 75)
-        Me.cmdBDG.Name = "cmdBDG"
-        Me.cmdBDG.Size = New System.Drawing.Size(242, 25)
-        Me.cmdBDG.TabIndex = 13
-        Me.cmdBDG.Text = "Business Development Group"
-        Me.cmdBDG.UseVisualStyleBackColor = True
         '
         'cmdMaintenance
         '
@@ -652,6 +646,59 @@ Partial Class mdiMain
         '
         Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
         Me.ContextMenuStrip1.Size = New System.Drawing.Size(61, 4)
+        '
+        'ToolStripLabel2
+        '
+        Me.ToolStripLabel2.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
+        Me.ToolStripLabel2.Name = "ToolStripLabel2"
+        Me.ToolStripLabel2.Size = New System.Drawing.Size(49, 22)
+        Me.ToolStripLabel2.Text = "Legend:"
+        '
+        'ToolStripSeparator10
+        '
+        Me.ToolStripSeparator10.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
+        Me.ToolStripSeparator10.Name = "ToolStripSeparator10"
+        Me.ToolStripSeparator10.Size = New System.Drawing.Size(6, 25)
+        '
+        'tstxtCancelled
+        '
+        Me.tstxtCancelled.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
+        Me.tstxtCancelled.Font = New System.Drawing.Font("Arial Narrow", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.tstxtCancelled.Name = "tstxtCancelled"
+        Me.tstxtCancelled.ReadOnly = True
+        Me.tstxtCancelled.Size = New System.Drawing.Size(50, 25)
+        Me.tstxtCancelled.Text = "Cancelled"
+        Me.tstxtCancelled.TextBoxTextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'tstxtPosted
+        '
+        Me.tstxtPosted.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
+        Me.tstxtPosted.Font = New System.Drawing.Font("Arial Narrow", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.tstxtPosted.Name = "tstxtPosted"
+        Me.tstxtPosted.ReadOnly = True
+        Me.tstxtPosted.Size = New System.Drawing.Size(50, 25)
+        Me.tstxtPosted.Text = "Posted"
+        Me.tstxtPosted.TextBoxTextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'tstxtOpen
+        '
+        Me.tstxtOpen.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
+        Me.tstxtOpen.Font = New System.Drawing.Font("Arial Narrow", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.tstxtOpen.Name = "tstxtOpen"
+        Me.tstxtOpen.ReadOnly = True
+        Me.tstxtOpen.Size = New System.Drawing.Size(50, 25)
+        Me.tstxtOpen.Text = "Open"
+        Me.tstxtOpen.TextBoxTextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'tstxtFoul
+        '
+        Me.tstxtFoul.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
+        Me.tstxtFoul.Font = New System.Drawing.Font("Arial Narrow", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.tstxtFoul.Name = "tstxtFoul"
+        Me.tstxtFoul.ReadOnly = True
+        Me.tstxtFoul.Size = New System.Drawing.Size(50, 25)
+        Me.tstxtFoul.Text = "Foul"
+        Me.tstxtFoul.TextBoxTextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'mdiMain
         '
@@ -750,5 +797,10 @@ Partial Class mdiMain
     Friend WithEvents SearchToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ContextMenuStrip1 As ContextMenuStrip
     Friend WithEvents ColorDialog1 As ColorDialog
-    Friend WithEvents cmdBDG As Button
+    Friend WithEvents ToolStripSeparator10 As ToolStripSeparator
+    Friend WithEvents ToolStripLabel2 As ToolStripLabel
+    Friend WithEvents tstxtOpen As ToolStripTextBox
+    Friend WithEvents tstxtPosted As ToolStripTextBox
+    Friend WithEvents tstxtCancelled As ToolStripTextBox
+    Friend WithEvents tstxtFoul As ToolStripTextBox
 End Class
