@@ -396,7 +396,7 @@ Public Class mdiMain
             .Nodes.Add("4.1", "Tariff Rates")
             MyNode = .Nodes.Find("4.1", True)
 
-            MyNode(0).Nodes.Add("4.1.1", "Export Sea")
+            MyNode(0).Nodes.Add("4.1.1", "Export Sea.")
             MyNode = .Nodes.Find("4.1.1", True)
             MyNode(0).Nodes.Add("4.1.1.1", "Export Sea LCL - Forwarding.")
             MyNode(0).Nodes.Add("4.1.1.2", "Export Sea FCL - Forwarding")
