@@ -4,6 +4,7 @@ Public Class frmExportBookingMenu
     Implements ICommonFunction
 
     Public clsExportRecord As New clsExportBookingHeader
+    Public clsBrkg As New clsBrkgJO
 
     Public Sub CancelRecord() Implements ICommonFunction.CancelRecord
         If txtStatus.Tag = 1 Then
@@ -36,7 +37,7 @@ Public Class frmExportBookingMenu
                     cmdSQL.Dispose()
 
                     Dim clsDB As New clsDBTrans
-                    clsExportRecord = clsDB.SearchExportBookingRecord(clsExportRecord._BookingNo, clsExportRecord._CompanyDetails._Company_Code)
+                    clsExportRecord = clsDB.CustomerServiceExportBookingSearch(clsExportRecord._BookingNo, clsExportRecord._CompanyDetails._Company_Code)
                     PopulateUserInput(clsExportRecord)
                 Catch ex As Exception
                     Try
@@ -56,8 +57,12 @@ Public Class frmExportBookingMenu
     End Sub
 
     Public Sub EditRecord() Implements ICommonFunction.EditRecord
-        ChangeEnabledButtons(True, False, True, True, False, True, False, False, False, True)
-        cmdSelectConsignor.Focus()
+        If txtStatus.Tag = 1 Then
+            ChangeEnabledButtons(True, False, True, True, False, True, False, False, False, True)
+            cmdSelectConsignor.Focus()
+        Else
+            MsgBox("Cannot edit record. Transaction is not open.", MsgBoxStyle.Exclamation, "System Message")
+        End If
     End Sub
 
     Public Sub NewRecord() Implements ICommonFunction.NewRecord
@@ -71,7 +76,84 @@ Public Class frmExportBookingMenu
     End Sub
 
     Public Sub PostRecord() Implements ICommonFunction.PostRecord
+        With txtActualGrossWeight
+            If Not IsNumeric(.Text) And .Text <= 0 Then
+                MsgBox("Actual Gross Weight is not yet encoded.", MsgBoxStyle.Information, "System Message")
+                Exit Sub
+            End If
+        End With
 
+        With txtActualVolume
+            If Not IsNumeric(.Text) And .Text <= 0 Then
+                MsgBox("Actual Volume is not yet encoded.", MsgBoxStyle.Information, "System Message")
+                Exit Sub
+            End If
+        End With
+
+        With txtRevisedMeasurement
+            If Not IsNumeric(.Text) And .Text <= 0 Then
+                MsgBox("Revised Measurement is not yet encoded.", MsgBoxStyle.Information, "System Message")
+                Exit Sub
+            End If
+        End With
+
+        If clsExportRecord._MasterBookingDetails._ID <= 0 Then
+            MsgBox("Please select Master Booking.", MsgBoxStyle.Information, "System Message")
+            Exit Sub
+        End If
+
+        If chkDocsCompleted.Checked = False Then
+            MsgBox("Please check if required documents are completed.", MsgBoxStyle.Information, "System Message")
+            Exit Sub
+        End If
+
+        If txtStatus.Tag = 1 Then
+                If MsgBox("Are you sure you want to POST record?", MsgBoxStyle.Question + MsgBoxStyle.YesNo, "System Message") = MsgBoxResult.Yes Then
+                    If cnnDBMaster.State <> ConnectionState.Open Then cnnDBMaster.Open()
+
+                    Dim cmdSQL = New MySql.Data.MySqlClient.MySqlCommand
+                    Dim trnSQL As MySql.Data.MySqlClient.MySqlTransaction
+
+                    trnSQL = cnnDBMaster.BeginTransaction
+
+                    Try
+                        cmdSQL.Connection = cnnDBMaster
+                        cmdSQL.Transaction = trnSQL
+                        cmdSQL.CommandText = "sp_exportbookingchangestatus"
+                        cmdSQL.CommandType = CommandType.StoredProcedure
+
+                        cmdSQL.Parameters.AddWithValue("@p_StatusID", 2)
+                        cmdSQL.Parameters("@p_StatusID").Direction = ParameterDirection.Input
+
+                        cmdSQL.Parameters.AddWithValue("@p_StatusByID", CurrentUser._User_ID)
+                        cmdSQL.Parameters("@p_StatusByID").Direction = ParameterDirection.Input
+
+                        cmdSQL.Parameters.AddWithValue("@p_ID", clsExportRecord._ID)
+                        cmdSQL.Parameters("@p_ID").Direction = ParameterDirection.Input
+
+                        cmdSQL.ExecuteNonQuery()
+
+                        trnSQL.Commit()
+                        cmdSQL.Dispose()
+
+                        Dim clsDB As New clsDBTrans
+                    clsExportRecord = clsDB.CustomerServiceExportBookingSearch(clsExportRecord._BookingNo, clsExportRecord._CompanyDetails._Company_Code)
+                    PopulateUserInput(clsExportRecord)
+                    Catch ex As Exception
+                        Try
+                            trnSQL.Rollback()
+                            MsgBox(ex.Message)
+                        Catch ex1 As Exception
+                            If Not trnSQL.Connection Is Nothing Then
+                                MsgBox("An exception of type " & ex1.GetType().ToString() &
+                                  " was encountered while attempting to roll back the transaction.")
+                            End If
+                        End Try
+                    End Try
+                End If
+            Else
+                MsgBox("Cannot post record. Record is already " & txtStatus.Text.ToUpper & ".", MsgBoxStyle.Information, "System Message")
+            End If
     End Sub
 
     Public Sub PrintPreview() Implements ICommonFunction.PrintPreview
@@ -109,7 +191,7 @@ Public Class frmExportBookingMenu
                     cmdSQL.Dispose()
 
                     Dim clsDB As New clsDBTrans
-                    clsExportRecord = clsDB.SearchExportBookingRecord(clsExportRecord._BookingNo, clsExportRecord._CompanyDetails._Company_Code)
+                    clsExportRecord = clsDB.CustomerServiceExportBookingSearch(clsExportRecord._BookingNo, clsExportRecord._CompanyDetails._Company_Code)
                     PopulateUserInput(clsExportRecord)
                 Catch ex As Exception
                     Try
@@ -128,54 +210,6 @@ Public Class frmExportBookingMenu
         End If
     End Sub
 
-    Private Function GenerateBookingPrefix() As String
-        Dim strTemp As String = ""
-        GenerateBookingPrefix = ""
-        Try
-            'Site/Location
-            Dim cmdSQL = New MySql.Data.MySqlClient.MySqlCommand
-
-            If cnnDBMaster.State <> ConnectionState.Open Then cnnDBMaster.Open()
-            cmdSQL.Connection = cnnDBMaster
-            cmdSQL.CommandText = "SELECT BookPrefix From tbl_dbsitename WHERE Site_Code = @Site_Code"
-            cmdSQL.Parameters.AddWithValue("@Site_Code", txtSite.Tag)
-
-            Dim reader As MySql.Data.MySqlClient.MySqlDataReader = cmdSQL.ExecuteReader
-
-            While reader.Read
-                strTemp = reader.Item("BookPrefix")
-            End While
-
-            reader.Close()
-            cmdSQL.Dispose()
-
-            'Service Type
-            For Each dtgRow As DataGridViewRow In dtgServices.Rows
-                If dtgRow.Cells(colSParam_Code.Name).Value = "SFRGT" And dtgRow.Cells(colSSelected.Name).Value = True Then
-                    Select Case cboModeOfTransport.Text
-                        Case "Air"
-                            strTemp = strTemp & "AE"
-                        Case "Sea"
-                            strTemp = strTemp & "SE"
-                    End Select
-                    GoTo lnAccountType
-                ElseIf dtgRow.Cells(colSSelected.Name).Value = True Then
-                    strTemp = strTemp & dtgRow.Cells(colSPrefix.Name).Value
-                    GoTo lnAccountType
-                End If
-            Next
-
-lnAccountType:
-            'Account Type
-            strTemp = strTemp & clsExportRecord._AccountTypeDetails._Prefix
-
-            GenerateBookingPrefix = strTemp
-        Catch ex As Exception
-            MsgBox(ex.Message)
-        End Try
-
-    End Function
-
     Public Sub ResetRecord() Implements ICommonFunction.ResetRecord
         Dim clsComboBox As New clsPopulateComboBox(cboModeOfTransport, "SELECT * FROM lib_params WHERE Param_Type = 4 ORDER BY `PK`", "Param_Desc", "PK")
         clsComboBox.PopComboBox()
@@ -189,7 +223,7 @@ lnAccountType:
         clsComboBox = New clsPopulateComboBox(cboLoadType, "SELECT * FROM lib_params WHERE Param_Type = 2 ORDER BY `PK`", "Param_Desc", "PK")
         clsComboBox.PopComboBox()
 
-        clsComboBox = New clsPopulateComboBox(cboUnit, "SELECT * FROM lib_params WHERE Param_Type = 5 ORDER BY `Param_Desc`", "Param_Desc", "PK")
+        clsComboBox = New clsPopulateComboBox(cboUnit, "SELECT * FROM lib_uom ORDER BY `Unit`", "Unit", "PK")
         clsComboBox.PopComboBox()
 
         PopulateServices()
@@ -210,7 +244,7 @@ lnAccountType:
 
         If clsExportRecord._ID > 0 Then
             Dim clsDB As New clsDBTrans
-            clsExportRecord = clsDB.SearchExportBookingRecord(clsExportRecord._BookingNo, clsExportRecord._CompanyDetails._Company_Code)
+            clsExportRecord = clsDB.CustomerServiceExportBookingSearch(clsExportRecord._BookingNo, clsExportRecord._CompanyDetails._Company_Code)
             PopulateUserInput(clsExportRecord)
         Else
             ClearUserInput()
@@ -226,6 +260,7 @@ lnAccountType:
                 Try
                     Dim clsDocs As New clsExportBookingDocuments
                     Dim clsServices As New clsExportBookingServices
+                    Dim blBrkg As Boolean = CheckIfBrokerageSelected()
 
                     With clsExportRecord
                         ._ID = ._ID
@@ -251,6 +286,7 @@ lnAccountType:
                         ._DocsCompleted = chkDocsCompleted.Checked
                         ._ColoadToDetails._Code = txtColoadTo.Tag
                         ._KPIDate = Nothing
+                        ._IfBrkg = CheckIfBrokerageSelected()
                         ._PrepByDetails._User_ID = CurrentUser._User_ID
                         ._ModByDetails._User_ID = CurrentUser._User_ID
 
@@ -274,8 +310,10 @@ lnAccountType:
                     End With
 
                     Dim clsDB As New clsDBTrans
-                    clsExportRecord = clsDB.SaveExportBookingRecord(clsExportRecord)
-                    clsExportRecord = clsDB.SearchExportBookingRecord(clsExportRecord._BookingNo, CurrentUser._Company_Code)
+
+                    clsExportRecord = clsDB.CustomerServiceExportBookingSave(clsExportRecord)
+                    clsExportRecord = clsDB.CustomerServiceExportBookingSearch(clsExportRecord._BookingNo, CurrentUser._Company_Code)
+
                     PopulateUserInput(clsExportRecord)
                 Catch ex As Exception
                     MsgBox(ex.Message, MsgBoxStyle.Critical, "System Message")
@@ -283,6 +321,57 @@ lnAccountType:
             End If
         End If
     End Sub
+
+    Private Function GenerateBookingPrefix() As String
+        Dim strTemp As String = ""
+        GenerateBookingPrefix = ""
+        Try
+            'Site/Location
+            Dim cmdSQL = New MySql.Data.MySqlClient.MySqlCommand
+
+            If cnnDBMaster.State <> ConnectionState.Open Then cnnDBMaster.Open()
+            cmdSQL.Connection = cnnDBMaster
+            cmdSQL.CommandText = "SELECT BookPrefix From tbl_dbsitename WHERE Site_Code = @Site_Code"
+            cmdSQL.Parameters.AddWithValue("@Site_Code", txtSite.Tag)
+
+            Dim reader As MySql.Data.MySqlClient.MySqlDataReader = cmdSQL.ExecuteReader
+
+            While reader.Read
+                strTemp = reader.Item("BookPrefix")
+            End While
+
+            reader.Close()
+            cmdSQL.Dispose()
+
+            'Service Type
+            dtgServices.EndEdit()
+            For Each dtgRow As DataGridViewRow In dtgServices.Rows
+                If dtgRow.Cells(colSParam_Code.Name).Value = "SFRGT" And dtgRow.Cells(colSSelected.Name).Value = True Then
+                    Select Case cboModeOfTransport.Text
+                        Case "Air"
+                            strTemp = strTemp & "AE"
+                        Case "Sea"
+                            strTemp = strTemp & "SE"
+                        Case "Land"
+                            strTemp = strTemp & "LE"
+                    End Select
+                    GoTo lnAccountType
+                ElseIf dtgRow.Cells(colSSelected.Name).Value = True Then
+                    strTemp = strTemp & dtgRow.Cells(colSPrefix.Name).Value
+                    GoTo lnAccountType
+                End If
+            Next
+
+lnAccountType:
+            'Account Type
+            strTemp = strTemp & clsExportRecord._AccountTypeDetails._Prefix
+
+            GenerateBookingPrefix = strTemp
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
+
+    End Function
 
     Public Sub SearchRecord() Implements ICommonFunction.SearchRecord
         With frmSearchBooking
@@ -293,7 +382,7 @@ lnAccountType:
     End Sub
 
     Public Sub PopulateUserInput(ByVal clsTempExportRecord As clsExportBookingHeader)
-        If Not IsNothing(clsTempExportRecord) Then
+        If Not IsNothing(clsTempExportRecord) And clsTempExportRecord._ID > 0 Then
             ClearUserInput()
             With clsTempExportRecord
                 txtBookingPrefix.Text = ._BookingPrefix
@@ -337,8 +426,11 @@ lnAccountType:
                 txtRevisedMeasurement.Text = ._RevisedMeasurement
                 txtMeasurementType.Tag = ._RevisedMeasurementTypeDetails._PK
                 txtMeasurementType.Text = ._RevisedMeasurementTypeDetails._Param_Desc
-                txtStatus.Tag = ._StatusDetails._Status_ID
-                txtStatus.Text = ._StatusDetails._Status_Name
+                With ._StatusDetails
+                    txtStatus.Tag = ._Status_ID
+                    txtStatus.Text = ._Status_Name
+                    txtStatus.BackColor = Color.FromArgb(._Status_ColorR, ._Status_ColorG, ._Status_ColorB)
+                End With
                 For Each row As DataGridViewRow In dtgDocuments.Rows
                     For Each clsTemp As clsExportBookingDocuments In ._DocumentDetails
                         If row.Cells(colDDocID.Name).Value = clsTemp._ID Then
@@ -385,6 +477,8 @@ lnAccountType:
                 tslblModDate.Text = ._ModDate
             End With
             ChangeEnabledButtons(True, True, False, True, True, True, True, True, True, False)
+        Else
+            MsgBox("Booking No. not found.", MsgBoxStyle.Information, "System Message")
         End If
     End Sub
 
@@ -612,6 +706,15 @@ lnAccountType:
             Exit Function
         End If
 
+        If clsExportRecord._BrkgDetails._ID > 0 And CheckIfBrokerageSelected() = False Then
+            If clsExportRecord._BrkgDetails._StatusDetails._ID > 0 Then
+                MsgBox("Cannot remove brokerage service. This booking already have brokerage status.", MsgBoxStyle.Exclamation, "System Message")
+                CheckRequiredEntries = False
+                dtgServices.Focus()
+                Exit Function
+            End If
+        End If
+
         If cboModeOfTransport.SelectedIndex = -1 Then
             MsgBox("Please select Mode of Transport.", MsgBoxStyle.Exclamation, "System Message")
             CheckRequiredEntries = False
@@ -666,6 +769,40 @@ lnAccountType:
             CheckRequiredEntries = False
             cboUnit.Focus()
             Exit Function
+        End If
+
+        If clsExportRecord._MasterBookingDetails._ID > 0 Then
+            With clsExportRecord._MasterBookingDetails
+                If cboModeOfTransport.SelectedValue <> ._ModeOfTransportDetails._PK Then
+                    MsgBox("Mode of Transport of Booking and Master Booking doesn't match.", MsgBoxStyle.Exclamation, "System Message")
+                    CheckRequiredEntries = False
+                    cboModeOfTransport.Focus()
+                    Exit Function
+                End If
+
+                If cboLoadType.SelectedValue <> ._LoadTypeDetails._PK Then
+                    MsgBox("Load Type of Booking and Master Booking doesn't match.", MsgBoxStyle.Exclamation, "System Message")
+                    CheckRequiredEntries = False
+                    cboLoadType.Focus()
+                    Exit Function
+                End If
+
+                If cboOriginPort.SelectedValue <> ._OriginDetails._PK Then
+                    MsgBox("Origin Port of Booking and Master Booking doesn't match.", MsgBoxStyle.Exclamation, "System Message")
+                    CheckRequiredEntries = False
+                    cboOriginPort.Focus()
+                    Exit Function
+                End If
+            End With
+        End If
+
+        If clsExportRecord._BrkgDetails._ID > 0 Then
+            If CheckIfBrokerageSelected() = False Then
+                MsgBox("Cannot remove Brokerage service. Cancel Brokerage J.O. first.", MsgBoxStyle.Exclamation, "System Message")
+                CheckRequiredEntries = False
+                dtgServices.Focus()
+                Exit Function
+            End If
         End If
     End Function
 
@@ -744,6 +881,15 @@ lnAccountType:
             End If
         Next
     End Sub
+
+    Private Function CheckIfBrokerageSelected() As Boolean
+        CheckIfBrokerageSelected = False
+        For Each dtgRow As DataGridViewRow In dtgServices.Rows
+            If dtgRow.Cells(colSPK.Name).Value = 28 And dtgRow.Cells(colSSelected.Name).Value = True Then
+                CheckIfBrokerageSelected = True
+            End If
+        Next
+    End Function
 
     Private EnableButtons As New clsEnableToolstripObjects()
     Public Sub ChangeEnabledButtons(ByVal blNew As Boolean, ByVal blEdit As Boolean, ByVal blSave As Boolean, ByVal blReset As Boolean,
@@ -934,36 +1080,42 @@ lnAccountType:
         pnlMasterBooking.Show()
         tscmdMasterShow.Visible = False
         tscmdMasterHide.Visible = True
+        Me.Refresh()
     End Sub
 
     Private Sub tscmdMasterHide_Click(sender As Object, e As EventArgs) Handles tscmdMasterHide.Click
         pnlMasterBooking.Hide()
         tscmdMasterShow.Visible = True
         tscmdMasterHide.Visible = False
+        Me.Refresh()
     End Sub
 
     Private Sub tscmdReqDocsShow_Click(sender As Object, e As EventArgs) Handles tscmdReqDocsShow.Click
         pnlReqDocs.Show()
         tscmdReqDocsShow.Visible = False
         tscmdReqDocsHide.Visible = True
+        Me.Refresh()
     End Sub
 
     Private Sub tscmdReqDocsHide_Click(sender As Object, e As EventArgs) Handles tscmdReqDocsHide.Click
         pnlReqDocs.Hide()
         tscmdReqDocsShow.Visible = True
         tscmdReqDocsHide.Visible = False
+        Me.Refresh()
     End Sub
 
     Private Sub tscmdColoadToShow_Click(sender As Object, e As EventArgs) Handles tscmdColoadToShow.Click
         pnlColoadTo.Show()
         tscmdColoadToShow.Visible = False
         tscmdColoadToHide.Visible = True
+        Me.Refresh()
     End Sub
 
     Private Sub tscmdColoadToHide_Click(sender As Object, e As EventArgs) Handles tscmdColoadToHide.Click
         pnlColoadTo.Hide()
         tscmdColoadToShow.Visible = True
         tscmdColoadToHide.Visible = False
+        Me.Refresh()
     End Sub
 
     Private Sub cmdSelectMaster_Click(sender As Object, e As EventArgs) Handles cmdSelectMaster.Click
@@ -982,7 +1134,13 @@ lnAccountType:
     End Sub
 
     Private Sub lblRemoveMaster_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles lblRemoveMaster.LinkClicked
-        clsExportRecord._MasterBookingDetails = New clsExportMasterBooking
-        ClearMasterBooking()
+        If MsgBox("Clear Master Booking details?", MsgBoxStyle.Question + MsgBoxStyle.YesNo, "System Message") = MsgBoxResult.Yes Then
+            clsExportRecord._MasterBookingDetails = New clsExportMasterBooking
+            ClearMasterBooking()
+        End If
+    End Sub
+
+    Private Sub dtgServices_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dtgServices.CellContentClick
+
     End Sub
 End Class

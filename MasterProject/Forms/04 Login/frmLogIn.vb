@@ -82,7 +82,6 @@
         End If
 
         If ValidateUserAccess() = True Then
-            strCurrentUser = Me.UsernameTextBox.Text
             frmSelectCompany.ShowDialog()
         End If
     End Sub

@@ -40,10 +40,10 @@
                                     "PrepDate"
             With cmdSQL.Parameters
                 .AddWithValue("@CompanyCode", CurrentUser._Company_Code)
-                .AddWithValue("@ModeOfTransportID", clsTempMasterRecord._ModeOfTransportDetails._PK)
-                .AddWithValue("@OriginID", clsTempMasterRecord._OriginDetails._PK)
-                .AddWithValue("@LoadTypeID", clsTempMasterRecord._LoadTypeDetails._PK)
-                .AddWithValue("@MasterBookingID", clsTempMasterRecord._ID)
+                .AddWithValue("@ModeOfTransportID", frmExportMasterBooking.cboModeOfTransport.SelectedValue)
+                .AddWithValue("@OriginID", frmExportMasterBooking.cboOriginPort.SelectedValue)
+                .AddWithValue("@LoadTypeID", frmExportMasterBooking.cboLoadType.SelectedValue)
+                .AddWithValue("@MasterBookingID", IIf(frmExportMasterBooking.clsExportMasterRecord._ID > 0, frmExportMasterBooking.clsExportMasterRecord._ID, -1))
             End With
 
             adapterCV.SelectCommand = cmdSQL
@@ -116,6 +116,16 @@
                 strTemp = strTemp & "`ConsigneeCode` = '" & CStr(objSelectedValue) & "'"
             End If
 
+            With frmExportMasterBooking
+                For Each row As DataGridViewRow In .dtgBookingDetails.Rows
+                    If Len(strTemp) > 0 Then
+                        strTemp = strTemp & " AND "
+                    End If
+
+                    strTemp = strTemp & "`BookingNo` <> '" & row.Cells(.colBookingNo.Name).Value & "'"
+                Next
+            End With
+
             dvDataView.RowFilter = Trim(strTemp)
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Critical, "System Message")
@@ -128,9 +138,11 @@
 
     Private Sub frmExportAddBookingToMaster_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         PopGrid()
-        Me.Text = "Select Export Booking [" & clsTempMasterRecord._ModeOfTransportDetails._Param_Desc & " | " &
-                    clsTempMasterRecord._LoadTypeDetails._Param_Desc & " | " &
-                    clsTempMasterRecord._OriginDetails._Description & "]"
+        FilterGrid()
+
+        Me.Text = "Select Export Booking [" & frmExportMasterBooking.cboModeOfTransport.Text & " | " &
+                    frmExportMasterBooking.cboLoadType.Text & " | " &
+                    frmExportMasterBooking.cboOriginPort.Text & "]"
 
         Dim clsMasterList As New clsPopulateComboBox(cboConsignor, "SELECT * FROM v_client ORDER BY `Description`", "Description", "Code")
         clsMasterList.PopComboBox()
@@ -202,17 +214,41 @@
     Private Sub dtgExportBooking_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles dtgExportBooking.CellDoubleClick
         Try
             Dim clsDB As New clsDBTrans
-            Dim clsExpBook As New clsExportBookingHeader
+            Dim clsExp As New clsExportBookingHeader
 
             With dtgExportBooking.Rows(e.RowIndex)
-                clsExpBook = clsDB.SearchExportBookingRecord(.Cells(2).Value, .Cells(1).Value)
-                clsExpBook._MasterBookingDetails._ID = clsTempMasterRecord._ID
-                clsExpBook = clsDB.SaveExportBookingRecord(clsExpBook)
+                clsExp = clsDB.CustomerServiceExportBookingSearch(.Cells(2).Value, .Cells(1).Value)
             End With
 
+            Dim row As New DataGridViewRow
+
             With frmExportMasterBooking
-                .ResetRecord()
+                .dtgBookingDetails.Rows.Add()
+                row = .dtgBookingDetails.Rows(.dtgBookingDetails.Rows.Count - 1)
+
+                row.Cells(.colID.Name).Value = clsExp._ID
+                row.Cells(.colCompanyCode.Name).Value = clsExp._CompanyDetails._Company_Code
+                row.Cells(.colBookingNo.Name).Value = clsExp._BookingNo
+                row.Cells(.colBookingNoComplete.Name).Value = clsExp._BookingPrefix & "-" & clsExp._BookingNo
+                row.Cells(.colConsignorCode.Name).Value = clsExp._ConsignorDetails._Code
+                row.Cells(.colConsignorName.Name).Value = clsExp._ConsignorDetails._Description
+                row.Cells(.colShipperCode.Name).Value = clsExp._ShipperDetails._Code
+                row.Cells(.colShipperName.Name).Value = clsExp._ShipperDetails._Description
+                row.Cells(.colConsigneeCode.Name).Value = clsExp._ConsigneeDetails._Code
+                row.Cells(.colConsigneeName.Name).Value = clsExp._ConsigneeDetails._Description
+                row.Cells(.colFinalDestinationID.Name).Value = clsExp._FinalDestinationDetails._PK
+                row.Cells(.colFinalDestinationName.Name).Value = clsExp._FinalDestinationDetails._Description
+                row.Cells(.colMeasurement.Name).Value = clsExp._Volume
+                row.Cells(.colNoOfPack.Name).Value = clsExp._NoOfPackage
+                row.Cells(.colUnit.Name).Value = clsExp._PackageUnitDetails._Param_Desc
+                row.Cells(.colActMeasurement.Name).Value = clsExp._ActualVolume
+                row.Cells(.colStatusID.Name).Value = clsExp._StatusDetails._Status_ID
+                row.Cells(.colStatusName.Name).Value = clsExp._StatusDetails._Status_Name
+                row.Cells(.colColorR.Name).Value = clsExp._StatusDetails._Status_ColorR
+                row.Cells(.colColorG.Name).Value = clsExp._StatusDetails._Status_ColorG
+                row.Cells(.colColorB.Name).Value = clsExp._StatusDetails._Status_ColorB
             End With
+
             Me.Close()
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Critical, "System Message")
