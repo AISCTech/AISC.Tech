@@ -372,4 +372,56 @@ Public Class mdiMain
     Private Sub HelpToolStripButton_Click(sender As Object, e As EventArgs) Handles HelpToolStripButton.Click
 
     End Sub
+
+    Private Sub cmdBDG_Click(sender As Object, e As EventArgs) Handles cmdBDG.Click
+        Me.lblMenuTitle.Text = "BUSINESS DEVELOPMENT GROUP"
+        Dim MyNode() As TreeNode
+
+        With trvMenu
+            .Nodes.Clear()
+            'Tariff Rates
+            .Nodes.Add("4.1", "Tariff Rates")
+            MyNode = .Nodes.Find("4.1", True)
+
+            MyNode(0).Nodes.Add("4.1.1", "Export Sea.")
+            MyNode = .Nodes.Find("4.1.1", True)
+            MyNode(0).Nodes.Add("4.1.1.1", "Export Sea LCL - Forwarding.")
+            MyNode(0).Nodes.Add("4.1.1.2", "Export Sea FCL - Forwarding")
+
+            MyNode = .Nodes.Find("4.1", True)
+            MyNode(0).Nodes.Add("4.1.2", "Export Air")
+            MyNode = .Nodes.Find("4.1.2", True)
+            MyNode(0).Nodes.Add("4.1.2.1", "Export Air LCL - Forwarding")
+            MyNode(0).Nodes.Add("4.1.2.2", "Export Air FCL - Forwarding")
+
+            MyNode = .Nodes.Find("4.1", True)
+            MyNode(0).Nodes.Add("4.1.3", "Import Sea")
+            MyNode = .Nodes.Find("4.1.3", True)
+            MyNode(0).Nodes.Add("4.1.3.1", "Import Sea LCL - Forwarding")
+            MyNode(0).Nodes.Add("4.1.3.2", "Import Sea FCL - Forwarding")
+
+            MyNode = .Nodes.Find("4.1", True)
+            MyNode(0).Nodes.Add("4.1.4", "Import Air")
+            MyNode = .Nodes.Find("4.1.4", True)
+            MyNode(0).Nodes.Add("4.1.4.1", "Import Air LCL - Forwarding")
+            MyNode(0).Nodes.Add("4.1.4.2", "Import Air FCL - Forwarding")
+
+            MyNode = .Nodes.Find("4.1", True)
+            MyNode(0).Nodes.Add("4.1.5", "Brokerage")
+            MyNode = .Nodes.Find("4.1.5", True)
+            MyNode(0).Nodes.Add("4.1.5.1", "Import LCL")
+            MyNode(0).Nodes.Add("4.1.5.2", "Import FCL")
+            MyNode(0).Nodes.Add("4.1.5.3", "Export LCL")
+            MyNode(0).Nodes.Add("4.1.5.4", "Export FCL")
+
+            MyNode = .Nodes.Find("4.1", True)
+            MyNode(0).Nodes.Add("4.1.6", "Trucking")
+            MyNode = .Nodes.Find("4.1.6", True)
+            MyNode(0).Nodes.Add("4.1.6.1", "LCL Trucking")
+            MyNode(0).Nodes.Add("4.1.6.2", "FCL Trucking")
+
+            .Nodes.Add("4.2", "Sales Quotation")
+            MyNode = .Nodes.Find("4.2", True)
+        End With
+    End Sub
 End Class
